@@ -6,7 +6,7 @@ import random
 
 def get_config(file=None):
     if file is None:
-        file=os.environ['HOME'] + "/.i3/workspaces.json"
+        file=os.environ['HOME'] + "/.config/i3/workspaces.json"
     configfile = open(file, 'r')
     configjson = configfile.read()
     config = json.loads(configjson)
