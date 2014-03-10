@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+sleep 1
+"$HOME/.config/i3/bin/touchpad-fixes" &
+if [ -n "$(which notify-listener.py)" ] || [ -x $HOME/bin/notify-listener.py ]
+then
+    notify-listener.py &
+fi
+if [ -n "$(which dunst)" ]
+then
+    dunst &
+fi
+
+# disable caps lock
+xmodmap -e "remove lock = Caps_Lock" -e "keycode 135 = Super_R"
+setxkbmap -option ctrl:nocaps

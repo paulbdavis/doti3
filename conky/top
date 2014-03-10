@@ -1,0 +1,79 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+
+# Update interval in seconds
+update_interval 2.0
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+# How strict should if_up be when testing an interface for being up?
+# The value is one of up, link or address, to check for the interface
+# being solely up, being up and having link or being up, having link
+# and an assigned IP address.
+if_up_strictness address
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+# use_spacer should have an argument of left, right, or none
+use_spacer left
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+pad_percents 3
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+# template {"full_text": "", "color":"\#"},
+#{"full_text": "/ ${fs_used_perc /}%", "color":"\#dfaf8f"},
+#{"full_text": "/home  ${fs_used_perc /home}%", "color":"\#efef8f"},
+
+# Stuff after 'TEXT' will be formatted on screen
+#[{"full_text": "\
+#${if_updatenr 1}host: ${exec hostname}${endif}\
+#${if_updatenr 2}kernel: ${exec /home/paul/bin/kernel-codename -a}${endif}\
+#${if_updatenr 3}distro: ${exec lsb_release -d -s | sed 's/"//g'} (${exec lsb_release -r -s})${endif}\
+#${if_updatenr 4}up: ${uptime}${endif}\
+#", "color":"\#DCDCCC"},
+TEXT
+[
+{"full_text":"disk:", "separator":false, "separator_block_width":3},
+{"full_text":"${diskio_read sda}", "separator":false, "separator_block_width": 3, "color":"\#a9a999", "min_width":35, "align":"right"},
+{"full_text":"read", "separator":false, "separator_block_width":3},
+{"full_text":"${diskio_write sda}", "separator":false, "separator_block_width":3, "color":"\#a9a999", "min_width":35, "align":"right"},
+{"full_text":"write"},
+
+{"full_text":"/:", "separator":false, "separator_block_width":3},
+{"full_text":"${fs_used /} / ${fs_size /}", "color":"${if_match ${fs_used_perc /} < 33}\#7f9f7f${else}${if_match ${fs_used_perc /} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text":"/var:", "separator":false, "separator_block_width":3},
+{"full_text":"${fs_used /var} / ${fs_size /var}", "color":"${if_match ${fs_used_perc /var} < 33}\#7f9f7f${else}${if_match ${fs_used_perc /var} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text":"/home:", "separator":false, "separator_block_width":3},
+{"full_text":"${fs_used /home} / ${fs_size /home}", "color":"${if_match ${fs_used_perc /home} < 33}\#7f9f7f${else}${if_match ${fs_used_perc /home} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+
+{"full_text": "net:", "separator": false, "separator_block_width":3},
+{"full_text": "${wireless_essid wlp2s0}", "separator":false, "separator_block_width":3, "color":"\#dca3a3"},
+{"full_text": "${addr wlp2s0}", "color":"\#83b3a3", "separator":false, "separator_block_width":1},
+{"full_text": "∷", "separator":false, "separator_block_width":1},
+{"full_text": "${exec $HOME/bin/external-ip}", "color":"\#7f9f7f", "separator":false, "separator_block_width": 3},
+{"full_text": "${upspeed wlp2s0}/s", "color":"\#a9a999", "separator":false, "separator_block_width":5, "min_width":45, "align":"right"},
+{"full_text": "↑", "separator":false, "separator_block_width":1},
+{"full_text": "${downspeed wlp2s0}/s", "color":"\#a9a999", "separator":false, "separator_block_width":5, "min_width":45, "align":"right"},
+{"full_text": "↓"},
+
+{"full_text": "mem:", "separator": false, "separator_block_width":3},
+{"full_text": "${memperc}%", "min_width":"000%", "separator": false, "separator_block_width":3, "color":"${if_match ${memperc} < 33}\#7f9f7f${else}${if_match ${memperc} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "${mem}/${memmax}", "color":"\#83b3a3"},
+
+{"full_text": "cpu:", "separator": false, "separator_block_width":3},
+{"full_text": "${cpu}%", "min_width":"000%", "separator": false, "separator_block_width":3, "color":"${if_match ${cpu} < 33}\#7f9f7f${else}${if_match ${cpu} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "${exec awk '{print $1}' /proc/loadavg}", "separator": false, "separator_block_width":3, "color":"${if_match ${exec awk '{print $1}' /proc/loadavg} < 1.0}\#7f9f7f${else}${if_match ${exec awk '{print $1}' /proc/loadavg} > 3.00}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "${exec awk '{print $2}' /proc/loadavg}", "separator": false, "separator_block_width":3, "color":"${if_match ${exec awk '{print $2}' /proc/loadavg} < 1.0}\#7f9f7f${else}${if_match ${exec awk '{print $2}' /proc/loadavg} > 3.00}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "${exec awk '{print $3}' /proc/loadavg}", "color":"${if_match ${exec awk '{print $3}' /proc/loadavg} < 1.0}\#7f9f7f${else}${if_match ${exec awk '{print $3}' /proc/loadavg} > 3.00}\#dca3a3${else}\#c3bf9f${endif}${endif}"}
+],

@@ -1,0 +1,11 @@
+{
+    "1": {"name":"www-dev"},
+    "2": {"name":"term"},
+    "3": {"name":"dev"},
+    "4": {"name":"www"},
+    "7": {"name":"chat"},
+    "9": {"name":"music"},
+    "10": {"name":"email"},
+    "11": {"name":"www-debug"},
+    "random": {"file":"~/.config/i3/planets"}
+}

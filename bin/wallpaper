@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+if [ -f "$1" ]
+then
+    destinationPrefix="$HOME/.background."
+    filename=$(basename "$1")
+
+    fileExtension=${filename##*.}
+
+    cp "$1" "$destinationPrefix$fileExtension"
+
+    if [[ $fileExtension == "png" ]] && [ -f $destinationPrefix"jpg" ]
+    then
+        rm "$destinationPrefix""jpg"
+    fi
+fi
+
+if [ -f "$HOME/.background.jpg" ]
+then
+    BGEXT="jpg"
+elif [ -f "$HOME/.background.png" ]
+then
+    BGEXT="png"
+fi
+
+feh --bg-scale "$HOME/.background.$BGEXT"
+
