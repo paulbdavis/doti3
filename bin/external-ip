@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "-r" ]
+then
+    rm $HOME/.externalip
+fi
+
+
+cacheFile="$HOME/.externalip"
+if [ ! -f "$cacheFile" ]
+then
+    touch $cacheFile
+fi
+
+cachedIp=$(cat $cacheFile)
+if [ -z "$cachedIp" ] || [ "$1" == "-f" ]
+then
+    externalIp=$(curl -s ifconfig.me)
+fi
+
+if [ "$1" == "-f" ]
+then
+    echo $externalIp
+else
+    if [ -z $cachedIp ]
+    then
+        echo $externalIp > $cacheFile
+        echo $externalIp
+    else
+        echo $cachedIp
+    fi
+fi

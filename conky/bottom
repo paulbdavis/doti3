@@ -48,7 +48,7 @@ TEXT
 {"full_text":"${exec hostname}: up ${uptime}"},
 
 {"full_text": "kernel:", "separator": false, "separator_block_width":3},
-{"full_text": "${exec $HOME/bin/kernel-codename -a}", "color":"\#83b3a3"},
+{"full_text": "${exec $HOME/.config/i3/bin/kernel-codename -a}", "color":"\#83b3a3"},
 
 {"full_text": "bat:", "separator": false, "separator_block_width":3},
 {"full_text": "${battery_percent BAT0}%", "min_width":"000%", "color":"${if_match ${battery_percent BAT0} > 66}\#7f9f7f${else}${if_match ${battery_percent BAT0} < 33}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
