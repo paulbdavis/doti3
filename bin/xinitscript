@@ -11,6 +11,8 @@ then
     dunst &
 fi
 
+export $PATH=$HOME/.config/i3/bin:$PATH
+
 # disable caps lock
 xmodmap -e "remove lock = Caps_Lock" -e "keycode 135 = Super_R"
 setxkbmap -option ctrl:nocaps
