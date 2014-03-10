@@ -44,7 +44,6 @@ cpu_avg_samples 2
 #", "color":"\#DCDCCC"},
 TEXT
 [
-{"full_text":"${exec xprop -id $(xdotool getactivewindow) | grep 'WM_NAME(STRING)' | cut -d\" -f2}"},
 {"full_text":"${exec hostname}: up ${uptime}"},
 
 {"full_text": "kernel:", "separator": false, "separator_block_width":3},
