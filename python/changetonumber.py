@@ -4,10 +4,16 @@ import os
 import datetime
 import random
 
+HOME = os.environ['HOME']
+
 def get_config(file=None):
     if file is None:
-        file=os.environ['HOME'] + "/.config/i3/workspaces.json"
-    configfile = open(file, 'r')
+        try:
+            file = HOME + "/.config/i3/workspaces.json"
+            configfile = open(file, 'r')
+        except FileNotFoundError:
+            file = HOME + "/.config/i3/lib/default-workspaces.json"
+            configfile = open(file, 'r')
     configjson = configfile.read()
     config = json.loads(configjson)
     configfile.close()
@@ -22,12 +28,11 @@ def get_workspace(number):
         space = None
 
     existing = [wks for wks in i3.get_workspaces() if wks['num'] is int(number)]
-    print(config)
     if len(existing):
         return existing[0]['name']
     else:
         if space is None:
-            default_rfile = '/usr/share/dict/american-english'
+            default_rfile = HOME + '/.config/i3/lib/planets'
             if "random" in config:
                 rfile = os.path.expanduser(config['random']['file'])
             else:
