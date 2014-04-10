@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-sleep 1
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
+xsetroot -solid "#333333"
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+
+sleep 0
 "$HOME/.config/i3/bin/touchpad-fixes" &
 if [ -n "$(which notify-listener.py)" ] || [ -x $HOME/bin/notify-listener.py ]
 then
