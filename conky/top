@@ -57,7 +57,9 @@ TEXT
 {"full_text":"/home:", "separator":false, "separator_block_width":3},
 {"full_text":"${fs_used /home} / ${fs_size /home}", "color":"${if_match ${fs_used_perc /home} < 33}\#7f9f7f${else}${if_match ${fs_used_perc /home} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
 
-{"full_text": "net:", "separator": false, "separator_block_width":3},
+${if_up wlp2s0}
+
+{"full_text": "net: wireless", "separator": false, "separator_block_width":3},
 {"full_text": "${wireless_essid wlp2s0}", "separator":false, "separator_block_width":3, "color":"\#dca3a3"},
 {"full_text": "${addr wlp2s0}", "color":"\#83b3a3", "separator":false, "separator_block_width":1},
 {"full_text": "∷", "separator":false, "separator_block_width":1},
@@ -66,6 +68,20 @@ TEXT
 {"full_text": "↑", "separator":false, "separator_block_width":1},
 {"full_text": "${downspeed wlp2s0}/s", "color":"\#a9a999", "separator":false, "separator_block_width":5, "min_width":45, "align":"right"},
 {"full_text": "↓"},
+
+${else}${if_up enp3s0}
+
+{"full_text": "net: ethernet", "separator": false, "separator_block_width":3},
+{"full_text": "${addr enp3s0}", "color":"\#83b3a3", "separator":false, "separator_block_width":1},
+{"full_text": "∷", "separator":false, "separator_block_width":1},
+{"full_text": "${exec $HOME/.config/i3/bin/external-ip}", "color":"\#7f9f7f", "separator":false, "separator_block_width": 3},
+{"full_text": "${upspeed enp3s0}/s", "color":"\#a9a999", "separator":false, "separator_block_width":5, "min_width":45, "align":"right"},
+{"full_text": "↑", "separator":false, "separator_block_width":1},
+{"full_text": "${downspeed enp3s0}/s", "color":"\#a9a999", "separator":false, "separator_block_width":5, "min_width":45, "align":"right"},
+{"full_text": "↓"},
+
+${endif}
+${endif}
 
 {"full_text": "mem:", "separator": false, "separator_block_width":3},
 {"full_text": "${memperc}%", "min_width":"000%", "separator": false, "separator_block_width":3, "color":"${if_match ${memperc} < 33}\#7f9f7f${else}${if_match ${memperc} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
