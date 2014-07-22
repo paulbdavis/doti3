@@ -7,6 +7,8 @@ xsetroot -solid "#333333"
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
+eval $(gpg-agent --daemon --write-env-file $HOME/.gpg-agent-info)
+
 sleep 0
 "$HOME/.config/i3/bin/touchpad-fixes" &
 if [ -n "$(which notify-listener.py)" ] || [ -x $HOME/bin/notify-listener.py ]

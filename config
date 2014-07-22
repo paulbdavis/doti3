@@ -47,7 +47,7 @@ bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_
 bindsym $mod+d exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+N exec "python3 $confDir/python/rename.py"
 
-bindsym $mod+Ctrl+L exec "i3lock -c 1c1c1c"
+bindsym $mod+Ctrl+L exec "$confDir/bin/lock"
 
 # mark window
 bindsym $mod+apostrophe exec i3-input -f '$font' -F 'mark %s' -P 'mark: '

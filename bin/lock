@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+import -window root /tmp/$USER-screenshot.png
+convert /tmp/$USER-screenshot.png -blur 0x5 /tmp/$USER-screenlock.png
+i3lock -i /tmp/$USER-screenlock.png
