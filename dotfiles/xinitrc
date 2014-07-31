@@ -7,5 +7,7 @@ then
     unset f
 fi
 
+eval $(ssh-agent)
+
 exec i3
 
