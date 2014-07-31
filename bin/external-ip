@@ -1,28 +1,35 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "-r" ]
+cacheFile="$HOME/.externalip"
+
+if [[ "$1" = "-r" ]]
 then
-    rm $HOME/.externalip
+    rm $cacheFile
+else
+    modified=$(expr $(date +%s) - $(date +%s -r $cacheFile))
+    if [[ $modified -gt 1800 ]]
+    then
+        rm $cacheFile
+    fi
 fi
 
 
-cacheFile="$HOME/.externalip"
-if [ ! -f "$cacheFile" ]
+if [[ ! -f "$cacheFile" ]]
 then
     touch $cacheFile
 fi
 
 cachedIp=$(cat $cacheFile)
-if [ -z "$cachedIp" ] || [ "$1" == "-f" ]
+if [[ -z "$cachedIp" ]] || [[ "$1" == "-f" ]]
 then
     externalIp=$(curl -s ifconfig.me)
 fi
 
-if [ "$1" == "-f" ]
+if [[ "$1" == "-f" ]]
 then
     echo $externalIp
 else
-    if [ -z $cachedIp ]
+    if [[ -z $cachedIp ]]
     then
         echo $externalIp > $cacheFile
         echo $externalIp
