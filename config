@@ -326,6 +326,7 @@ bar {
     colors {
         background $bg_grey
         statusline $fg
+        urgent_workspace   $red $dk_grey $red
     }
 }
 
