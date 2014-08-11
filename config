@@ -168,7 +168,8 @@ for_window [class="^VirtualBox"] floating enable
 for_window [class="^XTerm" instance="mixer"] move scratchpad
 # new_window 1pixel
 new_window pixel 2
-# hide_edge_borders both
+new_float pixel 2
+hide_edge_borders none
 
 # switch to workspace
 bindsym $mod+1 exec "python3 $confDir/python/changetonumber.py 1"
@@ -305,6 +306,7 @@ bar {
     status_command $confDir/conky/init bottom
     font $font
     font $pangoFont
+    binding_mode_indicator no
     colors {
         background $bg_grey
         statusline $fg
