@@ -221,7 +221,7 @@ bindsym $mod+Shift+C reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+E exit
+bindsym $mod+Shift+E exec i3-nagbar -m "Exit i3?" -t warning -b yes "i3-msg exit" ^Xexit -f "$pangoFont"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
