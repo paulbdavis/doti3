@@ -7,21 +7,21 @@ xsetroot -solid "#333333"
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-eval $(gpg-agent --daemon --write-env-file $HOME/.gpg-agent-info)
+eval $(gpg-agent -s --enable-ssh-support --daemon --write-env-file $HOME/.gpg-agent-info)
 
 sleep 0
 "$HOME/.config/i3/bin/touchpad-fixes" &
-if [ -n "$(which notify-listener.py)" ] || [ -x $HOME/bin/notify-listener.py ]
+if [ -n "$(which notify-listener.py 2>/dev/null)" ] || [ -x $HOME/bin/notify-listener.py ]
 then
     notify-listener.py &
 fi
-if [ -n "$(which dunst)" ]
+
+if [ -n "$(which dunst 2>/dev/null)" ]
 then
     dunst &
 fi
 
-export $PATH=$HOME/.config/i3/bin:$PATH
+export PATH=$HOME/.config/i3/bin:$PATH
 
 # disable caps lock
-xmodmap -e "remove lock = Caps_Lock" -e "keycode 135 = Super_R"
 setxkbmap -option ctrl:nocaps
