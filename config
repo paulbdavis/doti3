@@ -91,8 +91,34 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
 bindsym $mod+o focus output right
-bindsym $mod+Shift+M move scratchpad
-bindsym $mod+m scratchpad show
+
+
+bindsym $mod+Shift+M mark "scratchterm", move scratchpad
+bindsym $mod+m [con_mark="scratchterm"] scratchpad show
+bindsym $mod+Shift+F1 mark "scratch1", move scratchpad
+bindsym $mod+F1 [con_mark="scratch1"] scratchpad show
+bindsym $mod+Shift+F2 mark "scratch2", move scratchpad
+bindsym $mod+F2 [con_mark="scratch2"] scratchpad show
+bindsym $mod+Shift+F3 mark "scratch3", move scratchpad
+bindsym $mod+F3 [con_mark="scratch3"] scratchpad show
+bindsym $mod+Shift+F4 mark "scratch4", move scratchpad
+bindsym $mod+F4 [con_mark="scratch4"] scratchpad show
+bindsym $mod+Shift+F5 mark "scratch5", move scratchpad
+bindsym $mod+F5 [con_mark="scratch5"] scratchpad show
+bindsym $mod+Shift+F6 mark "scratch6", move scratchpad
+bindsym $mod+F6 [con_mark="scratch6"] scratchpad show
+bindsym $mod+Shift+F7 mark "scratch7", move scratchpad
+bindsym $mod+F7 [con_mark="scratch7"] scratchpad show
+bindsym $mod+Shift+F8 mark "scratch8", move scratchpad
+bindsym $mod+F8 [con_mark="scratch8"] scratchpad show
+bindsym $mod+Shift+F9 mark "scratch9", move scratchpad
+bindsym $mod+F9 [con_mark="scratch9"] scratchpad show
+bindsym $mod+Shift+F10 mark "scratch10", move scratchpad
+bindsym $mod+F10 [con_mark="scratch10"] scratchpad show
+bindsym $mod+Shift+F11 mark "scratch11", move scratchpad
+bindsym $mod+F11 [con_mark="scratch11"] scratchpad show
+bindsym $mod+Shift+F12 mark "scratch12", move scratchpad
+bindsym $mod+F12 [con_mark="scratch12"] scratchpad show
 
 # split in horizontal orientation
 bindsym $mod+b split h
