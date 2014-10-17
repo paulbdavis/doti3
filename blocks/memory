@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+FREEOUT="$(free)"
+TOTAL="$(echo "$FREEOUT" | grep Mem | awk '{print $2}')"
+USED="$(echo "$FREEOUT" | grep "buffers/cache" | awk '{print $3}')"
+PERCENT=$(bc <<<"scale=0; (100*$USED)/$TOTAL")
+USED=$(bc <<<"scale=2; $USED/1024/1024")
+TOTAL=$(bc <<< "scale=2; $TOTAL/1024/1024")
+
+COLOR="#7f9f7f"
+if [[ ${PERCENT} -gt 85 ]]
+then
+    COLOR="#dca3a3"
+elif [[ ${PERCENT} -gt 65 ]]
+then
+    COLOR="#c3bf9f"
+fi
+
+echo "${PERCENT}% ${USED}G/${TOTAL}G"
+echo
+echo $COLOR

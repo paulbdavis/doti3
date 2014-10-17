@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+INTERFACE="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
+
+if [[ $(expr $INTERFACE wpl) -gt 0 ]]
+then
+    TYPE="wireless"
+else
+    TYPE="ethernet"
+fi
+
+echo $TYPE

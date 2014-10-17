@@ -5,7 +5,7 @@ kernelVersion=$(uname -r | sed "s/-.*//g")
 
 # strip trailing .0 version, since the git tags on kernel.org do not have them
 kernelVersion=${kernelVersion/%".0"/}
-cacheFile="$HOME/.kernelcodename"
+cacheFile="/tmp/kernelcodename-$USER"
 
 if [ -f "$cacheFile" ]
 then

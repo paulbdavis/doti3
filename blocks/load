@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+CORES=$(grep -E 'processor\s+: [0-9]+' /proc/cpuinfo | wc -l)
+
+case $1 in
+    1)
+        LOAD=$(awk '{print $1}' /proc/loadavg)
+        ;;
+    5)
+        LOAD=$(awk '{print $2}' /proc/loadavg)
+        ;;
+    15)
+        LOAD=$(awk '{print $3}' /proc/loadavg)
+        ;;
+esac
+
+COLOR="#7f9f7f"
+if [[ $(bc <<<"$LOAD > ($CORES - 1)") -eq 1 ]]
+then
+    COLOR="#dca3a3"
+elif [[ $(bc <<<"$LOAD > (($CORES*2)/3)") -eq 1 ]]
+then
+    COLOR="#c3bf9f"
+fi
+
+echo $LOAD
+echo
+echo $COLOR

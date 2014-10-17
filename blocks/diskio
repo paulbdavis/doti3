@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+
+if [[ ! -f /tmp/iostat-$USER ]]
+then
+    iostat -y -m -d 1 1 > /tmp/iostat-$USER
+fi
+
+case $2 in
+    "trans")
+        AWK_ARG='$2'
+        SUFFIX=tx/s
+        ;;
+    "readps")
+        AWK_ARG='$3'
+        SUFFIX="mB/s read"
+        ;;
+    "writeps")
+        AWK_ARG='$4'
+        SUFFIX="mB/s write"
+        ;;
+    "read")
+        AWK_ARG='$5'
+        SUFFIX=mB
+        ;;
+    "write")
+        AWK_ARG='$6'
+        SUFFIX=mB
+        ;;
+esac
+
+VALUE=$(grep "$1" /tmp/iostat-$USER | awk "{print ${AWK_ARG}}")
+
+COLOR="#7f9f7f"
+if [[ $(bc <<<"$VALUE > 10") -eq 1 ]]
+then
+    COLOR="#dca3a3"
+elif [[ $(bc <<<"$VALUE > 5") -eq 1 ]]
+then
+    COLOR="#c3bf9f"
+fi
+
+echo $VALUE $SUFFIX
+echo
+echo $COLOR

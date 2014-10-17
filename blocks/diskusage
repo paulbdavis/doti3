@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+[[ -z "$1" ]] && echo "No disk specified"
+
+DFLINE="$(df -h "$1" | tail -1)"
+SIZE="$(echo "$DFLINE" | awk '{print $2}')"
+USED="$(echo "$DFLINE" | awk '{print $3}')"
+PERCENT="$(echo "$DFLINE" | awk '{print $5}')"
+
+COLOR="#7f9f7f"
+if [[ ${PERCENT%%%} -gt 85 ]]
+then
+    COLOR="#dca3a3"
+elif [[ ${PERCENT%%%} -gt 75 ]]
+then
+    COLOR="#c3bf9f"
+fi
+
+echo "$USED/$SIZE"
+echo
+echo $COLOR

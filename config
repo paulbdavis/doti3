@@ -314,7 +314,7 @@ client.unfocused            $bg_grey $bg_grey $fg $bg_grey
 client.urgent               $red $red $fg $dk_grey
 
 bar {
-    status_command $confDir/conky/init bottom
+    status_command i3blocks -c $confDir/blocks/bottom.conf
     font $font
     font $pangoFont
     binding_mode_indicator no
@@ -330,7 +330,7 @@ bar {
 }
 
 bar {
-    status_command $confDir/conky/init top
+    status_command i3blocks -c $confDir/blocks/top.conf
     font $font
     font $pangoFont
     position top
