@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cacheFile="$HOME/.externalip"
+cacheFile="/tmp/externalip-$USER"
 
 if [[ "$1" = "-r" ]]
 then
@@ -22,7 +22,7 @@ fi
 cachedIp=$(cat $cacheFile)
 if [[ -z "$cachedIp" ]] || [[ "$1" == "-f" ]]
 then
-    externalIp=$(curl -s ifconfig.me)
+    externalIp=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 fi
 
 if [[ "$1" == "-f" ]]

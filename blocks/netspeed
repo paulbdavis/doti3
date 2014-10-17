@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+
+IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
+
+if [[ $1 = up ]]
+then
+    RT=tx
+else
+    RT=rx
+fi
+
+
+R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes)
+sleep 1
+R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes)
+RBPS=$(bc <<<"$R2 - $R1")
+RKBPS=$(bc <<<"scale=2; $RBPS / 1024")
+
+echo $RKBPS | sed 's/^\./0./'
