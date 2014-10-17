@@ -13,11 +13,11 @@ case $2 in
         ;;
     "readps")
         AWK_ARG='$3'
-        SUFFIX="mB/s read"
+        SUFFIX="mB/s"
         ;;
     "writeps")
         AWK_ARG='$4'
-        SUFFIX="mB/s write"
+        SUFFIX="mB/s"
         ;;
     "read")
         AWK_ARG='$5'
