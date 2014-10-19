@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 FAIL() {
-    echo "0.0"
+    echo "0.0 b/s"
     exit 33
 }
 
@@ -14,11 +14,33 @@ else
     RT=rx
 fi
 
+REPORT=B
+if [[ -n "$2" ]] && [[ "$2" = "bits" ]]
+then
+    REPORT=b
+fi
 
 R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
 sleep 0.5s
 R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
-RBPS=$(bc <<<"($R2 - $R1)*2")
-RKBPS=$(bc <<<"scale=2; $RBPS / 1024")
+BPS=$(bc <<<"($R2 - $R1)*2")
+if [[ "$REPORT" = "b" ]]
+then
+    BPS=$(bc <<<"($R2 - $R1)*8")
+fi
 
-echo $RKBPS | sed 's/^\./0./'
+SCALE=0
+
+while [[ $(bc <<<"$BPS >= 1024") -eq 1 ]]
+do
+    BPS=$(bc <<<"scale=2; $BPS / 1024")
+    SCALE=$((SCALE+1))
+done
+
+case $SCALE in
+    1) UNIT="K";;
+    2) UNIT="M";;
+    3) UNIT="G";;
+esac
+
+echo $BPS ${UNIT}${REPORT}/s | sed 's/^\./0./'
