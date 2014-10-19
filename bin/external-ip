@@ -25,15 +25,20 @@ then
     externalIp=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 fi
 
-if [[ "$1" == "-f" ]]
+if [[ "$1" != "-f" ]]
 then
-    echo $externalIp
-else
     if [[ -z $cachedIp ]]
     then
         echo $externalIp > $cacheFile
-        echo $externalIp
     else
-        echo $cachedIp
+        externalIp=$cachedIp
     fi
 fi
+
+if [[ -z "$externalIp" ]]
+then
+    echo "0.0.0.0"
+    exit 33
+fi
+
+echo $externalIp

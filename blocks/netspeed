@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+FAIL() {
+    echo "0.0"
+    exit 33
+}
 
 IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 
@@ -11,10 +15,10 @@ else
 fi
 
 
-R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes)
-sleep 1
-R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes)
-RBPS=$(bc <<<"$R2 - $R1")
+R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
+sleep 0.5s
+R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
+RBPS=$(bc <<<"($R2 - $R1)*2")
 RKBPS=$(bc <<<"scale=2; $RBPS / 1024")
 
 echo $RKBPS | sed 's/^\./0./'

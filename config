@@ -315,8 +315,7 @@ client.urgent               $red $red $fg $dk_grey
 
 bar {
     status_command i3blocks -c $confDir/blocks/bottom.conf
-    font $font
-    font $pangoFont
+    font pango:Droid Sans, FontAwesome 8
     binding_mode_indicator no
     colors {
         background $bg_grey
@@ -331,8 +330,7 @@ bar {
 
 bar {
     status_command i3blocks -c $confDir/blocks/top.conf
-    font $font
-    font $pangoFont
+    font pango:Droid Sans, FontAwesome 8
     position top
     workspace_buttons no
     tray_output none

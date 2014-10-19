@@ -2,11 +2,21 @@
 
 INTERFACE="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 
+COLOR="#a9a999"
+CODE=0
 if [[ $(expr $INTERFACE : wpl) -gt 0 ]]
 then
-    TYPE="wireless"
+    TYPE=""
+elif [[ $(expr $INTERFACE : enp) -gt 0 ]]
+then
+    TYPE=""
 else
-    TYPE="ethernet"
+    TYPE=""
+    COLOR="#dca3a3"
+    CODE=33
 fi
 
 echo $TYPE
+echo
+echo $COLOR
+exit $CODE
