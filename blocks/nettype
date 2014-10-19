@@ -4,7 +4,7 @@ INTERFACE="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 
 COLOR="#a9a999"
 CODE=0
-if [[ $(expr $INTERFACE : wpl) -gt 0 ]]
+if [[ $(expr $INTERFACE : wlp) -gt 0 ]]
 then
     TYPE=""
 elif [[ $(expr $INTERFACE : enp) -gt 0 ]]
