@@ -8,7 +8,7 @@ if [[ ${BATTERY%%%} -lt 10 ]]
 then
     COLOR="#dca3a3"
     CODE=33
-elif [[ ${BATTERY%%%} -gt 30 ]]
+elif [[ ${BATTERY%%%} -lt 30 ]]
 then
     COLOR="#c3bf9f"
 fi
