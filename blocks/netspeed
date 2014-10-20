@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 FAIL() {
-    echo "0.0 b/s"
+    echo "0.0 b/s $SYMBOL"
+    echo
+    echo "#a9a999"
     exit 33
 }
 
@@ -10,8 +12,10 @@ IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 if [[ $1 = up ]]
 then
     RT=tx
+    SYMBOL=
 else
     RT=rx
+    SYMBOL=
 fi
 
 REPORT=B
@@ -43,4 +47,6 @@ case $SCALE in
     3) UNIT="G";;
 esac
 
-echo $BPS ${UNIT}${REPORT}/s | sed 's/^\./0./'
+echo $BPS ${UNIT}${REPORT}/s $SYMBOL | sed 's/^\./0./'
+echo
+echo "#a9a999"
