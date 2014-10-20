@@ -22,7 +22,7 @@ set $orange #ffcfaf
 set $yellow #c3bf9f
 set $red #dca3a3
 
-set $font -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 set $pangoFont pango:Droid Sans 8
 set $pangoMono pango:Droid Sans Mono 8
 
@@ -40,7 +40,7 @@ bindsym $mod+Return exec xterm
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn '$font' -nf '$fg' -sb '$blue' -sf '$fg'"
+bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn 'DroidSans-8' -nf '$fg' -sb '$blue' -sf '$fg'"
 
 bindsym $mod+d exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+N exec "python3 $confDir/python/rename.py"

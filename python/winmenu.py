@@ -80,7 +80,7 @@ def win_menu(clients, l=20):
     dmenu = subprocess.Popen([
         '/usr/bin/dmenu','-i',
         '-p', 'window', # prompt
-        '-fn', '-*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*', # font
+        '-fn', 'DroidSans-8',
         '-nb', '#333333', # list bg color
         '-nf', '#dcdccc', # list font color
         '-sb', '#688080', # selection bg color
@@ -103,4 +103,3 @@ if __name__ == '__main__':
         raise SystemExit
     con_id = clients[win_str]['con_id']
     i3.focus(con_id=con_id)
-
