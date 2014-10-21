@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+pattern="NAME\s\?=\s\?"
+kernelVersion=$(uname -r | sed "s/-.*//g")
+
+# strip trailing .0 version, since the git tags on kernel.org do not have them
+kernelVersion=${kernelVersion/%".0"/}
+cacheFile="/tmp/kernelcodename-$USER"
+
+if [ -f "$cacheFile" ]
+then
+    cache=$(cat $cacheFile)
+    cachedVersion=$(expr "$cache" : '\([0-9.]*\)')
+    cachedName=$(expr "$cache" : '.*@\([-A-Za-z ]*\)')
+
+    if [ "$cachedVersion" = "$kernelVersion" ]
+    then
+        kernelCodename="$cachedName"
+    fi
+fi
+
+if [ ! "$kernelCodename" ]
+then
+    url="http://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/plain/Makefile?id=refs/tags/v${kernelVersion}"
+    kernelCodename=$(grep $pattern <<<"$(curl -s "$url")" | sed "s/$pattern//g")
+fi
+
+echo "$kernelVersion@$kernelCodename" > "$cacheFile"
+
+echo "$kernelCodename ($kernelVersion)"
+echo "$kernelVersion"
+echo "#83b3a3"

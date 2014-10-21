@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+VOLUME="$(pulseaudio-ctl | grep "Volume level" | grep -o -E '[0-9]+ ' | tr -d ' ')"
+
+if [[ $VOLUME -gt 60 ]]
+then
+    echo 
+elif [[ $VOLUME -gt 0 ]]
+then
+    echo 
+else
+    echo 
+fi

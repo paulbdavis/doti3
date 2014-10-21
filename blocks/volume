@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+if [[ -n "$BLOCK_BUTTON" ]]
+then
+    case $BLOCK_BUTTON in
+        1) pulseaudio-ctl mute;;
+        4) pulseaudio-ctl up;;
+        5) pulseaudio-ctl down;;
+    esac
+fi
+
+VOLUME="$(pulseaudio-ctl | grep "Volume level" | grep -o -E '[0-9]+ ' | tr -d ' ')"
+MUTED="$(pulseaudio-ctl | grep "Is sink muted" | grep -o -E '(yes|no)' | tr -d ' ')"
+
+if [[ $VOLUME -gt 49 ]]
+then
+    ICON=
+elif [[ $VOLUME -gt 0 ]]
+then
+    ICON=
+else
+    ICON=
+fi
+
+if [[ $MUTED = yes ]]
+then
+    COLOR="#5f5f5f"
+    ICON=
+fi
+
+echo $ICON $VOLUME%
+echo
+echo $COLOR
