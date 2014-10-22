@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-FREEOUT="$(free)"
+FREEOUT="$(free -b)"
 TOTAL="$(echo "$FREEOUT" | grep Mem | awk '{print $2}')"
 USED="$(echo "$FREEOUT" | grep "buffers/cache" | awk '{print $3}')"
 PERCENT=$(bc <<<"scale=0; (100*$USED)/$TOTAL")
-USED=$(bc <<<"scale=2; $USED/1024/1024")
-TOTAL=$(bc <<< "scale=2; $TOTAL/1024/1024")
 
 COLOR="#7f9f7f"
 if [[ ${PERCENT} -gt 85 ]]
@@ -16,6 +14,36 @@ then
     COLOR="#c3bf9f"
 fi
 
-echo "${PERCENT}% ${USED}G/${TOTAL}G"
+SCALE=0
+
+while [[ $(bc <<<"$USED >= 1024") -eq 1 ]]
+do
+    USED=$(bc <<<"scale=2; $USED / 1024")
+    SCALE=$((SCALE+1))
+done
+
+case $SCALE in
+    1) USEDUNIT="K";;
+    2) USEDUNIT="M";;
+    3) USEDUNIT="G";;
+esac
+
+SCALE=0
+
+while [[ $(bc <<<"$TOTAL >= 1024") -eq 1 ]]
+do
+    TOTAL=$(bc <<<"scale=2; $TOTAL / 1024")
+    SCALE=$((SCALE+1))
+done
+
+case $SCALE in
+    1) TOTALUNIT="K";;
+    2) TOTALUNIT="M";;
+    3) TOTALUNIT="G";;
+esac
+
+
+
+echo "${PERCENT}% ${USED}${USEDUNIT}B/${TOTAL}${TOTALUNIT}B"
 echo
 echo $COLOR
