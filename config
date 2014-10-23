@@ -42,7 +42,7 @@ bindsym $mod+Shift+Q kill
 # start dmenu (a program launcher)
 bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn 'Ubuntu-8' -nf '$fg' -sb '$blue' -sf '$fg'"
 
-bindsym $mod+d exec "python3 $confDir/python/winmenu.py"
+bindsym $mod+a exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+N exec "python3 $confDir/python/rename.py"
 
 bindsym $mod+Ctrl+L exec "$confDir/bin/lock"
@@ -139,7 +139,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Control+space floating toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+p focus parent
 
 # focus the child container
 #bindcode $mod+d focus child
