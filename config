@@ -23,8 +23,8 @@ set $yellow #c3bf9f
 set $red #dca3a3
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
-set $pangoFont pango:Droid Sans 8
-set $pangoMono pango:Droid Sans Mono 8
+set $pangoFont pango:Ubuntu 8
+set $pangoMono pango:Ubuntu Mono 8
 
 # font for window titles. ISO 10646 = Unicode
 font $pangoFont
@@ -40,7 +40,7 @@ bindsym $mod+Return exec xterm
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn 'DroidSans-8' -nf '$fg' -sb '$blue' -sf '$fg'"
+bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn 'Ubuntu-8' -nf '$fg' -sb '$blue' -sf '$fg'"
 
 bindsym $mod+d exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+N exec "python3 $confDir/python/rename.py"
@@ -315,7 +315,7 @@ client.urgent               $red $red $fg $dk_grey
 
 bar {
     status_command i3blocks -c $confDir/blocks/bottom.conf
-    font pango:Droid Sans, FontAwesome 8
+    font pango:Ubuntu, FontAwesome 8
     binding_mode_indicator no
     colors {
         background $bg_grey
@@ -330,7 +330,7 @@ bar {
 
 bar {
     status_command i3blocks -c $confDir/blocks/top.conf
-    font pango:Droid Sans, FontAwesome 8
+    font pango:Ubuntu, FontAwesome 8
     position top
     workspace_buttons no
     tray_output none

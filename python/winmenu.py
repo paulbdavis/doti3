@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # dmenu script to jump to windows in i3.
 # Makes a list of nicely formatted strings for each open window, containing
 # workspace name, mark (if any), window title, and instance (would the previous
@@ -15,6 +15,7 @@
 
 import i3
 import subprocess
+import re
 
 def i3clients():
     """
@@ -23,12 +24,16 @@ def i3clients():
     "[workspace] mark window title (instance number)."
     """
     clients = {}
-    lengths = {'workspace': 0, 'mark': 0}
+    lengths = {'name': 0, 'workspace': 0, 'mark': 0}
     tree = i3.get_tree()
     for ws in i3.get_workspaces():
-        wsname = ws['name']
+        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 ]+)')
+        wsreres = wsre.match(ws['name'])
+        wsnum = wsreres.group(1)
+        wsname = wsreres.group(2)
         if len(wsname) > lengths['workspace']:
             lengths['workspace'] = len(wsname)
+        wsname = ws['name']
         workspace = i3.filter(tree, name=wsname)
         if not workspace:
             continue
@@ -51,6 +56,8 @@ def i3clients():
                 instances[window['name']] += 1
             else:
                 instances[window['name']]  = 1
+            if len(window['name']) > lengths['name']:
+                lengths['name'] = len(window['name'])
             windowdict['instance'] = instances[window['name']]
             # win_str = '[%s] %s' % (workspace['name'], window['name'])
             clients[window['id']] = windowdict
@@ -63,10 +70,17 @@ def i3clients():
     for con_id in clientlist:
         wslen = lengths['workspace']
         mlen = lengths['mark']
-        win_str = u'[ {k:<{v}}] {l:<{w}} {m} ({n})'.format(\
-                k=clients[con_id]['ws'], v=wslen + 1, \
+        nlen = lengths['name']
+        print(con_id)
+        print(clients[con_id])
+        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 ]+)')
+        wsreres = wsre.match(clients[con_id]['ws'])
+        wsnum = wsreres.group(1)
+        wsname = wsreres.group(2)
+        win_str = u'{wsn}: {m:<{nl}}[{k:<{v}}] {l:<{w}} ({n})'.format(\
+                m=clients[con_id]['name'], nl=nlen + 1, \
+                k=wsname, wsn=wsnum, v=wslen, \
                 l=clients[con_id]['mark'], w=mlen + 1, \
-                m=clients[con_id]['name'], \
                 n=clients[con_id]['instance'])
         clients[win_str] = clients[con_id]
         del clients[con_id]
@@ -80,7 +94,7 @@ def win_menu(clients, l=20):
     dmenu = subprocess.Popen([
         '/usr/bin/dmenu','-i',
         '-p', 'window', # prompt
-        '-fn', 'DroidSans-8',
+        '-fn', 'UbuntuMono-10',
         '-nb', '#333333', # list bg color
         '-nf', '#dcdccc', # list font color
         '-sb', '#688080', # selection bg color
