@@ -27,7 +27,7 @@ def i3clients():
     lengths = {'name': 0, 'workspace': 0, 'mark': 0}
     tree = i3.get_tree()
     for ws in i3.get_workspaces():
-        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 ]+)')
+        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 -]+)')
         wsreres = wsre.match(ws['name'])
         wsnum = wsreres.group(1)
         wsname = wsreres.group(2)
@@ -73,7 +73,7 @@ def i3clients():
         nlen = lengths['name']
         print(con_id)
         print(clients[con_id])
-        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 ]+)')
+        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 -]+)')
         wsreres = wsre.match(clients[con_id]['ws'])
         wsnum = wsreres.group(1)
         wsname = wsreres.group(2)
