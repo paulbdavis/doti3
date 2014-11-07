@@ -15,3 +15,7 @@ fi
 eval $(cat $sshinf)
 eval $(cut -d= -f1 $sshinf | xargs echo export)
 
+if [[ -n "$(which systemctl)" ]]
+then
+    systemctl --user import-environment DISPLAY
+fi
