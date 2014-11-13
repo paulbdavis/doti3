@@ -1,6 +1,28 @@
 #!/usr/bin/env bash
 
-CPUPERC=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+CPU=($(sed -n 's/^cpu\s//p' /proc/stat))
+IDLE=${CPU[3]}
+TOTAL=0
+for VAL in "${CPU[@]}"
+do
+    TOTAL=$(bc <<<"$TOTAL + $VAL")
+done
+
+sleep 1
+
+CPU2=($(sed -n 's/^cpu\s//p' /proc/stat))
+IDLE2=${CPU2[3]}
+TOTAL2=0
+for VAL in "${CPU2[@]}"
+do
+    TOTAL2=$(bc <<<"$TOTAL2 + $VAL")
+done
+
+DIFF_IDLE=$(bc <<<"$IDLE2 - $IDLE")
+DIFF_TOTAL=$(bc <<<"$TOTAL2 - $TOTAL")
+
+CPUPERC=$(bc <<<"(1000*($DIFF_TOTAL-$DIFF_IDLE)/$DIFF_TOTAL+5)/10")
+
 
 COLOR="#7f9f7f"
 if [[ $(bc <<<"$CPUPERC > 80") -eq 1 ]]

@@ -2,7 +2,7 @@
 
 FREEOUT="$(free -b)"
 TOTAL="$(echo "$FREEOUT" | grep Mem | awk '{print $2}')"
-USED="$(echo "$FREEOUT" | grep "buffers/cache" | awk '{print $3}')"
+USED="$(echo "$FREEOUT" | grep Mem | awk '{print $3}')"
 PERCENT=$(bc <<<"scale=0; (100*$USED)/$TOTAL")
 
 COLOR="#7f9f7f"
