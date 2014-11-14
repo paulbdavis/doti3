@@ -1,21 +1,7 @@
 
-gnupginf="/tmp/gpg-agent-info-${USER}"
-sshinf="/tmp/ssh-agent-info-${USER}"
-
-if pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-    eval $(cat $gnupginf)
-    eval $(cut -d= -f1 $gnupginf | xargs echo export)
-else
-    eval $(gpg-agent -s --daemon --write-env-file "$gnupginf")
-fi
-
-if ! pgrep -x -u "${USER}" ssh-agent >/dev/null 2>&1; then
-    ssh-agent > $sshinf
-fi
-eval $(cat $sshinf)
-eval $(cut -d= -f1 $sshinf | xargs echo export)
-
 if [[ -n "$(which systemctl)" ]]
 then
     systemctl --user import-environment DISPLAY
 fi
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh_auth_sock
