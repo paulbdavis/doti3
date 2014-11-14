@@ -1,7 +1,8 @@
 
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh_auth_sock
+
 if [[ -n "$(which systemctl)" ]]
 then
     systemctl --user import-environment DISPLAY
+    systemctl --user import-environment SSH_AUTH_SOCK
 fi
-
-export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh_auth_sock
