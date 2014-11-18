@@ -6,3 +6,13 @@ then
     systemctl --user import-environment DISPLAY
     systemctl --user import-environment SSH_AUTH_SOCK
 fi
+
+if [ "${PATH%%:*}" != "$HOME/bin" ]
+then
+    if [ -d "$HOME/bin" ]
+    then
+        PATH="$HOME/bin:$PATH"
+    fi
+fi
+
+compton&
