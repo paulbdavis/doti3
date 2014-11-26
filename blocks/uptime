@@ -4,9 +4,9 @@ UPSTRING="$(uptime -p)"
 
 echo $UPSTRING | sed -r \
     -e 's/up//' \
-    -e 's/ weeks?,/w/' \
-    -e 's/ days?,/d/' \
-    -e 's/ hours,/h/' \
+    -e 's/ weeks?,?/w/' \
+    -e 's/ days?,?/d/' \
+    -e 's/ hours?,?/h/' \
     -e 's/ minutes?,?/m/' \
     -e 's/ seconds?,?/s/'
 echo
