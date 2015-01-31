@@ -1,14 +1,14 @@
 #!/usr/bin/python2
 
 # This script opens a dmenu and lets you type a new name for the
-# current workspace. The naming is done like "x: name", where x is 
+# current workspace. The naming is done like "x: name", where x is
 # the workspace number.
 #
-# Author: Jan Oliver Oelerich 
+# Author: Jan Oliver Oelerich
 
 import i3
 import subprocess
-
+from os.path import expanduser
 def get_workspace():
     workspaces = i3.get_workspaces()
     for workspace in workspaces:
@@ -17,14 +17,11 @@ def get_workspace():
     return None
 
 def dmenu_prompt(num):
+    script = expanduser('~/.config/i3/bin/make-menu')
     dmenu = subprocess.Popen([
-        '/usr/bin/dmenu','-i',
+        script, '-m',
         '-p', 'Type new workspace name: {0}:'.format(num), # prompt
-        '-fn', '-*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*', # font
-        '-nb', '#333333', # list bg color
-        '-nf', '#dcdccc', # list font color
-        '-sb', '#688080', # selection bg color
-        '-sf', '#dcdccc' # selection font color
+        '-f', 'Ubuntu-12'
         ],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+DMENU=$(which dmenu)
+PROMPT="?"
+FONT='Ubuntu-10'
+LINES=5
+
+BG="#1c1c1c"
+FG="#dcdccc"
+SELECTEDBG="#688080"
+SELECTEDFG="#1c1c1c"
+
+while getopts ":rp:f:ml:" opt
+do
+    case $opt in
+        r) DMENU=$(which dmenu_run);;
+        p) PROMPT="$OPTARG";;
+        f) FONT="$OPTARG";;
+        m) SELECTEDBG="$BG"
+           SELECTEDFG="$FG";; # match colors
+        l) LINES="$OPTARG";;
+        \?) "Invalid option -$OPTARG";;
+        :) "-$OPTARG requires an argument"
+    esac
+done
+
+$DMENU -i -z -l "$LINES" \
+       -nb "$BG" -nf "$FG" \
+       -sb "$SELECTEDBG" -sf "$SELECTEDFG" \
+       -p "$PROMPT" -fn "$FONT"

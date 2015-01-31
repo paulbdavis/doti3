@@ -40,7 +40,7 @@ bindsym $mod+Return exec xterm
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+r exec "dmenu_run -i -p 'What the fuck do you want?' -l 5 -nb '$bg_grey' -fn 'Ubuntu-8' -nf '$fg' -sb '$blue' -sf '$fg'"
+bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want?'"
 
 bindsym $mod+a exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+N exec "python3 $confDir/python/rename.py"
@@ -144,76 +144,40 @@ bindsym $mod+p focus parent
 # focus the child container
 #bindcode $mod+d focus child
 
-
-# workspace variables
-set $ws5 5
-set $ws6 6
-set $ws8 8
-set $ws12 12
-set $ws13 13
-set $ws14 14
-set $ws15 15
-set $ws16 16
-set $ws17 17
-set $ws18 18
-set $ws19 19
-set $ws20 20
-
 # clients to specificv workspaces
-assign [class="^Google-chrome" instance="^crx.*"] "7: chat"
 assign [class="^Google-chrome"] "4: www"
-assign [class="^jetbrains.*"] "3: dev"
-assign [class="^XTerm" instance="irssi"] "7: chat"
-assign [class="^XTerm" instance="xmpp"] "7: chat"
-assign [title="^Bitmessage"] "7: chat"
-assign [class="^Pidgin"] "7: chat"
-assign [class="^Mumble"] "7: chat"
-assign [class="^XTerm" instance="email"] "10: email"
-assign [class="^XTerm" instance="music"] "9: music"
+assign [class="^Firefox"] "4: www"
 
-for_window [class="^Google-chrome" instance="^crx.*"] border normal
+for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
 for_window [class="^feh"] floating enable
 for_window [class="^Pidgin"] border normal
 for_window [class="^VirtualBox"] floating enable
-for_window [class="^XTerm" instance="mixer"] move scratchpad
 
 new_window pixel 2
 new_float pixel 2
 hide_edge_borders none
 
 # switch to workspace
-bindsym $mod+1 exec "python3 $confDir/python/changetonumber.py 1"
-bindsym $mod+2 exec "python3 $confDir/python/changetonumber.py 2"
-bindsym $mod+3 exec "python3 $confDir/python/changetonumber.py 3"
-bindsym $mod+4 exec "python3 $confDir/python/changetonumber.py 4"
-bindsym $mod+5 exec "python3 $confDir/python/changetonumber.py 5"
-bindsym $mod+6 exec "python3 $confDir/python/changetonumber.py 6"
-bindsym $mod+7 exec "python3 $confDir/python/changetonumber.py 7"
-bindsym $mod+8 exec "python3 $confDir/python/changetonumber.py 8"
-bindsym $mod+9 exec "python3 $confDir/python/changetonumber.py 9"
-bindsym $mod+0 exec "python3 $confDir/python/changetonumber.py 10"
-bindsym $mod+Control+1 exec "python3 $confDir/python/changetonumber.py 11"
-bindsym $mod+Control+2 exec "python3 $confDir/python/changetonumber.py 12"
-bindsym $mod+Control+3 exec "python3 $confDir/python/changetonumber.py 13"
-bindsym $mod+Control+4 exec "python3 $confDir/python/changetonumber.py 14"
-bindsym $mod+Control+5 exec "python3 $confDir/python/changetonumber.py 15"
-bindsym $mod+Control+6 exec "python3 $confDir/python/changetonumber.py 16"
-bindsym $mod+Control+7 exec "python3 $confDir/python/changetonumber.py 17"
-bindsym $mod+Control+8 exec "python3 $confDir/python/changetonumber.py 18"
-bindsym $mod+Control+9 exec "python3 $confDir/python/changetonumber.py 19"
-bindsym $mod+Control+0 exec "python3 $confDir/python/changetonumber.py 20"
-
-
-
-# workspace screen assignment
-workspace "1: www-dev" output VGA1
-workspace "2: term" output VGA1
-workspace "3: dev" output VGA1
-workspace "4: www" output VGA1
-workspace "7: chat" output LVDS1
-workspace "9: music" output LVDS1
-workspace "10: net" output LVDS1
-workspace "11: www-debug" output LVDS1
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+Control+1 workspace number 11
+bindsym $mod+Control+2 workspace number 12
+bindsym $mod+Control+3 workspace number 13
+bindsym $mod+Control+4 workspace number 14
+bindsym $mod+Control+5 workspace number 15
+bindsym $mod+Control+6 workspace number 16
+bindsym $mod+Control+7 workspace number 17
+bindsym $mod+Control+8 workspace number 18
+bindsym $mod+Control+9 workspace number 19
+bindsym $mod+Control+0 workspace number 20
 
 bindsym $mod+period move container to output right; focus output right
 bindsym $mod+comma move container to output left; focus output left
@@ -221,26 +185,26 @@ bindsym $mod+Shift+greater move workspace to output right
 bindsym $mod+Shift+less move workspace to output left
 
 # move focused container to workspace
-bindsym $mod+Shift+exclam exec "python3 $confDir/python/changetonumber.py --move 1"
-bindsym $mod+Shift+at exec "python3 $confDir/python/changetonumber.py --move 2"
-bindsym $mod+Shift+numbersign exec "python3 $confDir/python/changetonumber.py --move 3"
-bindsym $mod+Shift+dollar exec "python3 $confDir/python/changetonumber.py --move 4"
-bindsym $mod+Shift+percent exec "python3 $confDir/python/changetonumber.py --move 5"
-bindsym $mod+Shift+asciicircum exec "python3 $confDir/python/changetonumber.py --move 6"
-bindsym $mod+Shift+ampersand exec "python3 $confDir/python/changetonumber.py --move 7"
-bindsym $mod+Shift+asterisk exec "python3 $confDir/python/changetonumber.py --move 8"
-bindsym $mod+Shift+parenleft exec "python3 $confDir/python/changetonumber.py --move 9"
-bindsym $mod+Shift+parenright exec "python3 $confDir/python/changetonumber.py --move 10"
-bindsym $mod+Control+Shift+exclam exec "python3 $confDir/python/changetonumber.py --move 11"
-bindsym $mod+Control+Shift+at exec "python3 $confDir/python/changetonumber.py --move 12"
-bindsym $mod+Control+Shift+numbersign exec "python3 $confDir/python/changetonumber.py --move 13"
-bindsym $mod+Control+Shift+dollar exec "python3 $confDir/python/changetonumber.py --move 14"
-bindsym $mod+Control+Shift+percent exec "python3 $confDir/python/changetonumber.py --move 15"
-bindsym $mod+Control+Shift+asciicircum exec "python3 $confDir/python/changetonumber.py --move 16"
-bindsym $mod+Control+Shift+ampersand exec "python3 $confDir/python/changetonumber.py --move 17"
-bindsym $mod+Control+Shift+asterisk exec "python3 $confDir/python/changetonumber.py --move 18"
-bindsym $mod+Control+Shift+parenleft exec "python3 $confDir/python/changetonumber.py --move 19"
-bindsym $mod+Control+Shift+parenright exec "python3 $confDir/python/changetonumber.py --move 20"
+bindsym $mod+Shift+exclam              move container to workspace number 1
+bindsym $mod+Shift+at                  move container to workspace number 2
+bindsym $mod+Shift+numbersign          move container to workspace number 3
+bindsym $mod+Shift+dollar              move container to workspace number 4
+bindsym $mod+Shift+percent             move container to workspace number 5
+bindsym $mod+Shift+asciicircum         move container to workspace number 6
+bindsym $mod+Shift+ampersand           move container to workspace number 7
+bindsym $mod+Shift+asterisk            move container to workspace number 8
+bindsym $mod+Shift+parenleft           move container to workspace number 9
+bindsym $mod+Shift+parenright          move container to workspace number 10
+bindsym $mod+Control+Shift+exclam      move container to workspace number 11
+bindsym $mod+Control+Shift+at          move container to workspace number 12
+bindsym $mod+Control+Shift+numbersign  move container to workspace number 13
+bindsym $mod+Control+Shift+dollar      move container to workspace number 14
+bindsym $mod+Control+Shift+percent     move container to workspace number 15
+bindsym $mod+Control+Shift+asciicircum move container to workspace number 16
+bindsym $mod+Control+Shift+ampersand   move container to workspace number 17
+bindsym $mod+Control+Shift+asterisk    move container to workspace number 18
+bindsym $mod+Control+Shift+parenleft   move container to workspace number 19
+bindsym $mod+Control+Shift+parenright  move container to workspace number 20
 
 # reload the configuration file
 bindsym $mod+Shift+C reload
@@ -273,7 +237,7 @@ mode "resize" {
     # same bindings, but for the arrow keys
     bindsym Left resize grow left 5 px or 5 ppt
     bindsym Shift+Left resize shrink   left 5 px or 5 ppt
-
+    f
     bindsym Down resize grow down 5 px or 5 ppt
     bindsym Shift+Down resize shrink   down 5 px or 5 ppt
 
@@ -293,25 +257,25 @@ bindsym $mod+y mode "resize"
 set $screen_connect_mode connect screen: (s) external only, (a) above, (b) below, (l) left, (r) right
 
 mode "$screen_connect_mode" {
-    bindsym s exec --no-startup-id connect-screen -swc, mode "default"
-    bindsym a exec --no-startup-id connect-screen -awc, mode "default"
-    bindsym b exec --no-startup-id connect-screen -bwc, mode "default"
-    bindsym l exec --no-startup-id connect-screen -lwc, mode "default"
-    bindsym r exec --no-startup-id connect-screen -rwc, mode "default"
+    bindsym s exec --no-startup-id connect-screen -sw, mode "default"
+    bindsym a exec --no-startup-id connect-screen -aw, mode "default"
+    bindsym b exec --no-startup-id connect-screen -bw, mode "default"
+    bindsym l exec --no-startup-id connect-screen -lw, mode "default"
+    bindsym r exec --no-startup-id connect-screen -rw, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 # keys for connecting and disconnecting screen
 bindsym $mod+z mode "$screen_connect_mode"
-bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -wc"
+bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
 
 
-# colors                    border  bg      text    indicator
-client.focused              $blue $blue $dk_grey $orange
-client.focused_inactive     $bg_grey $bg_grey $blue $bg_grey
-client.unfocused            $bg_grey $bg_grey $fg $bg_grey
-client.urgent               $red $red $fg $dk_grey
+#colors                 border   bg       text     indicator
+client.focused          $blue    $blue    $dk_grey $orange
+client.focused_inactive $bg_grey $bg_grey $blue    $bg_grey
+client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
+client.urgent           $red     $red     $fg      $dk_grey
 
 bar {
     status_command i3blocks -c $confDir/blocks/bottom.conf

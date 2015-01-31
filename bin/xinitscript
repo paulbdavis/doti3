@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
 
-xset +fp /usr/share/fonts/local
-xset fp rehash
+FONT_DIR=/usr/share/fonts/local
+
+if [[ -d "$FONT_DIR" ]]
+then
+    xset +fp $FONT_DIR
+    xset fp rehash
+fi
 
 xsetroot -solid "#333333"
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-sleep 0
 "$HOME/.config/i3/bin/touchpad-fixes" &
-if [ -n "$(which notify-listener.py 2>/dev/null)" ] || [ -x $HOME/bin/notify-listener.py ]
+
+if [[ -n "$(which notify-listener.py 2>/dev/null)" ]] ||
+       [[ -x $HOME/bin/notify-listener.py ]]
 then
     notify-listener.py &
 fi
 
-if [ -n "$(which dunst 2>/dev/null)" ]
+if [[ -n "$(which dunst 2>/dev/null)" ]]
 then
     dunst &
 fi

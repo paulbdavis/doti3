@@ -1,0 +1,29 @@
+#! /usr/bin/env bash
+
+conkyFlag=0
+wallpaperFlag=0
+
+while getopts 'cw' OPTION
+do
+    case $OPTION in
+        c) conkyFlag=1;;
+        w) wallpaperFlag=1;;
+        ?) echo "Usage: $0 [-cw]";;
+    esac
+done
+
+xrandr --output LVDS1 --mode 1366x768
+xrandr --output VGA1 --off
+
+# if [ $conkyFlag -eq 1 ]
+# then
+#     echo "Restarting conky"
+#     ps ax | grep myconky | awk '{print $1}' | xargs kill
+#     conky -c $HOME/.myconky/main
+# fi
+
+if [ $wallpaperFlag -eq 1 ]
+then
+    echo "Running wallpaper script"
+    $HOME/bin/wallpaper
+fi

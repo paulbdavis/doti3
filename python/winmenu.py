@@ -16,6 +16,7 @@
 import i3
 import subprocess
 import re
+from os.path import expanduser
 
 def i3clients():
     """
@@ -91,14 +92,11 @@ def win_menu(clients, l=20):
     """
     Displays a window menu using dmenu.
     """
+    script = expanduser('~/.config/i3/bin/make-menu')
     dmenu = subprocess.Popen([
-        '/usr/bin/dmenu','-i',
+        script,
         '-p', 'window', # prompt
-        '-fn', 'UbuntuMono-10',
-        '-nb', '#333333', # list bg color
-        '-nf', '#dcdccc', # list font color
-        '-sb', '#688080', # selection bg color
-        '-sf', '#dcdccc', # selection font color
+        '-f', 'UbuntuMono-10',
         '-l', str(l)],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE)
