@@ -237,7 +237,7 @@ mode "resize" {
     # same bindings, but for the arrow keys
     bindsym Left resize grow left 5 px or 5 ppt
     bindsym Shift+Left resize shrink   left 5 px or 5 ppt
-    f
+
     bindsym Down resize grow down 5 px or 5 ppt
     bindsym Shift+Down resize shrink   down 5 px or 5 ppt
 

@@ -24,7 +24,7 @@ do
     esac
 done
 
-$DMENU -i -z -l "$LINES" \
+$DMENU -i -l "$LINES" \
        -nb "$BG" -nf "$FG" \
        -sb "$SELECTEDBG" -sf "$SELECTEDFG" \
        -p "$PROMPT" -fn "$FONT"
