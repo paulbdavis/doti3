@@ -145,8 +145,8 @@ bindsym $mod+p focus parent
 #bindcode $mod+d focus child
 
 # clients to specificv workspaces
-assign [class="^Google-chrome"] "4: www"
-assign [class="^Firefox"] "4: www"
+for_window [class="^Google-chrome"] move workspace number 4
+for_window [class="^Firefox"] move workspace number 4
 
 for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
 for_window [class="^feh"] floating enable
