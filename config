@@ -34,7 +34,7 @@ floating_modifier $mod
 
 workspace_auto_back_and_forth no
 # start a terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec "TERMINAL=termite i3-sensible-terminal"
 
 # kill focused window
 bindsym $mod+Shift+Q kill
