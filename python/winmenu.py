@@ -28,10 +28,12 @@ def i3clients():
     lengths = {'name': 0, 'workspace': 0, 'mark': 0}
     tree = i3.get_tree()
     for ws in i3.get_workspaces():
-        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 -]+)')
+        wsre = re.compile(r'([0-9]+):? ?([a-zA-Z0-9 -]+)?')
         wsreres = wsre.match(ws['name'])
         wsnum = wsreres.group(1)
         wsname = wsreres.group(2)
+        if not wsname:
+            wsname = wsnum
         if len(wsname) > lengths['workspace']:
             lengths['workspace'] = len(wsname)
         wsname = ws['name']
@@ -72,17 +74,20 @@ def i3clients():
         wslen = lengths['workspace']
         mlen = lengths['mark']
         nlen = lengths['name']
-        print(con_id)
-        print(clients[con_id])
-        wsre = re.compile(r'([0-9]+): ([a-zA-Z0-9 -]+)')
+        wsre = re.compile(r'([0-9]+):? ?([a-zA-Z0-9 -]+)?')
         wsreres = wsre.match(clients[con_id]['ws'])
         wsnum = wsreres.group(1)
         wsname = wsreres.group(2)
-        win_str = u'{wsn}: {m:<{nl}}[{k:<{v}}] {l:<{w}} ({n})'.format(\
-                m=clients[con_id]['name'], nl=nlen + 1, \
-                k=wsname, wsn=wsnum, v=wslen, \
-                l=clients[con_id]['mark'], w=mlen + 1, \
-                n=clients[con_id]['instance'])
+        if not wsname:
+            wsnum = wsname
+        client=clients[con_id]
+        print(client)
+        win_str = u'{wsn}: {m:<{nl}}[{k:<{v}}] {l:<{w}} ({n})'\
+            .format(m=client['name'], nl=nlen + 1, \
+                    k=wsname, wsn=wsnum, v=wslen, \
+                    l=client['mark'], w=mlen + 1, \
+                    n=str(client['instance']))
+
         clients[win_str] = clients[con_id]
         del clients[con_id]
     return clients
