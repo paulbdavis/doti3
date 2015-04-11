@@ -93,7 +93,8 @@ bindsym $mod+Shift+Right move right
 
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
-bindsym $mod+o focus output right
+bindsym $mod+o exec "$confDir/bin/i3-next-output"
+bindsym $mod+Shift+o exec "$confDir/bin/i3-previous-output"
 
 
 bindsym $mod+Shift+M mark "scratchterm", move scratchpad
@@ -182,10 +183,10 @@ bindsym $mod+Control+8 workspace number 18
 bindsym $mod+Control+9 workspace number 19
 bindsym $mod+Control+0 workspace number 20
 
-bindsym $mod+period move container to output right; focus output right
-bindsym $mod+comma move container to output left; focus output left
-bindsym $mod+Shift+greater move workspace to output right
-bindsym $mod+Shift+less move workspace to output left
+bindsym $mod+period exec "$confDir/bin/i3-move-container-next-output"
+bindsym $mod+comma exec "$confDir/bin/i3-move-container-previous-output"
+bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
+bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam              move container to workspace number 1
@@ -272,7 +273,6 @@ mode "$screen_connect_mode" {
 # keys for connecting and disconnecting screen
 bindsym $mod+z mode "$screen_connect_mode"
 bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
-
 
 #colors                 border   bg       text     indicator
 client.focused          $blue    $blue    $dk_grey $orange
