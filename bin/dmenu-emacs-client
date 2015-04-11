@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+SERVERS="$(ps aux | grep emacs | grep -e '--daemon=' | sed -r 's/.*--daemon=([^ ]+).*/\1/')"
+
+SERVER="$(echo -e "_default $SERVERS" | tr ' ' '\n' | $HOME/.config/i3/bin/make-menu )"
+
+echo $SERVER
+
+if [[ -z "$SERVER" ]]
+then
+    exit
+elif [[ "$SERVER" == "_default" ]]
+then
+    # if _default, attempt to connect to the default server
+    emacsclient -a '' -c $*
+else
+    if [[ "${SERVERS//$SERVER/}" == "$SERVERS" ]]
+    then
+        # there is not a server with this name running, start one
+        emacs --daemon="$SERVER"
+    fi
+
+    # connect an emacs client to the server
+    emacsclient --server-file="$SERVER" -c $*
+fi
