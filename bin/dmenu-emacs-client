@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SERVERS="$(ps aux | grep emacs | grep -e '--daemon=' | sed -r 's/.*--daemon=([^ ]+).*/\1/')"
+SERVERS="$(ps aux | grep $USER.*emacs | grep -e '--daemon=' | sed -r 's/.*--daemon=([^ ]+).*/\1/')"
 
 SERVER="$(echo -e "_default $SERVERS" | tr ' ' '\n' | $HOME/.config/i3/bin/make-menu -p "emacs server" -l 0)"
 
