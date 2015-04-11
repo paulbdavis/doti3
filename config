@@ -36,7 +36,7 @@ workspace_auto_back_and_forth no
 # start a terminal
 bindsym $mod+Return exec "TERMINAL=termite i3-sensible-terminal"
 # start an emacs client
-bindsym $mod+Shift+Return exec "emacsclient -c"
+bindsym $mod+Shift+Return exec "emacsclient -a '' -c"
 bindsym $mod+Shift+Ctrl+Return exec "emacs -q -l $HOME/.emacs.d/light.el"
 
 # kill focused window
