@@ -14,13 +14,15 @@ set $confDir ~/.config/i3
 
 # zenburn colors
 set $bg_grey #333333
+set $lt_grey #777777
 set $fg #dcdccc
 set $dk_grey #1c1c1c
-set $blue #688080
+set $blue #6ca0a3
+set $blue_1 #4c7073
 set $green #7f9f7f
-set $orange #ffcfaf
-set $yellow #c3bf9f
-set $red #dca3a3
+set $orange #dfaf8f
+set $yellow #f0dfaf
+set $red #cc9393
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 set $pangoFont pango:Ubuntu 8
@@ -276,7 +278,7 @@ bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
 
 #colors                 border   bg       text     indicator
 client.focused          $blue    $blue    $dk_grey $orange
-client.focused_inactive $bg_grey $bg_grey $blue    $bg_grey
+client.focused_inactive $blue_1  $blue_1  $dk_grey $orange
 client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
 client.urgent           $red     $red     $fg      $dk_grey
 
@@ -288,9 +290,9 @@ bar {
         background $bg_grey
         statusline $fg
 
-        focused_workspace  $blue $dk_grey $blue
-        active_workspace   $orange $dk_grey $orange
-        inactive_workspace $bg_grey $bg_grey $fg
+focused_workspace  $blue $lt_grey $dk_grey
+active_workspace   $blue $dk_grey $blue
+        inactive_workspace $blue_1 $dk_grey $lt_grey
         urgent_workspace   $red $dk_grey $red
     }
 }
