@@ -25,9 +25,9 @@ then
 fi
 
 R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
-sleep 0.5s
+sleep 1s
 R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
-BPS=$(bc <<<"($R2 - $R1)*2")
+BPS=$(bc <<<"($R2 - $R1)")
 if [[ "$REPORT" = "b" ]]
 then
     BPS=$(bc <<<"($R2 - $R1)*8")
