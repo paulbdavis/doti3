@@ -14,6 +14,7 @@ set $confDir ~/.config/i3
 
 # zenburn colors
 set $bg_grey #333333
+set $md_grey #555555
 set $lt_grey #777777
 set $fg #dcdccc
 set $dk_grey #1c1c1c
@@ -278,7 +279,7 @@ bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
 
 #colors                 border   bg       text     indicator
 client.focused          $blue    $blue    $dk_grey $orange
-client.focused_inactive $blue_1  $blue_1  $dk_grey $orange
+client.focused_inactive $md_grey $md_grey $dk_grey $orange
 client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
 client.urgent           $red     $red     $fg      $dk_grey
 
@@ -290,8 +291,8 @@ bar {
         background $bg_grey
         statusline $fg
 
-focused_workspace  $blue $lt_grey $dk_grey
-active_workspace   $blue $dk_grey $blue
+        focused_workspace  $blue $lt_grey $dk_grey
+        active_workspace   $blue $dk_grey $blue
         inactive_workspace $blue_1 $dk_grey $lt_grey
         urgent_workspace   $red $dk_grey $red
     }
