@@ -17,6 +17,6 @@ then
     COLOR="#c3bf9f"
 fi
 
-echo "$count"
+echo "$count pending"
 echo
 echo "$COLOR"
