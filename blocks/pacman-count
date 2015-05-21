@@ -1,0 +1,28 @@
+#!/bin/bash
+# Arch upgradeable packages
+
+list=`pacman -Sup 2> /dev/null | sed 1d`
+
+if [ "$list" == "" ]; then
+    count=0
+else
+    count=`echo "$list" | wc -l`
+fi
+
+for pkg in $list; do
+    echo -n "  "
+    echo $pkg | sed -e 's#.*/##g' -e 's%(.*).pkg.*$%1%'
+done
+
+COLOR="#7f9f7f"
+if [[ $count -gt 50 ]]
+then
+    COLOR="#dca3a3"
+elif [[ $count -gt 10 ]]
+then
+    COLOR="#c3bf9f"
+fi
+
+echo "$count"
+echo
+echo "$COLOR"
