@@ -278,6 +278,7 @@ mode "tmux" {
      bindsym --release $mod+v exec xdotool key --clearmodifiers ctrl+a quotedbl
      bindsym --release $mod+b exec xdotool key --clearmodifiers ctrl+a percent
      bindsym --release $mod+shift+q exec xdotool key --clearmodifiers ctrl+a x
+     bindsym --release $mod+n exec xdotool key --clearmodifiers ctrl+a c
 
      bindsym --release $mod+f exec xdotool key --clearmodifiers ctrl+a z
 
