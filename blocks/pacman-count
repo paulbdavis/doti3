@@ -1,13 +1,7 @@
 #!/bin/bash
 # Arch upgradeable packages
 
-list=`pacman -Sup 2> /dev/null | sed 1d`
-
-if [ "$list" == "" ]; then
-    count=0
-else
-    count=`echo "$list" | wc -l`
-fi
+count=$(pacman -Sup 2> /dev/null | sed 1d | wc -l)
 
 for pkg in $list; do
     echo -n "  "
