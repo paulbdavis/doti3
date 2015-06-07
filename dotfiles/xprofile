@@ -1,5 +1,5 @@
 
-export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh_auth_sock
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 
 if which systemctl
 then

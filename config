@@ -349,3 +349,4 @@ bar {
 
 exec "$confDir/bin/connect-screen -sw"
 exec "$confDir/bin/xinitscript"
+exec "gpg-connect-agent <<<UPDATESTARTUPTTY"
