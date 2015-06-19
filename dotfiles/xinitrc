@@ -7,5 +7,22 @@ then
     unset f
 fi
 
+if which systemctl
+then
+    systemctl --user set-environment DISPLAY=$DISPLAY
+    systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+fi
+
+
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+
+if [ "${PATH%%:*}" != "$HOME/bin" ]
+then
+    if [ -d "$HOME/bin" ]
+    then
+        PATH="$HOME/bin:$PATH"
+    fi
+fi
+
 exec i3
 

@@ -3,8 +3,8 @@ export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 
 if which systemctl
 then
-    systemctl --user import-environment DISPLAY
-    systemctl --user import-environment SSH_AUTH_SOCK
+    systemctl --user set-environment DISPLAY=$DISPLAY
+    systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK
 fi
 
 if [ "${PATH%%:*}" != "$HOME/bin" ]
