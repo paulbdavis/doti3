@@ -49,7 +49,10 @@ bindsym $mod+Shift+Q kill
 bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want?'"
 
 bindsym $mod+a exec "python3 $confDir/python/winmenu.py"
-bindsym $mod+semicolon exec "python3 $confDir/python/rename.py"
+bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
+
+bindsym $mod+Shift+b border normal
+bindsym $mod+Shift+Ctrl+b border pixel 2
 
 bindsym $mod+Ctrl+L exec "$confDir/bin/lock"
 
