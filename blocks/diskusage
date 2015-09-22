@@ -22,7 +22,7 @@ do
     then
         color="#c3bf9f"
     fi
-    output="$output <span color='$color'>$disk: $used/$size</span> "
+    output="$output <span color='#a9a999'>$disk @</span> $part <span color='$color'>$used/$size</span> "
 done
 
 
