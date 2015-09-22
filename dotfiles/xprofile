@@ -1,10 +1,12 @@
 
 export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+export GPG_TTY=$(tty)
 
 if which systemctl
 then
     systemctl --user set-environment DISPLAY=$DISPLAY
     systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+    systemctl --user set-environment GPG_TTY=$GPG_TTY
 fi
 
 compton&
