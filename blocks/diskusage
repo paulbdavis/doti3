@@ -1,21 +1,30 @@
 #!/usr/bin/env bash
 
-[[ -z "$1" ]] && echo "No disk specified"
+partitions=$(lsblk | awk '{print $1":"$7}' | sed -e 1d -e 's/^[^a-zA-Z0-9]\+//' -e '/:$/d' -e '/SWAP/d')
 
-DFLINE="$(df -h "$1" | tail -1)"
-SIZE="$(echo "$DFLINE" | awk '{print $2}')"
-USED="$(echo "$DFLINE" | awk '{print $3}')"
-PERCENT="$(echo "$DFLINE" | awk '{print $5}')"
+output=""
 
-COLOR="#7f9f7f"
-if [[ ${PERCENT%%%} -gt 85 ]]
-then
-    COLOR="#dca3a3"
-elif [[ ${PERCENT%%%} -gt 75 ]]
-then
-    COLOR="#c3bf9f"
-fi
+for dp in $partitions
+do
+    disk="${dp%:*}"
+    part="${dp##*:}"
+    dfline="$(df -h "$part" | tail -1)"
+    size="$(echo "$dfline" | awk '{print $2}')"
+    used="$(echo "$dfline" | awk '{print $3}')"
+    percent="$(echo "$dfline" | awk '{print $5}')"
 
-echo "$USED/$SIZE"
-echo
-echo $COLOR
+    #a9a999
+    color="#7f9f7f"
+    if [[ ${percent%%%} -gt 85 ]]
+    then
+        color="#dca3a3"
+    elif [[ ${percent%%%} -gt 75 ]]
+    then
+        color="#c3bf9f"
+    fi
+    output="$output <span color='$color'>$disk: $used/$size</span> "
+done
+
+
+
+echo "$output"
