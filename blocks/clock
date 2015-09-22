@@ -3,8 +3,7 @@
 CODE=0
 
 LOCALTIME="$( date "+ %l:%M %P %Z" )"
-GMTTIME="$( date -u "+%l:%M %P %Z" )"
 
-echo "$LOCALTIME ($GMTTIME)"
+echo "$LOCALTIME"
 
 exit $CODE

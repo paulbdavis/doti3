@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+declare -a tzs
+tzs=( "GMT" "Asia/Hong_Kong" "US/Mountain" "Europe/Berlin" )
+
+current=$(cat /tmp/$USER-worldclock)
+
+[[ -z "$current" ]] || [[ "$current" -ge "${#tzs[@]}" ]] && current=0
+
+
+# echo '(<span color="#dcdccc">'$(TZ=${tzs[$current]} date "+%Y.%m.%d %l:%M %P")'</span>' '<span color="#a9a999">'${tzs[$current]}'</span>)'
+echo '<span color="#a9a999">'$(TZ=${tzs[$current]} date "+%Y.%m.%d %H:%M %Z %z")'</span>'
+
+echo $[ $current + 1 ] > /tmp/$USER-worldclock
