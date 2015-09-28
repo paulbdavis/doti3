@@ -105,6 +105,8 @@ bindsym $mod+Shift+o exec "$confDir/bin/i3-previous-output"
 
 bindsym $mod+Shift+M mark "scratchterm", move scratchpad
 bindsym $mod+m [con_mark="scratchterm"] scratchpad show
+bindsym $mod+Shift+C mark "scratchchat", move scratchpad
+bindsym $mod+c [con_mark="scratchchat"] scratchpad show
 bindsym $mod+Shift+N mark "scratchemacs", move scratchpad
 bindsym $mod+n [con_mark="scratchemacs"] scratchpad show
 bindsym $mod+Shift+F1 mark "scratch1", move scratchpad
@@ -220,7 +222,7 @@ bindsym $mod+Control+Shift+parenleft   move container to workspace number 19
 bindsym $mod+Control+Shift+parenright  move container to workspace number 20
 
 # reload the configuration file
-bindsym $mod+Shift+C reload
+bindsym $mod+Control+Shift+R reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
