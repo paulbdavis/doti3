@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-partitions=$(lsblk -p -r --output NAME,MOUNTPOINT | grep ' /' | sed -e 's~/dev/~~' -e 's/ /:/')
+partitions=$(lsblk -p -r --output NAME,MOUNTPOINT | grep ' /' | sed -e 's~/dev/~~' -e 's/ /:/' | sort -u -r)
 
 output=""
 
