@@ -8,21 +8,22 @@ for dp in $partitions
 do
     disk="${dp%:*}"
     part="${dp##*:}"
-    dfline="$(df -h "$part" | tail -1)"
-    size="$(echo "$dfline" | awk '{print $2}')"
-    used="$(echo "$dfline" | awk '{print $3}')"
-    percent="$(echo "$dfline" | awk '{print $5}')"
-
-    #a9a999
-    color="#7f9f7f"
-    if [[ ${percent%%%} -gt 85 ]]
+    dfline="$(df -h "$part" 2>/dev/null | tail -1)"
+    if [[ -n "$dfline" ]]
     then
-        color="#dca3a3"
-    elif [[ ${percent%%%} -gt 75 ]]
-    then
-        color="#c3bf9f"
+        size="$(echo "$dfline" | awk '{print $2}')"
+        used="$(echo "$dfline" | awk '{print $3}')"
+        percent="$(echo "$dfline" | awk '{print $5}')"
+        color="#7f9f7f"
+        if [[ ${percent%%%} -gt 85 ]]
+        then
+            color="#dca3a3"
+        elif [[ ${percent%%%} -gt 75 ]]
+        then
+            color="#c3bf9f"
+        fi
+        output="${output}<span color='#6c6c6c' size='small'>${disk}</span> ${part} <span color='$color'>${used}/${size}</span> "
     fi
-    output="$output <span color='#5c5c5c' weight='bold' size='smaller'>$disk @</span> $part <span color='$color'>$used/$size</span> "
 done
 
 

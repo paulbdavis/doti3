@@ -12,10 +12,10 @@ IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 if [[ $1 = up ]]
 then
     RT=tx
-    SYMBOL=
+    SYMBOL=
 else
     RT=rx
-    SYMBOL=
+    SYMBOL=
 fi
 
 REPORT=B
