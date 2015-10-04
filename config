@@ -305,20 +305,8 @@ mode "tmux" {
 
 bindsym $mod+t mode "tmux"
 
-set $screen_connect_mode connect screen: (s) external only, (a) above, (b) below, (l) left, (r) right
-
-mode "$screen_connect_mode" {
-    bindsym s exec --no-startup-id connect-screen -sw, mode "default"
-    bindsym a exec --no-startup-id connect-screen -aw, mode "default"
-    bindsym b exec --no-startup-id connect-screen -bw, mode "default"
-    bindsym l exec --no-startup-id connect-screen -lw, mode "default"
-    bindsym r exec --no-startup-id connect-screen -rw, mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 # keys for connecting and disconnecting screen
-bindsym $mod+z mode "$screen_connect_mode"
+bindsym $mod+z exec "$confDir/bin/connect-screen -w"
 bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
 
 #colors                 border   bg       text     indicator
@@ -355,7 +343,6 @@ bar {
     }
 }
 
-exec "$confDir/bin/connect-screen -sw"
 exec "$confDir/bin/xinitscript"
 exec "compton"
 exec "gpg-connect-agent <<<UPDATESTARTUPTTY"

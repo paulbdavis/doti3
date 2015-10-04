@@ -1,26 +1,32 @@
 #! /usr/bin/env bash
 
+menu_cmd="$HOME/.config/i3/bin/make-menu"
+
 conkyFlag=0
 wallpaperFlag=0
 
-while getopts 'cw' OPTION
+while getopts 'w' OPTION
 do
     case $OPTION in
-        c) conkyFlag=1;;
         w) wallpaperFlag=1;;
-        ?) echo "Usage: $0 [-cw]";;
+        ?) echo "Usage: $0 [-w]";;
     esac
 done
 
-xrandr --output LVDS1 --mode 1366x768
-xrandr --output VGA1 --off
+declare -a active_displays
 
-# if [ $conkyFlag -eq 1 ]
-# then
-#     echo "Restarting conky"
-#     ps ax | grep myconky | awk '{print $1}' | xargs kill
-#     conky -c $HOME/.myconky/main
-# fi
+while read display
+do
+    dname="$(echo "$display" | awk '{print $1}')"
+    if echo "$display" | grep 'connected [0-9]' >/dev/null 2>&1
+    then
+        active_displays=("${active_displays[@]}" $dname)
+    fi
+done < <(xrandr | grep ' connected ')
+
+display="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Select display to disconnect")"
+
+xrandr --output "$display" --off
 
 if [ $wallpaperFlag -eq 1 ]
 then
