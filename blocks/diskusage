@@ -3,6 +3,7 @@
 partitions=$(lsblk -p -r --output NAME,MOUNTPOINT | grep ' /' | sed -e 's~/dev/~~' -e 's/ /:/' | sort -u -r)
 
 output=""
+short=""
 
 for dp in $partitions
 do
@@ -22,10 +23,12 @@ do
         then
             color="#c3bf9f"
         fi
-        output="${output}<span color='#6c6c6c' size='small'>${disk}</span> ${part} <span color='$color'>${used}/${size}</span> "
+        output="${output}<span color='#6c6c6c'>${disk}</span> ${part} <span color='$color'>${used}/${size}</span> "
+        short="${short}${part} <span color='$color'>${used}/${size}</span> "
     fi
 done
 
 
 
 echo "$output"
+echo "$short"
