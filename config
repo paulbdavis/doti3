@@ -163,6 +163,7 @@ for_window [class="^Google-chrome"] move workspace number 4
 for_window [class="^Firefox"] move workspace number 4
 
 for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
+for_window [class="^chromium" instance="^crx.*"] border normal,floating enable
 for_window [class="^Pwsafe"] border normal,floating enable
 for_window [class="^feh"] floating enable
 for_window [class="^Pidgin"] border normal
