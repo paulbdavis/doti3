@@ -9,44 +9,68 @@ FAIL() {
 
 IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 
-if [[ $1 = up ]]
+
+tmpfile=/tmp/$USER-netspeed-unit
+
+declare -a units
+units=( "B" "b" )
+
+if [[ -n "$BLOCK_BUTTON" ]]
 then
-    RT=tx
-    SYMBOL=
+    case $BLOCK_BUTTON in
+        1|4) current=$[$(cat $tmpfile) + 1];;
+        5) current=$[$(cat $tmpfile) - 1];;
+    esac
 else
-    RT=rx
-    SYMBOL=
+    current=$(cat $tmpfile)
 fi
 
-REPORT=B
-if [[ -n "$2" ]] && [[ "$2" = "bits" ]]
-then
-    REPORT=b
-fi
+[[ -z "$current" ]] || [[ "$current" -ge "${#units[@]}" ]] && current=0
 
-R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
-sleep 1s
-R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
-BPS=$(bc <<<"($R2 - $R1)")
-if [[ "$REPORT" = "b" ]]
-then
-    BPS=$(bc <<<"($R2 - $R1)*8")
-fi
+[[ "$current" -lt 0 ]] && current=$[${#units[@]} - 1]
 
-SCALE=0
+echo "$current" > $tmpfile
 
-while [[ $(bc <<<"$BPS >= 1024") -eq 1 ]]
+REPORT=${units[$current]}
+
+for dType in down up
 do
-    BPS=$(bc <<<"scale=2; $BPS / 1024")
-    SCALE=$((SCALE+1))
+    if [[ $dType = up ]]
+    then
+        RT=tx
+        SYMBOL=
+    else
+        RT=rx
+        SYMBOL=
+    fi
+
+    R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
+    sleep 1s
+    R2=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
+    BPS=$(bc <<<"($R2 - $R1)")
+    if [[ "$REPORT" = "b" ]]
+    then
+        BPS=$(bc <<<"($R2 - $R1)*8")
+    fi
+
+    SCALE=0
+
+    while [[ $(bc <<<"$BPS >= 1024") -eq 1 ]]
+    do
+        BPS=$(bc <<<"scale=2; $BPS / 1024")
+        SCALE=$((SCALE+1))
+    done
+
+    case $SCALE in
+        1) UNIT="K";;
+        2) UNIT="M";;
+        3) UNIT="G";;
+    esac
+
+    final=$final$(echo $BPS ${UNIT}${REPORT}/s $SYMBOL | sed 's/^\./0./')" "
+
 done
 
-case $SCALE in
-    1) UNIT="K";;
-    2) UNIT="M";;
-    3) UNIT="G";;
-esac
-
-echo $BPS ${UNIT}${REPORT}/s $SYMBOL | sed 's/^\./0./'
+echo $final
 echo
 echo "#a9a999"
