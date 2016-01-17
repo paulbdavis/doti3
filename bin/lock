@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
 import -window root /tmp/$USER-screenshot.png
-convert /tmp/$USER-screenshot.png -blur 0x5 /tmp/$USER-screenlock.png
+convert /tmp/$USER-screenshot.png -scale 10% -scale 1000% /tmp/$USER-screenlock.png
+if [[ -f $1 ]]
+then
+    convert /tmp/$USER-screenlock.png $1 -gravity center -composite -matte /tmp/$USER-screenlock.png
+fi
+
 i3lock -i /tmp/$USER-screenlock.png

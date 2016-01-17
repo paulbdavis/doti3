@@ -54,7 +54,7 @@ bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
 bindsym $mod+Shift+b border normal
 bindsym $mod+Shift+Ctrl+b border pixel 2
 
-bindsym $mod+Ctrl+L exec "$confDir/bin/lock"
+bindsym $mod+Ctrl+L exec "$confDir/bin/lock $confdir/lib/lock.png"
 
 # mark window
 bindsym $mod+apostrophe exec i3-input -f '$pangoMono' -F 'mark %s' -P 'mark: '
