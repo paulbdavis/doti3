@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 import -window root /tmp/$USER-screenshot.png
-convert /tmp/$USER-screenshot.png -scale 10% -scale 1000% /tmp/$USER-screenlock.png
+convert /tmp/$USER-screenshot.png -scale 2.5% -scale 4000% /tmp/$USER-screenlock.png
 if [[ -f $1 ]]
 then
+    convert /tmp/$USER-screenlock.png -fill "#1c1c1c" -stroke "#3f3f3f" -strokewidth 5 -draw "circle 1280,540 1430,540" /tmp/$USER-screenlock.png
     convert /tmp/$USER-screenlock.png $1 -gravity center -composite -matte /tmp/$USER-screenlock.png
 fi
 
