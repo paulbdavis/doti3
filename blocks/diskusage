@@ -5,6 +5,10 @@ partitions=$(lsblk -p -r --output NAME,MOUNTPOINT | grep ' /' | sed -e 's~/dev/~
 output=""
 short=""
 
+okcount=0
+
+displaycutoff=50
+
 for dp in $partitions
 do
     disk="${dp%:*}"
@@ -23,10 +27,22 @@ do
         then
             color="#c3bf9f"
         fi
-        output="${output}<span color='#6c6c6c'>${disk}</span> ${part} <span color='$color'>${used}/${size}</span> "
-        short="${short}${part} <span color='$color'>${used}/${size}</span> "
+
+        if [[ ${percent%%%} -gt $displaycutoff ]]
+        then
+            output="${output}<span color='#6c6c6c'>${disk}</span> <span color='#a9a999'>${part}</span> <span color='$color'>${used}/${size}</span> "
+            short="${short}${part} <span color='$color'>${used}/${size}</span> "
+        else
+            okcount=$[$okcount + 1]
+        fi
     fi
 done
+
+if [[ $okcount -gt 0 ]]
+then
+    output="<span color='#7f9f7f'>$okcount &lt; $displaycutoff%</span>   ${output}"
+    short="<span color='#7f9f7f'>$okcount &lt; $displaycutoff%</span>   ${short}"
+fi
 
 
 
