@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
 import -window root /tmp/$USER-screenshot.png
 convert /tmp/$USER-screenshot.png -scale 2.5% -scale 4000% /tmp/$USER-screenlock.png
 if [[ -f $1 ]]
 then
-    convert /tmp/$USER-screenlock.png -fill "#1c1c1c" -stroke "#3f3f3f" -strokewidth 5 -draw "circle 1280,540 1430,540" /tmp/$USER-screenlock.png
+    dimensions="$(identify $1 | awk '{print $3}')"
+    w=${dimensions%x*}
+    h=${dimensions#*x}
+    circle_r=$w
+    if [[ "$h" -gt "$w" ]]
+    then
+        circle_r=$h
+    fi
+    circle_r=$[$circle_r + 30]
+    dimensions="$(identify /tmp/$USER-screenlock.png | awk '{print $3}')"
+    w=${dimensions%x*}
+    h=${dimensions#*x}
+    x=$[$w / 2]
+    y=$[$h / 2]
+    x2=$[$x + $circle_r]
+    convert /tmp/$USER-screenlock.png -fill "#1c1c1c" -stroke "#3f3f3f" -strokewidth 5 -draw "circle $x,$y $x2,$y" /tmp/$USER-screenlock.png
     convert /tmp/$USER-screenlock.png $1 -gravity center -composite -matte /tmp/$USER-screenlock.png
 fi
 
