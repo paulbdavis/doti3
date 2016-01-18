@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+spot=$(curl https://api.coinbase.com/v2/prices/spot | jshon -e data -e amount -u 2>/dev/null)
+last=$(cat /tmp/$USER-btcspot.txt)
+[[ -z "$last" ]] && last=0
+
+color="#7f9f7f"
+symbol=
+
+if [[ "$(bc <<<"$last > $spot")" -eq 1 ]]
+then
+    color="#dca3a3"
+    symbol=
+fi
+
+
+echo $spot > /tmp/$USER-btcspot.txt
+
+echo '<span color="'$color'">$'$spot $symbol'</span>'
