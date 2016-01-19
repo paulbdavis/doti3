@@ -26,4 +26,7 @@ then
     convert /tmp/$USER-screenlock.png $1 -gravity center -composite -matte /tmp/$USER-screenlock.png
 fi
 
-i3lock -i /tmp/$USER-screenlock.png
+# kill all ssh sessions when locking, for extra security
+killall ssh || echo "no ssh sessions to kill"
+
+exec i3lock -i /tmp/$USER-screenlock.png
