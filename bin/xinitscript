@@ -27,5 +27,7 @@ fi
 
 export PATH=$HOME/.config/i3/bin:$PATH
 
+wallpaper
+
 # disable caps lock
 setxkbmap -option ctrl:nocaps
