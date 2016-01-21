@@ -10,7 +10,14 @@ FG="#dcdccc"
 SELECTEDBG="#688080"
 SELECTEDFG="#1c1c1c"
 
-while getopts ":rp:f:ml:" opt
+dimensions="$(xrandr | grep ' connected ' | awk '{print $3}' | sed 's/+.*$//')"
+w=${dimensions%x*}
+h=${dimensions#*x}
+
+width=500
+height=0
+
+while getopts ":rp:f:ml:w:h:" opt
 do
     case $opt in
         r) DMENU=$(which dmenu_run);;
@@ -19,12 +26,19 @@ do
         m) SELECTEDBG="$BG"
            SELECTEDFG="$FG";; # match colors
         l) LINES="$OPTARG";;
+        w) width="$OPTARG";;
+        h) height="$OPTARG";;
         \?) "Invalid option -$OPTARG";;
         :) "-$OPTARG requires an argument"
     esac
 done
 
-$DMENU -i -l "$LINES" \
+xOffset=$[($w - $width) / 2]
+yOffset=$[($h / 2) - 100]
+
+$DMENU -dim 0.5 -dc "$SELECTEDBG" \
+       -w $width -h $height -x $xOffset -y $yOffset \
+       -z -l "$LINES" \
        -nb "$BG" -nf "$FG" \
        -sb "$SELECTEDBG" -sf "$SELECTEDFG" \
        -p "$PROMPT" -fn "$FONT"

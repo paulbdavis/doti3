@@ -79,7 +79,7 @@ def i3clients():
         wsnum = wsreres.group(1)
         wsname = wsreres.group(2)
         if not wsname:
-            wsnum = wsname
+            wsname = wsnum
         client=clients[con_id]
         print(client)
         win_str = u'{wsn}: {m:<{nl}}[{k:<{v}}] {l:<{w}} ({n})'\
@@ -102,6 +102,7 @@ def win_menu(clients, l=20):
         script,
         '-p', 'window', # prompt
         '-f', 'UbuntuMono-10',
+        '-w', '1500',
         '-l', str(l)],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE)
