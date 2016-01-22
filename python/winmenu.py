@@ -100,8 +100,8 @@ def win_menu(clients, l=20):
     script = expanduser('~/.config/i3/bin/make-menu')
     dmenu = subprocess.Popen([
         script,
-        '-p', 'window', # prompt
-        '-f', 'UbuntuMono-10',
+        '-p', 'window: ', # prompt
+        '-f', 'Ubuntu Mono 12',
         '-w', '1500',
         '-l', str(l)],
         stdin=subprocess.PIPE,

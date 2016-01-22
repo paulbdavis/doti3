@@ -21,8 +21,8 @@ def dmenu_prompt(num):
     dmenu = subprocess.Popen([
         script, '-m',
         '-h', '50',
-        '-p', 'Type new workspace name: {0}:'.format(num), # prompt
-        '-f', 'Ubuntu-12'
+        '-p', 'Type new workspace name: {0}: '.format(num), # prompt
+        '-f', 'Ubuntu 12'
         ],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE

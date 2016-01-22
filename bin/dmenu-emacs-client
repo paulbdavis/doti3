@@ -2,7 +2,7 @@
 
 SERVERS="$(ps aux | grep $USER.*emacs | grep -e '--daemon=' | sed -r 's/.*--daemon=([^ ]+).*/\1/')"
 
-SERVER="$(echo -e "_default $SERVERS" | tr ' ' '\n' | $HOME/.config/i3/bin/make-menu -p "emacs server" -f "Ubuntu-12" -h 35 -w 800 -l 0)"
+SERVER="$(echo -e "_default $SERVERS" | tr ' ' '\n' | $HOME/.config/i3/bin/make-menu -p "emacs server: " -f "Ubuntu 12" -h 35 -w 800 -l 0)"
 
 echo $SERVER
 

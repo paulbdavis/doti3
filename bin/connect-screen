@@ -38,6 +38,12 @@ do
     fi
 done < <(xrandr | grep ' connected ')
 
+if [[  ${#inactive_displays[@]} -eq 0 ]]
+then
+    $menu_cmd -e "No extra displays to connect"
+    exit
+fi
+
 display="$(echo ${inactive_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Select display")"
 
 action="$(echo "solo left right above below" | tr ' ' '\n' | $menu_cmd -p "Action for $display")"

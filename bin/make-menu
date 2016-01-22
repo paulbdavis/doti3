@@ -1,26 +1,38 @@
 #!/usr/bin/env bash
 
-DMENU=$(which dmenu)
+set -x
+
+DMENU=$(which rofi)
 PROMPT="?"
-FONT='Ubuntu-10'
+FONT='Ubuntu 12'
 LINES=5
 
-BG="#1c1c1c"
-FG="#dcdccc"
-SELECTEDBG="#688080"
-SELECTEDFG="#1c1c1c"
+bg="#1c1c1c"
+bg_active="#dcdccc"
+bg_urgent="#bc8383"
 
-dimensions="$(xrandr | grep ' connected ' | awk '{print $3}' | sed 's/+.*$//')"
-w=${dimensions%x*}
-h=${dimensions#*x}
+fg="#dcdccc"
+fg_active="#1c1c1c"
+fg_urgent="#1c1c1c"
 
-width=500
-height=0
+hlbg="#688080"
+hlbg_active="#ffffff"
+hlbg_urgent="#cc9393"
 
-while getopts ":rp:f:ml:w:h:" opt
+hlfg="#1c1c1c"
+hlfg_active="#1c1c1c"
+hlfg_urgent="#1c1c1c"
+
+border="#688080"
+
+mode="dmenu"
+
+while getopts ":re:p:f:ml:w:h:" opt
 do
     case $opt in
-        r) DMENU=$(which dmenu_run);;
+        r) mode="run";;
+        e) message="$OPTARG"
+           mode="message";;
         p) PROMPT="$OPTARG";;
         f) FONT="$OPTARG";;
         m) SELECTEDBG="$BG"
@@ -33,12 +45,22 @@ do
     esac
 done
 
-xOffset=$[($w - $width) / 2]
-yOffset=$[($h / 2) - 100]
 
-$DMENU -dim 0.5 -dc "$SELECTEDBG" \
-       -w $width -h $height -x $xOffset -y $yOffset \
-       -z -l "$LINES" \
-       -nb "$BG" -nf "$FG" \
-       -sb "$SELECTEDBG" -sf "$SELECTEDFG" \
-       -p "$PROMPT" -fn "$FONT"
+options="-bg "$bg" -fg "$fg" \
+-bg-active "$bg_active" -fg-active "$fg_active" \
+-bg-urgent "$bg_urgent" -fg-urgent "$fg_urgent" \
+-hlbg "$hlbg" -hlfg "$hlfg" \
+-hlbg-active "$hlbg_active" -hlfg-active "$hlfg_active" \
+-hlbg-urgent "$hlbg_urgent" -hlfg-urgent "$hlfg_urgent" \
+-bc "$border" -bw 3"
+
+if [[ "$mode" = "dmenu" ]]
+then
+    $DMENU -dmenu $options -p "$PROMPT" -font "$FONT" -separator-style solid
+elif [[ "$mode" = "run" ]]
+then
+    $DMENU -modi combi -show combi -combi-modi "window,run,drun" -separator-style solid -fuzzy \
+           $options \ -font "$FONT"
+else
+    $DMENU -dmenu $options -e "$message" -separator-style none
+fi
