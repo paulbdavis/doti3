@@ -29,4 +29,7 @@ fi
 # kill all ssh sessions when locking, for extra security
 killall ssh || echo "no ssh sessions to kill"
 
+# clear GPG agent passwords
+pkill -SIGHUP gpg-agent
+
 exec i3lock -i /tmp/$USER-screenlock.png
