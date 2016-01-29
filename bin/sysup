@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -e
+
+[[ "$USER" != "root" ]] && echo "You must be root" && exit;
+
+
+pac_down="pacman -Syuw"
+pac_install="pacman -Su"
+
+snap_desc="pacman upgrade"
+
+doing_install=
+
+if [[ -n "$*" ]]
+then
+    echo "Installing $* with upgrade"
+    pac_down="$pac_down $*"
+    pac_install="$pac_install $*"
+    doing_install="y"
+    snap_desc="pacman upgrade and install $*"
+fi
+
+# upgrade and download packages only
+if ! $pac_down
+then
+    echo "Upgrade cancelled, no snapshot generated"
+    exit
+fi
+
+up_count=$(pacman -Sup 2> /dev/null | sed 1d | wc -l)
+
+if [[ $up_count -lt 1 ]]
+then
+    if [[ "$doing_install" = "y" ]]
+    then
+        snap_desc="install $*"
+    else
+        echo "Nothing to upgrade"
+        exit
+    fi
+fi
+
+# do upgrade with pre and post snapshots
+snapper -c root create --command "$pac_install" --description "$snap_desc"
+
+# list out the snapsots afterwards
+snapper -c root list
