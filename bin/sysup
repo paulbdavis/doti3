@@ -41,8 +41,13 @@ then
     fi
 fi
 
-# do upgrade with pre and post snapshots
-snapper -c root create --command "$pac_install" --description "$snap_desc"
+if which snapper >/dev/null 2>&1
+then
+    # do upgrade with pre and post snapshots
+    snapper -c root create --command "$pac_install" --description "$snap_desc"
 
-# list out the snapsots afterwards
-snapper -c root list
+    # list out the snapsots afterwards
+    snapper -c root list
+else
+    $pac_install
+fi
