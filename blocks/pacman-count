@@ -1,12 +1,7 @@
 #!/bin/bash
 # Arch upgradeable packages
 
-count=$(pacman -Sup 2> /dev/null | sed 1d | wc -l)
-
-for pkg in $list; do
-    echo -n "  "
-    echo $pkg | sed -e 's#.*/##g' -e 's%(.*).pkg.*$%1%'
-done
+count=$(checkupdates | wc -l)
 
 COLOR="#7f9f7f"
 if [[ $count -gt 50 ]]
