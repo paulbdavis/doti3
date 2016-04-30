@@ -26,8 +26,8 @@ set $yellow #f0dfaf
 set $red #cc9393
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
-set $pangoFont pango:Ubuntu 10
-set $pangoMono pango:Ubuntu Mono 10
+set $pangoFont pango:Ubuntu 8
+set $pangoMono pango:Ubuntu Mono 8
 
 # font for window titles. ISO 10646 = Unicode
 font $pangoFont
@@ -319,7 +319,7 @@ client.urgent           $red     $red     $fg      $dk_grey
 
 bar {
     status_command i3blocks -c $confDir/blocks/bottom.conf
-    font pango:Ubuntu, FontAwesome 10
+    font pango:Ubuntu, FontAwesome 8
     binding_mode_indicator no
     colors {
         background $bg_grey
@@ -334,7 +334,7 @@ bar {
 
 bar {
     status_command i3blocks -c $confDir/blocks/top.conf
-    font pango:Ubuntu, FontAwesome 10
+    font pango:Ubuntu, FontAwesome 8
     position top
     workspace_buttons no
     tray_output none
