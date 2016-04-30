@@ -27,10 +27,11 @@ border="#688080"
 
 mode="dmenu"
 
-while getopts ":re:p:f:ml:w:h:" opt
+while getopts ":r:se:p:f:ml:w:h:" opt
 do
     case $opt in
         r) mode="run";;
+        s) mode="spotlight";;
         e) message="$OPTARG"
            mode="message";;
         p) PROMPT="$OPTARG";;
@@ -52,6 +53,9 @@ then
 elif [[ "$mode" = "run" ]]
 then
     $DMENU -modi combi -show combi -combi-modi "window,run,drun" -fuzzy
+elif [[ "$mode" = "spotlight" ]]
+then
+    $DMENU -modi combi -show combi -combi-modi "window,drun" -fuzzy
 else
     $DMENU -dmenu -e "$message" -separator-style none
 fi
