@@ -281,8 +281,6 @@ rofi.dpi:                            -1
 rofi.threads:                        1
 ! Scrollbar width
 rofi.scrollbar-width:                8
-! Pidfile location
-rofi.pid:                            /run/user/1001/rofi.pid
 ! Keybinding
 rofi.kb-primary-paste:               Control+Shift+v,Shift+Insert
 ! Keybinding
