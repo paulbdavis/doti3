@@ -45,21 +45,13 @@ do
     esac
 done
 
-options="-bg "$bg" -fg "$fg" \
--bg-active "$bg_active" -fg-active "$fg_active" \
--bg-urgent "$bg_urgent" -fg-urgent "$fg_urgent" \
--hlbg "$hlbg" -hlfg "$hlfg" \
--hlbg-active "$hlbg_active" -hlfg-active "$hlfg_active" \
--hlbg-urgent "$hlbg_urgent" -hlfg-urgent "$hlfg_urgent" \
--bc "$border" -bw 3"
 
 if [[ "$mode" = "dmenu" ]]
 then
-    $DMENU -dmenu $options -p "$PROMPT" -font "$FONT" -separator-style solid
+    $DMENU -dmenu -p "$PROMPT"
 elif [[ "$mode" = "run" ]]
 then
-    $DMENU -modi combi -show combi -combi-modi "window,run,drun" -separator-style solid -fuzzy \
-           $options \ -font "$FONT"
+    $DMENU -modi combi -show combi -combi-modi "window,run,drun" -fuzzy
 else
-    $DMENU -dmenu $options -e "$message" -separator-style none
+    $DMENU -dmenu -e "$message" -separator-style none
 fi
