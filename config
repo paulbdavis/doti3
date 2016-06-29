@@ -159,10 +159,8 @@ bindsym $mod+p focus parent
 # focus the child container
 #bindcode $mod+d focus child
 
-# clients to specificv workspaces
-for_window [class="^Google-chrome"] move workspace number 4
-for_window [class="^Firefox"] move workspace number 4
-
+# for_window [class="^vivaldi-stable" instance="^crx.*"] border normal,floating enable
+for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
 for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
 for_window [class="^chromium" instance="^crx.*"] border normal,floating enable
 for_window [class="^Pwsafe"] border normal,floating enable

@@ -13,7 +13,7 @@ IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
 tmpfile=/tmp/$USER-netspeed-unit
 
 declare -a units
-units=( "B" "b" )
+units=( "b" "B" )
 
 if [[ -n "$BLOCK_BUTTON" ]]
 then
