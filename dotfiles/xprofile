@@ -1,5 +1,5 @@
 
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
 export GPG_TTY=$(tty)
 
 if which systemctl
