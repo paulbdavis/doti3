@@ -30,7 +30,7 @@ declare -a inactive_displays
 while read display
 do
     dname="$(echo "$display" | awk '{print $1}')"
-    if echo "$display" | grep 'connected \(primary\)\? [0-9]' >/dev/null 2>&1
+    if echo "$display" | grep 'connected \(primary\)\? \?[0-9]' >/dev/null 2>&1
     then
         active_displays=("${active_displays[@]}" $dname)
     else
