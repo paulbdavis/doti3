@@ -100,8 +100,6 @@ bindsym $mod+Shift+Right move right
 
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
-bindsym $mod+o exec "$confDir/bin/i3-next-output"
-bindsym $mod+Shift+o exec "$confDir/bin/i3-previous-output"
 
 
 bindsym $mod+Shift+M mark "scratchterm", move scratchpad
@@ -194,8 +192,10 @@ bindsym $mod+Control+8 workspace number 18
 bindsym $mod+Control+9 workspace number 19
 bindsym $mod+Control+0 workspace number 20
 
-bindsym $mod+period exec "$confDir/bin/i3-move-container-next-output"
-bindsym $mod+comma exec "$confDir/bin/i3-move-container-previous-output"
+bindsym $mod+o exec "$confDir/bin/i3-next-output"
+bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
+bindsym $mod+period exec "$confDir/bin/i3-next-output"
+bindsym $mod+comma exec "$confDir/bin/i3-previous-output"
 bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
 bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
 
