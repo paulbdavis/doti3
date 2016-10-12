@@ -165,6 +165,7 @@ for_window [class="^Pwsafe"] border normal,floating enable
 for_window [class="^feh"] floating enable
 for_window [class="^Pidgin"] border normal
 for_window [class="^VirtualBox"] floating enable
+for_window [class="^TeamViewer"] floating enable
 
 new_window pixel 2
 new_float pixel 2

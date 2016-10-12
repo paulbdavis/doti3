@@ -34,7 +34,7 @@ do
 
         if [[ ${percent%%%} -gt $displaycutoff ]]
         then
-            output="${output}<span color='#6c6c6c'>${disk}</span> <span color='#a9a999'>${part}</span> <span color='$color'>${used}/${size}</span> "
+            output="${output}<span color='#6c6c6c'>$(echo "$disk" | sed 's~mapper/~~')</span> <span color='#a9a999'>${part}</span> <span color='$color'>${used}/${size}</span> "
             short="${short}${part} <span color='$color'>${used}/${size}</span> "
         else
             okcount=$[$okcount + 1]
