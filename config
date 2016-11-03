@@ -166,6 +166,8 @@ for_window [class="^feh"] floating enable
 for_window [class="^Pidgin"] border normal
 for_window [class="^VirtualBox"] floating enable
 for_window [class="^TeamViewer"] floating enable
+for_window [class="^Tresorit"] floating enable
+for_window [class="^telegram"] floating enable
 
 new_window pixel 2
 new_float pixel 2

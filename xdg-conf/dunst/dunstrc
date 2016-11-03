@@ -48,7 +48,7 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "0x15-0-19"
+    geometry = "0x15"
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
@@ -99,7 +99,7 @@
     #  * foreground: use the same color as the foreground
     #  * frame: use the same color as the frame.
     #  * anything else will be interpreted as a X color
-    separator_color = frame
+    separator_color = #1c1c1c
 
     # print a notification on startup
     # This is mainly for error detection, since dbus (re-)starts dunst
@@ -113,7 +113,7 @@
     browser = /usr/bin/firefox -new-tab
 
 [frame]
-    width = 1
+    width = 0
     color = "#DCDCCC"
 
 [shortcuts]
@@ -138,18 +138,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
-    background = "#3f3f3f"
+    background = "#333333"
     foreground = "#DCDCCC"
     timeout = 10
 
 [urgency_normal]
-    background = "#3f3f3f"
+    background = "#333333"
     foreground = "#7F8F7F"
     timeout = 10
 
 [urgency_critical]
     background = "#DCA3A3"
-    foreground = "#3f3f3f"
+    foreground = "#333333"
     timeout = 0
 
 
