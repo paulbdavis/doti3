@@ -30,8 +30,8 @@ rm -rf /tmp/aur-build
 if which aurget >/dev/null 2>&1
 then
     # upgrade AUR packages as well
-    pac_down="($pac_down && sudo -u $aur_user mkdir -p /tmp/aur /tmp/aur-build && cd /tmp/aur-build && sudo -u $aur_user PKGDEST=/tmp/aur aurget -Sbu --noedit --deps)"
-    pac_install="($pac_install && pacman -U /tmp/aur/* && rm -rf /tmp/aur /tmp/aur-build)"
+    pac_down="($pac_down)"
+    pac_install="($pac_install  && sudo -u $aur_user mkdir -p /tmp/aur /tmp/aur-build && cd /tmp/aur-build && sudo -u $aur_user PKGDEST=/tmp/aur aurget -Sbu --noedit --deps && pacman -U /tmp/aur/* && rm -rf /tmp/aur /tmp/aur-build)"
 else
     echo "No \`aurget' found, not upgrading AUR packages"
 fi
