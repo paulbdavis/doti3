@@ -4,6 +4,7 @@ set -x
 
 DMENU="$(which rofi)"
 PROMPT="? "
+FONT="Ubuntu 18"
 
 mode="dmenu"
 
@@ -28,22 +29,25 @@ do
     esac
 done
 
+run_prompt() {
+    $DMENU -font "$FONT" "$@"
+}
 
 if [[ "$mode" = "dmenu" ]]
 then
-    $DMENU -dmenu -p "$PROMPT"
+    run_prompt -dmenu -p "$PROMPT"
 elif [[ "$mode" = "prompt" ]]
 then
-    $DMENU -separator-style none -dmenu -mesg "$PROMPT" -p "> "
+    run_prompt -separator-style none -dmenu -mesg "$PROMPT" -p '> '
 elif [[ "$mode" = "run" ]]
 then
-    $DMENU -show "run" -fuzzy -display-run "$PROMPT"
+    run_prompt -show "run" -fuzzy -display-run "$PROMPT"
 elif [[ "$mode" = "spotlight" ]]
 then
-    $DMENU -modi drun -show drun -fuzzy -display-drun "$PROMPT"
+    run_prompt -modi drun -show drun -fuzzy -display-drun "$PROMPT"
 elif [[ "$mode" = "window" ]]
 then
-    $DMENU -modi -font "Ubuntu Mono 18" window -show window -fuzzy -display-window "$PROMPT"
+    run_prompt -modi window -show window -fuzzy -display-window "$PROMPT"
 else
-    $DMENU -e "$message" -separator-style none
+    run_prompt -e "$message" -separator-style none
 fi
