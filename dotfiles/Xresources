@@ -199,15 +199,15 @@ rofi.lines:                          100
 ! Number of columns
 rofi.columns:                        1
 ! Font to use
-rofi.font:                           Ubuntu 12
+rofi.font:                           Ubuntu Mono 18
 ! Use extended color scheme
 rofi.color-enabled:                  true
 ! Color scheme for normal row        bg,fg,bg alt,hl bg,hl,fg
-rofi.color-normal:                   _rofi_none,_foreground,_rofi_background_alt,_color12,_background
+rofi.color-normal:                   _rofi_none,_foreground,_rofi_none,_color12,_background
 ! Color scheme for urgent row
-rofi.color-urgent:                   _rofi_none,_foreground,_rofi_background_alt,_color1,_background
+rofi.color-urgent:                   _rofi_none,_foreground,_rofi_none,_color1,_background
 ! Color scheme for active row
-rofi.color-active:                   _rofi_none,_foreground,_rofi_background,_color4,_background
+rofi.color-active:                   _rofi_none,_foreground,_rofi_none,_color4,_background
 ! Color scheme window
 rofi.color-window:                   _rofi_background,_color12,_color12
 ! Border width
@@ -244,6 +244,7 @@ rofi.case-sensitive:                 false
 rofi.sidebar-mode:                   false
 ! Set lazy filter limit
 rofi.lazy-filter-limit:              15000
+rofi.window-format:                  {w:3} {c:24} {t}
 ! Row height (in chars)
 rofi.eh:                             1
 ! Enable auto select mode

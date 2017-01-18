@@ -4,7 +4,6 @@ set -x
 
 DMENU="$(which rofi)"
 PROMPT="? "
-FONT='Ubuntu 12'
 
 mode="dmenu"
 
@@ -36,7 +35,7 @@ then
     $DMENU -show "run" -fuzzy -display-run "$PROMPT"
 elif [[ "$mode" = "spotlight" ]]
 then
-    $DMENU -modi drun,window,ssh -show drun -fuzzy -display-drun "$PROMPT" -display-window "$PROMPT" -display-ssh "$PROMPT"
+    $DMENU -sidebar-mode -modi drun,window,ssh -show drun -fuzzy -display-drun "Apps" -display-window "Windows" -display-ssh "SSH"
 else
-    $DMENU -dmenu -e "$message" -separator-style none
+    $DMENU -e "$message" -separator-style none
 fi

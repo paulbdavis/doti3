@@ -47,7 +47,7 @@ bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want? '"
-bindsym $mod+space exec "$confDir/bin/make-menu -s -p 'What the fuck do you want? '"
+bindsym $mod+space exec "$confDir/bin/make-menu -s"
 
 bindsym $mod+a exec "python3 $confDir/python/winmenu.py"
 bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
