@@ -185,8 +185,9 @@ URxvt*background: _background
 URxvt*foreground: _foreground
 
 
-#define _rofi_background        argb:991c1c1c
-#define _rofi_background_alt    argb:993c3c3c
+#define _rofi_background        argb:cc1c1c1c
+#define _rofi_background_alt    argb:441c1c1c
+#define _rofi_none              argb:00000000
 ! Enabled modi
 rofi.modi:                           window,run,ssh
 ! Window opacity
@@ -202,11 +203,11 @@ rofi.font:                           Ubuntu 12
 ! Use extended color scheme
 rofi.color-enabled:                  true
 ! Color scheme for normal row        bg,fg,bg alt,hl bg,hl,fg
-rofi.color-normal:                   _rofi_background,_foreground,_rofi_background_alt,_color12,_background
+rofi.color-normal:                   _rofi_none,_foreground,_rofi_background_alt,_color12,_background
 ! Color scheme for urgent row
-rofi.color-urgent:                   _rofi_background,_foreground,_rofi_background_alt,_color1,_background
+rofi.color-urgent:                   _rofi_none,_foreground,_rofi_background_alt,_color1,_background
 ! Color scheme for active row
-rofi.color-active:                   _rofi_background,_foreground,_rofi_background_alt,_color4,_background
+rofi.color-active:                   _rofi_none,_foreground,_rofi_background,_color4,_background
 ! Color scheme window
 rofi.color-window:                   _rofi_background,_color12,_color12
 ! Border width
@@ -226,7 +227,7 @@ rofi.terminal:                       termite
 ! Ssh client to use
 rofi.ssh-client:                     ssh
 ! Ssh command to execute
-rofi.ssh-command:                    {terminal} -e {ssh-client} {host}
+rofi.ssh-command:                    {terminal} -e "{ssh-client} -A {host}"
 ! Run command to execute
 rofi.run-command:                    {cmd}
 ! Command to get extra run targets
@@ -270,7 +271,8 @@ rofi.filter:
 ! Separator style (none, dash, solid)
 rofi.separator-style:                solid
 ! Hide scroll-bar
-rofi.hide-scrollbar:                 false
+rofi.hide-scrollbar:                 true
+rofi.scroll-method:                  1
 ! Show markup
 rofi.markup-rows:                    false
 ! Fullscreen
@@ -280,7 +282,7 @@ rofi.fake-transparency:              true
 ! DPI
 rofi.dpi:                            -1
 ! Threads to use for string matching
-rofi.threads:                        1
+rofi.threads:                        2
 ! Scrollbar width
 rofi.scrollbar-width:                8
 ! Keybinding

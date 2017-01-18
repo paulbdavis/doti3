@@ -3,31 +3,12 @@
 set -x
 
 DMENU="$(which rofi)"
-PROMPT="?"
+PROMPT="? "
 FONT='Ubuntu 12'
-LINES=5
-
-bg="#1c1c1c"
-bg_active="#dcdccc"
-bg_urgent="#bc8383"
-
-fg="#dcdccc"
-fg_active="#1c1c1c"
-fg_urgent="#1c1c1c"
-
-hlbg="#688080"
-hlbg_active="#ffffff"
-hlbg_urgent="#cc9393"
-
-hlfg="#1c1c1c"
-hlfg_active="#1c1c1c"
-hlfg_urgent="#1c1c1c"
-
-border="#688080"
 
 mode="dmenu"
 
-while getopts ":r:se:p:f:ml:w:h:" opt
+while getopts ":rse:p:f:ml:w:h:" opt
 do
     case $opt in
         r) mode="run";;
@@ -52,10 +33,10 @@ then
     $DMENU -dmenu -p "$PROMPT"
 elif [[ "$mode" = "run" ]]
 then
-    $DMENU -modi combi -show combi -combi-modi "window,run,drun" -fuzzy
+    $DMENU -show "run" -fuzzy -display-run "$PROMPT"
 elif [[ "$mode" = "spotlight" ]]
 then
-    $DMENU -modi combi -show combi -combi-modi "window,drun" -fuzzy
+    $DMENU -modi drun,window,ssh -show drun -fuzzy -display-drun "$PROMPT" -display-window "$PROMPT" -display-ssh "$PROMPT"
 else
     $DMENU -dmenu -e "$message" -separator-style none
 fi
