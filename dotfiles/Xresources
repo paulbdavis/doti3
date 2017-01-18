@@ -48,8 +48,8 @@ rtorrent*geometry: 103x26
 #define _color3 #f0dfaf
 #define _color11 #efef8f
 ! blue
-#define _color4 #6a99b1
-#define _color12 #8cd0d3
+#define _color4 #7cb8bb
+#define _color12 #6ca0a3
 ! magenta
 #define _color5 #bca3a3
 #define _color13 #c0bed1
@@ -185,10 +185,12 @@ URxvt*background: _background
 URxvt*foreground: _foreground
 
 
+#define _rofi_background        argb:991c1c1c
+#define _rofi_background_alt    argb:993c3c3c
 ! Enabled modi
 rofi.modi:                           window,run,ssh
 ! Window opacity
-rofi.opacity:                        100
+rofi.opacity:                        50
 ! Window width
 rofi.width:                          50
 ! Number of lines
@@ -199,20 +201,20 @@ rofi.columns:                        1
 rofi.font:                           Ubuntu 12
 ! Use extended color scheme
 rofi.color-enabled:                  true
-! Color scheme for normal row
-rofi.color-normal:                   #1c1c1c,#dcdccc,#3c3c3c,#688080,#1c1c1c
+! Color scheme for normal row        bg,fg,bg alt,hl bg,hl,fg
+rofi.color-normal:                   _rofi_background,_foreground,_rofi_background_alt,_color12,_background
 ! Color scheme for urgent row
-rofi.color-urgent:                   #1c1c1c,#dcdccc,#3c3c3c,#688080,#1c1c1c
+rofi.color-urgent:                   _rofi_background,_foreground,_rofi_background_alt,_color1,_background
 ! Color scheme for active row
-rofi.color-active:                   #1c1c1c,#dcdccc,#3c3c3c,#688080,#1c1c1c
+rofi.color-active:                   _rofi_background,_foreground,_rofi_background_alt,_color4,_background
 ! Color scheme window
-rofi.color-window:                   #1c1c1c,#688080
+rofi.color-window:                   _rofi_background,_color12,_color12
 ! Border width
-rofi.bw:                             3
+rofi.bw:                             0
 ! Location on screen
 rofi.location:                       0
 ! Padding
-rofi.padding:                        5
+rofi.padding:                        400
 ! Y-offset relative to location
 rofi.yoffset:                        0
 ! X-offset relative to location
@@ -220,7 +222,7 @@ rofi.xoffset:                        0
 ! Always show number of lines
 rofi.fixed-num-lines:                false
 ! Terminal to use
-rofi.terminal:                       rofi-sensible-terminal
+rofi.terminal:                       termite
 ! Ssh client to use
 rofi.ssh-client:                     ssh
 ! Ssh command to execute
@@ -272,9 +274,9 @@ rofi.hide-scrollbar:                 false
 ! Show markup
 rofi.markup-rows:                    false
 ! Fullscreen
-rofi.fullscreen:                     false
+rofi.fullscreen:                     true
 ! Fake transparency
-rofi.fake-transparency:              false
+rofi.fake-transparency:              true
 ! DPI
 rofi.dpi:                            -1
 ! Threads to use for string matching

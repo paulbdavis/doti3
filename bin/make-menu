@@ -2,7 +2,7 @@
 
 set -x
 
-DMENU=$(which rofi)
+DMENU="$(which rofi)"
 PROMPT="?"
 FONT='Ubuntu 12'
 LINES=5
