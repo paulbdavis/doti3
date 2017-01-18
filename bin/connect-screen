@@ -58,14 +58,15 @@ then
     do
         xrandr --output "$active" --off
     done
-else if [[ "$action" == "left" ]] || [[ "$action" == "right" ]]
-     then
-         target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action of:")"
-         xrandr --output "$display" --mode "$(get_resolution "$display")" --${action}-of "$target"
-     else
-         target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action:")"
-         xrandr --output "$display" --mode "$(get_resolution "$display")" --${action} "$target"
-     fi
+else
+    if [[ "$action" == "left" ]] || [[ "$action" == "right" ]]
+    then
+        target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action of:")"
+        xrandr --output "$display" --mode "$(get_resolution "$display")" --${action}-of "$target"
+    else
+        target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action:")"
+        xrandr --output "$display" --mode "$(get_resolution "$display")" --${action} "$target"
+    fi
 fi
 
 if [ $wallpaperFlag -eq 1 ]
