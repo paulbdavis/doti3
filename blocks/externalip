@@ -1,39 +1,8 @@
 #!/usr/bin/env bash
 
-cacheFile="/tmp/externalip-$USER"
+vpn_name="$(systemctl list-units | grep openvpn-client@ | awk '{print $1}' | sed -e 's/openvpn-client@//' -e 's/.service//')"
 
-if [[ "$1" = "-r" ]]
-then
-    rm $cacheFile
-else
-    modified=$(expr $(date +%s) - $(date +%s -r $cacheFile))
-    if [[ $modified -gt 1800 ]]
-    then
-        rm $cacheFile
-    fi
-fi
-
-
-if [[ ! -f "$cacheFile" ]]
-then
-    touch $cacheFile
-fi
-
-cachedIp=$(cat $cacheFile)
-if [[ -z "$cachedIp" ]] || [[ "$1" == "-f" ]]
-then
-    externalIp=$(curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
-fi
-
-if [[ "$1" != "-f" ]]
-then
-    if [[ -z $cachedIp ]]
-    then
-        echo $externalIp > $cacheFile
-    else
-        externalIp=$cachedIp
-    fi
-fi
+externalIp="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 
 if [[ -z "$externalIp" ]] || [[ $(expr match "$externalIp" "[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}") -eq 0 ]]
 then
@@ -41,4 +10,16 @@ then
     exit 33
 fi
 
-echo $externalIp
+color="#dca3a3"
+lock=""
+
+if [[ -n "$vpn_name" ]]
+then
+    color="#7f9f7f"
+    lock=""
+fi
+
+
+echo $lock $externalIp $vpn_name
+echo
+echo $color
