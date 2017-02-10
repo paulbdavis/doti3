@@ -38,10 +38,10 @@ do
     if [[ $dType = up ]]
     then
         RT=tx
-        SYMBOL=
+        SYMBOL=
     else
         RT=rx
-        SYMBOL=
+        SYMBOL=
     fi
 
     R1=$(cat /sys/class/net/$IF/statistics/${RT}_bytes) || FAIL
