@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vpn_name="$(systemctl list-units | grep openvpn-client@ | awk '{print $1}' | sed -e 's/openvpn-client@//' -e 's/.service//')"
+vpn_name="$(systemctl list-units --plain --state=active | grep openvpn-client@ | awk '{print $1}' | sed -e 's/openvpn-client@//' -e 's/.service//')"
 
 externalIp="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 
