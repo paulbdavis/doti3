@@ -20,7 +20,10 @@ then
     notify-listener.py &
 fi
 
-if [[ -n "$(which dunst 2>/dev/null)" ]]
+if [[ -n "$(which twmnd 2>/dev/null)" ]]
+then
+    twmnd &
+elif [[ -n "$(which dunst 2>/dev/null)" ]]
 then
     dunst &
 fi
