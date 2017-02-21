@@ -383,6 +383,7 @@ bar {
     status_command i3blocks -c $confDir/blocks/top.conf
     font pango:Ubuntu, FontAwesome 12px
     mode hide
+    tray_output none
     colors {
         background $bg_grey
         statusline $fg
