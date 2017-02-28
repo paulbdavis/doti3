@@ -382,31 +382,15 @@ bar {
 bar {
     status_command i3blocks -c $confDir/blocks/top.conf
     font pango:Ubuntu, FontAwesome 12px
-    mode hide
+    position top
+    workspace_buttons no
     tray_output none
     colors {
         background $bg_grey
         statusline $fg
-
-        focused_workspace  $blue $lt_grey $dk_grey
-        active_workspace   $blue $dk_grey $blue
-        inactive_workspace $blue_1 $dk_grey $lt_grey
         urgent_workspace   $red $dk_grey $red
     }
 }
-
-# bar {
-#     status_command i3blocks -c $confDir/blocks/top.conf
-#     font pango:Ubuntu, FontAwesome 8
-#     position top
-#     workspace_buttons no
-#     tray_output none
-#     colors {
-#         background $bg_grey
-#         statusline $fg
-#         urgent_workspace   $red $dk_grey $red
-#     }
-# }
 
 exec "$confDir/bin/xinitscript"
 exec "compton"
