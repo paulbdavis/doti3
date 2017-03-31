@@ -1,7 +1,11 @@
 #!/bin/bash
 
-#set finger tap off
-/usr/bin/synclient MaxTapTime=0;
 
-#turn horizontal scrolling on
-/usr/bin/synclient HorizTwoFingerScroll=1;
+if which synclient >/dev/null 2>&1
+then
+    #set finger tap off
+    /usr/bin/synclient MaxTapTime=0;
+
+    #turn horizontal scrolling on
+    /usr/bin/synclient HorizTwoFingerScroll=1;
+fi
