@@ -21,7 +21,7 @@ fi
 
 if [ ! "$kernelCodename" ]
 then
-    url="http://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/plain/Makefile?id=refs/tags/v${kernelVersion}"
+    url="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/plain/Makefile?id=refs/tags/v${kernelVersion}"
     kernelCodename=$(grep $pattern <<<"$(curl -s "$url")" | sed "s/$pattern//g")
 fi
 
