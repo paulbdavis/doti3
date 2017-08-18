@@ -55,6 +55,9 @@ bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
 bindsym $mod+Shift+b border normal
 bindsym $mod+Shift+Ctrl+b border pixel 2
 
+# take screenshot of active window
+bindsym $mod+Shift+Ctrl+c exec "import -window $(xdotool getwindowfocus -f) $HOME/pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).jpg"
+
 bindsym $mod+Ctrl+L exec "$confDir/bin/lock $confdir/lib/lock.png"
 
 # mark window
@@ -172,6 +175,7 @@ for_window [class="^TeamViewer"] floating enable
 for_window [class="^Tresorit"] floating enable
 for_window [class="^telegram"] floating enable
 for_window [class="^Steam"] floating enable
+for_window [class="^Pinentry"] floating enable
 
 new_window pixel 2
 new_float pixel 2
