@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 declare -a tzs
-tzs=( "GMT" "Asia/Hong_Kong" "US/Mountain" "Europe/Berlin" "Europe/Moscow")
+tzs=( "GMT" "Asia/Hong_Kong" "US/Eastern" "Europe/Berlin" "Europe/Moscow")
 
 if [[ -n "$BLOCK_BUTTON" ]]
 then
