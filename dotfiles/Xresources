@@ -291,7 +291,7 @@ rofi.kb-primary-paste:               Control+Shift+v,Shift+Insert
 ! Keybinding
 rofi.kb-secondary-paste:             Control+v,Insert
 ! Keybinding
-rofi.kb-clear-line:                  Control+u
+!rofi.kb-clear-line:                  Control+k
 ! Keybinding
 rofi.kb-move-front:                  Control+a
 ! Keybinding
@@ -305,9 +305,9 @@ rofi.kb-move-char-back:              Left,Control+b
 ! Keybinding
 rofi.kb-move-char-forward:           Right,Control+f
 ! Keybinding
-rofi.kb-remove-word-back:            Control+Alt+h
+! rofi.kb-remove-word-back:            Alt+Backspace
 ! Keybinding
-rofi.kb-remove-word-forward:         Control+Alt+d
+rofi.kb-remove-word-forward:         Alt+d
 ! Keybinding
 rofi.kb-remove-char-forward:         Delete,Control+d
 ! Keybinding
@@ -347,7 +347,7 @@ rofi.kb-row-last:                    End,KP_End
 ! Keybinding
 rofi.kb-row-select:                  Control+space
 ! Keybinding
-rofi.kb-cancel:                      Escape,Control+bracketleft
+rofi.kb-cancel:                      Escape,Control+bracketleft,Control+g
 ! Keybinding
 rofi.kb-custom-1:                    Alt+1
 ! Keybinding
