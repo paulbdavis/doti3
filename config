@@ -12,6 +12,8 @@
 set $mod Mod4
 set $confDir ~/.config/i3
 
+set $defaultBorderPx 4
+
 # zenburn colors
 set $bg_grey #333333
 set $md_grey #555555
@@ -53,7 +55,7 @@ bindsym $mod+a exec "$confDir/bin/make-menu -w -f 'Ubuntu Mono 18' -p 'What the 
 bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
 
 bindsym $mod+Shift+b border normal
-bindsym $mod+Shift+Ctrl+b border pixel 2
+bindsym $mod+Shift+Ctrl+b border pixel $defaultBorderPx
 
 # take screenshot of active window
 bindsym $mod+Shift+Ctrl+c exec "import -window $(xdotool getwindowfocus -f) $HOME/pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).jpg"
@@ -177,8 +179,8 @@ for_window [class="^telegram"] floating enable
 for_window [class="^Steam"] floating enable
 for_window [class="^Pinentry"] floating enable
 
-new_window pixel 2
-new_float pixel 2
+new_window pixel $defaultBorderPx
+new_float pixel $defaultBorderPx
 hide_edge_borders none
 
 # switch to workspace
