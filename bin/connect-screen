@@ -53,7 +53,7 @@ action="$(echo "solo left right above below" | tr ' ' '\n' | $menu_cmd -p "Actio
 
 if [[ "$action" == "solo" ]]
 then
-    xrandr --output "$display" --mode "$(get_resolution "$display")"
+    xrandr --output "$display" --mode "$(get_resolution "$display")" --primary
     for active in ${active_displays[@]}
     do
         xrandr --output "$active" --off
