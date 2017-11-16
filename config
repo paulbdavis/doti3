@@ -181,7 +181,7 @@ for_window [class="^Pinentry"] floating enable
 
 new_window pixel $defaultBorderPx
 new_float pixel $defaultBorderPx
-hide_edge_borders none
+hide_edge_borders smart
 
 # switch to workspace
 bindsym $mod+1 workspace number 1
@@ -207,8 +207,6 @@ bindsym $mod+Control+0 workspace number 20
 
 bindsym $mod+o exec "$confDir/bin/i3-next-output"
 bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
-bindsym $mod+period exec "$confDir/bin/i3-next-output"
-bindsym $mod+comma exec "$confDir/bin/i3-previous-output"
 bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
 bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
 
