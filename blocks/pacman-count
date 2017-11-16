@@ -1,7 +1,7 @@
 #!/bin/bash
 # Arch upgradeable packages
 
-count=$(checkupdates | wc -l)
+count=$(cat <(checkupdates) <(pacaur -k) | wc -l)
 linux_needs_upgrade=$(checkupdates | grep '^linux ')
 
 COLOR="#7f9f7f"
