@@ -27,6 +27,9 @@ set $orange #dfaf8f
 set $yellow #f0dfaf
 set $red #cc9393
 
+#rgba colors
+set $bg_grey_t #1c1c1ce6
+
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 set $pangoFont pango:Ubuntu 8
 set $pangoMono pango:Ubuntu Mono 8
@@ -370,10 +373,11 @@ client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
 client.urgent           $red     $red     $fg      $dk_grey
 
 bar {
+    i3bar_command i3bar -t
     status_command i3blocks -c $confDir/blocks/bottom.conf
     font pango:Ubuntu, FontAwesome 12px
     colors {
-        background $bg_grey
+        background $bg_grey_t
         statusline $fg
 
         focused_workspace  $blue $lt_grey $dk_grey
@@ -384,13 +388,14 @@ bar {
 }
 
 bar {
+    i3bar_command i3bar -t
     status_command i3blocks -c $confDir/blocks/top.conf
     font pango:Ubuntu, FontAwesome 12px
     position top
     workspace_buttons no
     tray_output none
     colors {
-        background $bg_grey
+        background $bg_grey_t
         statusline $fg
         urgent_workspace   $red $dk_grey $red
     }
