@@ -13,7 +13,7 @@ then
     COLOR="#c3bf9f"
 fi
 
-output="$count pending"
+output=" <span color=\"$COLOR\">$count"
 
 if [[ -n "$linux_needs_upgrade" ]]
 then
@@ -23,6 +23,6 @@ then
     output="$output "
 fi
 
-echo "$output"
+echo "$output</span>"
 echo
-echo "$COLOR"
+echo
