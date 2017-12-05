@@ -21,7 +21,7 @@
 cache_file=~/.cache/i3blocks/notification
 
 # Ensure the cache exists
-mkdir -p `dirname $CACHE`
+mkdir -p $(dirname "$cache_file")
 touch "$cache_file"
 
 if env | grep -q BLOCK_
@@ -33,26 +33,25 @@ then # called by i3blocks
     # source the notification
     eval "$(tail -1 $cache_file)"
 
-    full_text="$SUMMARY $BODY"
+    full_text="<span color='#a9a999'>$APPNAME</span> $SUMMARY $BODY"
     short_text="$SUMMARY"
 
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
 
+    if [[ $total_notifications -gt 1 ]]
+    then
+        full_text="<span color='#6c6c6c'>(1/$total_notifications)</span> $full_text"
+    fi
+
     case "$URGENCY" in
         LOW)
-            color=#dcdccc
-            code=0
-            full_text=" $full_text"
+            full_text="<span color='#83b3a3'></span> $full_text"
             ;;
         NORMAL)
-            color=#7f9f7f
-            code=0
-            full_text=" $full_text"
+            full_text="<span color='#7f9f7f'></span> $full_text"
             ;;
         CRITICAL)
-            color=#dca3a3
-            code=0
-            full_text=" $full_text"
+            full_text="<span color='#dca3a3'></span> $full_text"
             ;;
         *)
             # unknown urgency, certainly empty notification
@@ -60,16 +59,11 @@ then # called by i3blocks
             ;;
     esac
 
-    if [[ $total_notifications -gt 1 ]]
-    then
-        full_text="(1/$total_notifications) $full_text"
-    fi
-
     # Output the status block
     echo "$full_text"
     echo "$short_text"
-    echo "$color"
-    exit "$code"
+    echo ""
+    exit 0
 
 else # called by dunst
 

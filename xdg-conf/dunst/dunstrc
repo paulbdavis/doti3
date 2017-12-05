@@ -148,10 +148,14 @@
     foreground = "#333333"
     timeout = 0
 
+[telegram]
+    appname = "*Telegram Desktop*"
+    urgency = "low"
 
 [i3blocks]
     summary = "*"
     script = "/home/paul/.config/i3/blocks/notifications"
+
     
 # Every section that isn't one of the above is interpreted as a rules
 # to override settings for certain messages.
