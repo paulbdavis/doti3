@@ -28,13 +28,13 @@ if env | grep -q BLOCK_
 then # called by i3blocks
 
     # clear notification on click
-    [[ "$BLOCK_BUTTON" -ne 0 ]] && sed -i '$ d' "$cache_file"
+    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i '$ d' "$cache_file"
 
     # source the notification
     eval "$(tail -1 $cache_file)"
 
-    full_text="<span color='#a9a999'>$APPNAME</span> $SUMMARY $BODY"
-    short_text="$SUMMARY"
+    full_text="<span color='#a9a999'>$APPNAME</span> $(echo $SUMMARY | iconv -f utf-8 -t ascii//TRANSLIT) $(echo $BODY | iconv -f utf-8 -t ascii//TRANSLIT)"
+    short_text="$(echo $SUMMARY | iconv -f utf-8 -t ascii//TRANSLIT)"
 
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
 
