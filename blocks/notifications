@@ -33,8 +33,8 @@ then # called by i3blocks
     # source the notification
     eval "$(tail -1 $cache_file)"
 
-    full_text="<span color='#a9a999'>$APPNAME</span> $(echo $SUMMARY | iconv -f utf-8 -t ascii//TRANSLIT) $(echo $BODY | iconv -f utf-8 -t ascii//TRANSLIT)"
-    short_text="$(echo $SUMMARY | iconv -f utf-8 -t ascii//TRANSLIT)"
+    full_text="<span color='#a9a999'>$APPNAME</span> $SUMMARY $BODY"
+    short_text="$SUMMARY"
 
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
 
