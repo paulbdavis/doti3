@@ -38,29 +38,32 @@ then # called by i3blocks
 
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
 
-    if [[ $total_notifications -gt 1 ]]
-    then
-        full_text="(1/$total_notifications) $full_text"
-    fi
-
     case "$URGENCY" in
         LOW)
             color=#dcdccc
             code=0
+            full_text=" $full_text"
             ;;
         NORMAL)
             color=#7f9f7f
             code=0
+            full_text=" $full_text"
             ;;
         CRITICAL)
             color=#dca3a3
             code=0
+            full_text=" $full_text"
             ;;
         *)
             # unknown urgency, certainly empty notification
             exit 0
             ;;
     esac
+
+    if [[ $total_notifications -gt 1 ]]
+    then
+        full_text="(1/$total_notifications) $full_text"
+    fi
 
     # Output the status block
     echo "$full_text"
