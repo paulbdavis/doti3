@@ -152,6 +152,10 @@
     appname = "*Telegram Desktop*"
     urgency = "low"
 
+[mattermost]
+    body = "*wrote: *"
+    urgency = "low"
+
 [i3blocks]
     summary = "*"
     script = "/home/paul/.config/i3/blocks/notifications"
