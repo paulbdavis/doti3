@@ -8,7 +8,7 @@
     #   %i  iconname (including its path)
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
-    format = "%a\n%s\n%b"
+    format = ""
 
     # Sort messages by urgency
     sort = yes
@@ -112,10 +112,6 @@
         # browser for opening urls in context menu
     browser = /usr/bin/firefox -new-tab
 
-[frame]
-    width = 0
-    color = "#DCDCCC"
-
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
     # available modifiers are 'ctrl', 'mod1' (the alt-key), 'mod2', 'mod3'
@@ -153,6 +149,10 @@
     timeout = 0
 
 
+[i3blocks]
+    summary = "*"
+    script = "/home/paul/.config/i3/blocks/notifications"
+    
 # Every section that isn't one of the above is interpreted as a rules
 # to override settings for certain messages.
 # Messages can be matched by 'appname', 'summary', 'body' or 'icon'

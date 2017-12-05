@@ -1,0 +1,83 @@
+#!/bin/env bash
+#
+# i3blocks integration with dunst.
+# Author: Vivien Didelot <vivien.didelot@gmail.com>
+#
+# dunst caches a notification and signals i3blocks.
+# i3blocks catches the signal and prints the cached notification.
+#
+# Put this rule at the end of your ~/.config/dunst/dunstrc:
+#
+#     [i3blocks]
+#         summary = "*"
+#         script = FULL_PATH_OF_THIS_SCRIPT
+#
+# Add this block in your ~/.i3blocks.conf:
+#
+#     [dunst]
+#     command=THIS_SCRIPT
+#     signal=12
+
+cache_file=~/.cache/i3blocks/notification
+
+# Ensure the cache exists
+mkdir -p `dirname $CACHE`
+touch "$cache_file"
+
+if env | grep -q BLOCK_
+then # called by i3blocks
+
+    # clear notification on click
+    [[ "$BLOCK_BUTTON" -ne 0 ]] && sed -i '$ d' "$cache_file"
+
+    # source the notification
+    eval "$(tail -1 $cache_file)"
+
+    full_text="$SUMMARY $BODY"
+    short_text="$SUMMARY"
+
+    total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
+
+    if [[ $total_notifications -gt 1 ]]
+    then
+        full_text="(1/$total_notifications) $full_text"
+    fi
+
+    case "$URGENCY" in
+        LOW)
+            color=#dcdccc
+            code=0
+            ;;
+        NORMAL)
+            color=#7f9f7f
+            code=0
+            ;;
+        CRITICAL)
+            color=#dca3a3
+            code=0
+            ;;
+        *)
+            # unknown urgency, certainly empty notification
+            exit 0
+            ;;
+    esac
+
+    # Output the status block
+    echo "$full_text"
+    echo "$short_text"
+    echo "$color"
+    exit "$code"
+
+else # called by dunst
+
+    # store the notification
+    cat << EOF >> "$cache_file"
+APPNAME="$1"; SUMMARY="$2"; BODY="$3"; ICON="$4"; URGENCY="$5"
+EOF
+
+    # signal i3blocks that there is a new notification
+    pkill -RTMIN+13 i3blocks
+    exit
+
+fi
+
