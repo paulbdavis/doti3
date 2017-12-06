@@ -19,39 +19,75 @@
 #     signal=12
 
 cache_file=~/.cache/i3blocks/notification
+index_file=~/.cache/i3blocks/notification-index
 
 # Ensure the cache exists
 mkdir -p $(dirname "$cache_file")
 touch "$cache_file"
+touch "$index_file"
+
+index="$(cat $index_file)"
+if [[ -z "$index" ]]
+then
+    index=1 # actually a line number, don't yell at me
+    echo "$index" > "$index_file"
+fi
 
 if env | grep -q BLOCK_
 then # called by i3blocks
 
+    # get total count, for possible clearing
+    total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
+    
     # clear notification on click
-    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i '$ d' "$cache_file"
+    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "$[$total_notifications - $index + 1]"d "$cache_file"
+    # clear all on right click
+    [[ "$BLOCK_BUTTON" -eq 3 ]] && cp /dev/null "$cache_file"
 
-    # source the notification
-    eval "$(tail -1 $cache_file)"
-
-    full_text="<span color='#a9a999'>$APPNAME</span> $SUMMARY $BODY"
-    short_text="$SUMMARY"
-
+    # get total count, reset index if necessary
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
 
-    if [[ $total_notifications -gt 1 ]]
+    if [[ "$index" -gt "$total_notifications" ]]
     then
-        full_text="<span color='#6c6c6c'>(1/$total_notifications)</span> $full_text"
+        index="$total_notifications"
+        echo "$index" > "$index_file"
     fi
+        
+
+    # change index on scroll
+    if [[ "$BLOCK_BUTTON" -eq 4 ]]
+    then
+        index=$[$index-1]
+    elif [[ "$BLOCK_BUTTON" -eq 5 ]]
+    then
+        index=$[$index+1]
+    fi
+
+    if [[ "$index" -gt "$total_notifications" ]]
+    then
+        index="$total_notifications"
+    elif [[ "$index" -lt 1 ]]
+    then
+        index=1
+    fi
+    echo "$index" > "$index_file"
+    
+
+    # source the notification
+    eval "$(tail -$index $cache_file | head -1)"
 
     case "$URGENCY" in
         LOW)
-            full_text="<span color='#83b3a3'></span> $full_text"
+            color="#83b3a3"
+            symbol=""
             ;;
         NORMAL)
-            full_text="<span color='#7f9f7f'></span> $full_text"
+            color="#7f9f7f"
+            symbol=""
             ;;
         CRITICAL)
-            full_text="<span color='#dca3a3'></span> $full_text"
+            color="#dba3a3"
+            symbol=""
             ;;
         *)
             # unknown urgency, certainly empty notification
@@ -59,8 +95,16 @@ then # called by i3blocks
             ;;
     esac
 
+    full_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+    short_text="$SUMMARY"
+
+    if [[ $total_notifications -gt 1 ]]
+    then
+        full_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $full_text"
+    fi
+
     # Output the status block
-    echo "$full_text"
+    echo "<span color='$color'>$symbol</span> $full_text"
     echo "$short_text"
     echo ""
     exit 0
