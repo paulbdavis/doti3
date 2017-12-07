@@ -52,7 +52,7 @@ then # called by i3blocks
         index="$total_notifications"
         echo "$index" > "$index_file"
     fi
-        
+    
 
     # change index on scroll
     if [[ "$BLOCK_BUTTON" -eq 4 ]]
@@ -96,8 +96,35 @@ then # called by i3blocks
     esac
 
     full_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
-    short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> ${BODY:0:90}..."
 
+    fullmsg="$SUMMARY $BODY"
+    msglen="${#fullmsg}"
+    if [[ "$msglen" -gt 100 ]]
+    then
+        sumlen="${#SUMMARY}"
+        bodylen="${#BODY}"
+        if [[ "$sumlen" -gt 100 ]]
+        then
+            short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>${SUMMARY:0:100}...</b></span>"
+            leftover=0
+        else
+            short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>${SUMMARY}</b></span>"
+            leftover="$[100-$sumlen]"
+        fi
+
+        if [[ "${leftover}" -gt 0 ]]
+        then
+            if [[ "$bodylen" -gt "$leftover" ]]
+            then
+                short_text="$short_text ${BODY:0:$leftover}..."
+            else
+                short_text="$short_text ${BODY}"
+            fi
+        fi
+    else
+        short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+    fi        
+    
     if [[ $total_notifications -gt 1 ]]
     then
         full_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $full_text"
