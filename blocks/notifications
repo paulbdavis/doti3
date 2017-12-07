@@ -97,19 +97,32 @@ then # called by i3blocks
 
     full_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
 
-    fullmsg="$SUMMARY $BODY"
+    app="$APPNAME"
+    applen="${#app}"
+    fullmsg="$app $SUMMARY $BODY"
     msglen="${#fullmsg}"
-    if [[ "$msglen" -gt 100 ]]
+    msglimit=95
+    applimit=16
+
+    # if message is too long, first just try truncating the app name to 20 characters
+    if [[ "$msglen" -gt "$msglimit" ]] && [[ "$applen" -gt "$applimit" ]]
+    then
+        app="${app:0:$applimit}..."
+        fullmsg="$app $SUMMARY $BODY"
+        msglen="${#fullmsg}"
+    fi
+    
+    if [[ "$msglen" -gt "$msglimit" ]]
     then
         sumlen="${#SUMMARY}"
         bodylen="${#BODY}"
-        if [[ "$sumlen" -gt 100 ]]
+        if [[ "$sumlen" -gt "$msglimit" ]]
         then
-            short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>${SUMMARY:0:100}...</b></span>"
+            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY:0:$msglimit}...</b></span>"
             leftover=0
         else
-            short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>${SUMMARY}</b></span>"
-            leftover="$[100-$sumlen]"
+            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY}</b></span>"
+            leftover="$[$msglimit-$sumlen]"
         fi
 
         if [[ "${leftover}" -gt 0 ]]
@@ -122,7 +135,7 @@ then # called by i3blocks
             fi
         fi
     else
-        short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+        short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
     fi        
     
     if [[ $total_notifications -gt 1 ]]
