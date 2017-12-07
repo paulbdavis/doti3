@@ -21,6 +21,20 @@
 cache_file=~/.cache/i3blocks/notification
 index_file=~/.cache/i3blocks/notification-index
 
+color_low="#83b3a3"
+symbol_low=""
+color_normal="#7f9f7f"
+symbol_normal=""
+color_critical="#dba3a3"
+symbol_critical=""
+
+# limit for total message length
+msg_limit=95
+
+# limit for app name length, tries to truncate APPNAME first to get
+# unter msg_limit
+app_limit=16
+
 # Ensure the cache exists
 mkdir -p $(dirname "$cache_file")
 touch "$cache_file"
@@ -78,16 +92,16 @@ then # called by i3blocks
 
     case "$URGENCY" in
         LOW)
-            color="#83b3a3"
-            symbol=""
+            color="$color_low"
+            symbol="$symbol_low"
             ;;
         NORMAL)
-            color="#7f9f7f"
-            symbol=""
+            color="$color_normal"
+            symbol="$symbol_normal"
             ;;
         CRITICAL)
-            color="#dba3a3"
-            symbol=""
+            color="$color_critical"
+            symbol="$symbol_critical"
             ;;
         *)
             # unknown urgency, certainly empty notification
@@ -101,28 +115,26 @@ then # called by i3blocks
     applen="${#app}"
     fullmsg="$app $SUMMARY $BODY"
     msglen="${#fullmsg}"
-    msglimit=95
-    applimit=16
 
     # if message is too long, first just try truncating the app name to 20 characters
-    if [[ "$msglen" -gt "$msglimit" ]] && [[ "$applen" -gt "$applimit" ]]
+    if [[ "$msglen" -gt "$msg_limit" ]] && [[ "$applen" -gt "$app_limit" ]]
     then
-        app="${app:0:$applimit}..."
+        app="${app:0:$app_limit}..."
         fullmsg="$app $SUMMARY $BODY"
         msglen="${#fullmsg}"
     fi
     
-    if [[ "$msglen" -gt "$msglimit" ]]
+    if [[ "$msglen" -gt "$msg_limit" ]]
     then
         sumlen="${#SUMMARY}"
         bodylen="${#BODY}"
-        if [[ "$sumlen" -gt "$msglimit" ]]
+        if [[ "$sumlen" -gt "$msg_limit" ]]
         then
-            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY:0:$msglimit}...</b></span>"
+            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY:0:$msg_limit}...</b></span>"
             leftover=0
         else
             short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY}</b></span>"
-            leftover="$[$msglimit-$sumlen]"
+            leftover="$[$msg_limit-$sumlen]"
         fi
 
         if [[ "${leftover}" -gt 0 ]]
