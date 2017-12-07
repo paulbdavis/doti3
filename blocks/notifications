@@ -96,16 +96,17 @@ then # called by i3blocks
     esac
 
     full_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
-    short_text="$SUMMARY"
+    short_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> ${BODY:0:90}..."
 
     if [[ $total_notifications -gt 1 ]]
     then
         full_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $full_text"
+        short_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $short_text"
     fi
 
     # Output the status block
     echo "<span color='$color'>$symbol</span> $full_text"
-    echo "$short_text"
+    echo "<span color='$color'>$symbol</span> $short_text"
     echo ""
     exit 0
 
