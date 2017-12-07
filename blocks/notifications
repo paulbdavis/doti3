@@ -165,7 +165,7 @@ then # called by i3blocks
 else # called by dunst
 
     # store the notification
-    echo "APPNAME=\"$1\"; SUMMARY=\"$2\"; BODY=\"$(echo "$3" | tr '\n' '-' | sed -e 's/-$//' -e 's/-/ - /g')\"; ICON=\"$4\"; URGENCY=\"$5\"" >> "$cache_file"
+    echo "APPNAME=\"$1\"; SUMMARY=\"$2\"; BODY=\"$(echo "$3" | tr '\n' '-' | sed -e 's/"/\\"/g' -e 's/-$//' -e 's/-/ - /g')\"; ICON=\"$4\"; URGENCY=\"$5\"" >> "$cache_file"
 
     # signal i3blocks that there is a new notification
     pkill -RTMIN+13 i3blocks
