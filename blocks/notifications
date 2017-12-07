@@ -29,7 +29,7 @@ color_critical="#dba3a3"
 symbol_critical=""
 
 # limit for total message length
-msg_limit=95
+msg_limit=85
 
 # limit for app name length, tries to truncate APPNAME first to get
 # unter msg_limit

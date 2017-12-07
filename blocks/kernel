@@ -28,5 +28,5 @@ fi
 echo "$kernelVersion@$kernelCodename" > "$cacheFile"
 
 echo "$kernelCodename ($kernelVersion)"
-echo "$kernelVersion"
+echo
 echo "#83b3a3"
