@@ -47,6 +47,12 @@ then
     echo "$index" > "$index_file"
 fi
 
+function cleanstring {
+    sed -e ':a;N;$!ba;s/\n/ - /g' \
+        -e 's/"/\\"/g' \
+        -e 's/`/\\`/g' <<<"$1"
+}
+
 if env | grep -q BLOCK_
 then # called by i3blocks
 
@@ -165,7 +171,7 @@ then # called by i3blocks
 else # called by dunst
 
     # store the notification
-    echo "APPNAME=\"$1\"; SUMMARY=\"$2\"; BODY=\"$(echo "$3" | sed -e ':a;N;$!ba;s/\n/ - /g' -e 's/"/\\"/g' -e 's/`/\\`/g' -e 's/ -$//')\"; ICON=\"$4\"; URGENCY=\"$5\"" >> "$cache_file"
+    echo "APPNAME=\"$(cleanstring "$1")\"; SUMMARY=\"$(cleanstring "$2")\"; BODY=\"$(cleanstring "$3")\"; ICON=\"$(cleanstring "$4")\"; URGENCY=\"$(cleanstring "$5")\"" >> "$cache_file"
 
     # signal i3blocks that there is a new notification
     pkill -RTMIN+13 i3blocks
