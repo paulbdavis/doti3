@@ -60,7 +60,7 @@ then # called by i3blocks
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
     
     # clear notification on click
-    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "$[$total_notifications - $index + 1]"d "$cache_file"
+    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "$index"d "$cache_file"
     # clear all on right click
     [[ "$BLOCK_BUTTON" -eq 3 ]] && cp /dev/null "$cache_file"
 
@@ -94,7 +94,7 @@ then # called by i3blocks
     
 
     # source the notification
-    eval "$(tail -$index $cache_file | head -1)"
+    eval "$(sed -n ${index}p $cache_file)"
 
     case "$URGENCY" in
         LOW)
