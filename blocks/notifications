@@ -23,13 +23,22 @@ index_file=~/.cache/i3blocks/notification-index
 
 color_low="#83b3a3"
 symbol_low=""
+
 color_normal="#7f9f7f"
 symbol_normal=""
+
 color_critical="#dba3a3"
 symbol_critical=""
 
-# limit for total message length
-msg_limit=85
+# limit for total message length, based on screen size here
+disp_size="$(xrandr | grep ' connected \(primary \)\?[0-9]' | sed 's/.* \([0-9]\+x[0-9]\+\).*/\1/')"
+
+if [[ "$disp_size" = "2560x1080" ]]
+then
+    msg_limit=180
+else
+    msg_limit=85
+fi
 
 # limit for app name length, tries to truncate APPNAME first to get
 # unter msg_limit
