@@ -60,10 +60,8 @@ then
 fi
 
 function cleanstring {
-    sed -e ':a;N;$!ba;s/\n/ - /g' \
-        -e 's/!/\\!/g' \
-        -e 's/"/\\"/g' \
-        -e 's/`/\\`/g' <<<"$1"
+    sed -e "s/'/\"/g" \
+        -e ':a;N;$!ba;s/\n/ - /g' <<<"$1"
 }
 
 if env | grep -q BLOCK_
@@ -184,7 +182,7 @@ then # called by i3blocks
 else # called by dunst
 
     # store the notification
-    echo "APPNAME=\"$(cleanstring "$1")\"; SUMMARY=\"$(cleanstring "$2")\"; BODY=\"$(cleanstring "$3")\"; ICON=\"$(cleanstring "$4")\"; URGENCY=\"$(cleanstring "$5")\"" >> "$cache_file"
+    echo "APPNAME='$(cleanstring "$1")'; SUMMARY='$(cleanstring "$2")'; BODY='$(cleanstring "$3")'; ICON='$(cleanstring "$4")'; URGENCY='$(cleanstring "$5")'" >> "$cache_file"
 
     # signal i3blocks that there is a new notification
     pkill -RTMIN+13 i3blocks
