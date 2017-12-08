@@ -21,6 +21,9 @@
 cache_file=~/.cache/i3blocks/notification
 index_file=~/.cache/i3blocks/notification-index
 
+color_appname="#a9a999"
+color_count="#6c6c6c"
+
 color_low="#83b3a3"
 symbol_low=""
 
@@ -69,7 +72,7 @@ then # called by i3blocks
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
     
     # clear notification on click
-    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "$index"d "$cache_file"
+    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "${index}d" "$cache_file"
     # clear all on right click
     [[ "$BLOCK_BUTTON" -eq 3 ]] && cp /dev/null "$cache_file"
 
@@ -124,7 +127,7 @@ then # called by i3blocks
             ;;
     esac
 
-    full_text="<span color='#a9a999'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+    full_text="<span color='$color_appname'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
 
     app="$APPNAME"
     applen="${#app}"
@@ -145,10 +148,10 @@ then # called by i3blocks
         bodylen="${#BODY}"
         if [[ "$sumlen" -gt "$msg_limit" ]]
         then
-            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY:0:$msg_limit}...</b></span>"
+            short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>${SUMMARY:0:$msg_limit}...</b></span>"
             leftover=0
         else
-            short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>${SUMMARY}</b></span>"
+            short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>${SUMMARY}</b></span>"
             leftover="$[$msg_limit-$sumlen]"
         fi
 
@@ -162,13 +165,13 @@ then # called by i3blocks
             fi
         fi
     else
-        short_text="<span color='#a9a999'>$app</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+        short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
     fi        
     
     if [[ $total_notifications -gt 1 ]]
     then
-        full_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $full_text"
-        short_text="<span color='#6c6c6c'>($index/$total_notifications)</span> $short_text"
+        full_text="<span color='$color_count'>($index/$total_notifications)</span> $full_text"
+        short_text="<span color='$color_count'>($index/$total_notifications)</span> $short_text"
     fi
 
     # Output the status block
