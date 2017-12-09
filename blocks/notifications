@@ -20,6 +20,8 @@
 
 cache_file=~/.cache/i3blocks/notification
 index_file=~/.cache/i3blocks/notification-index
+list_file=~/.cache/i3blocks/notification-list
+rofi_cmd=~/.config/i3/bin/make-menu
 
 color_appname="#a9a999"
 color_count="#6c6c6c"
@@ -64,6 +66,19 @@ function cleanstring {
         -e ':a;N;$!ba;s/\n/ - /g' <<<"$1"
 }
 
+function showlist {
+    cp /dev/null "$list_file"
+    while read line
+    do
+        (eval "$line" && echo -e "$APPNAME - $SUMMARY - $BODY" >> "$list_file")
+    done <"$cache_file"
+    cat "$list_file" | $rofi_cmd -p 'type "clear" to clear all: '
+}
+
+function clearall {
+    cp /dev/null "$cache_file"
+}
+
 if env | grep -q BLOCK_
 then # called by i3blocks
 
@@ -73,7 +88,16 @@ then # called by i3blocks
     # clear notification on click
     [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "${index}d" "$cache_file"
     # clear all on right click
-    [[ "$BLOCK_BUTTON" -eq 3 ]] && cp /dev/null "$cache_file"
+    [[ "$BLOCK_BUTTON" -eq 3 ]] && clearall
+    # display all on middle click
+    if [[ "$BLOCK_BUTTON" -eq 2 ]]
+    then
+        response="$(showlist)"
+        if [[ "$response" = "clear" ]]
+        then
+            clearall
+        fi
+    fi
 
     # get total count, reset index if necessary
     total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
