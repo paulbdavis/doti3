@@ -1,7 +1,8 @@
 #!/bin/bash
 # Arch upgradeable packages
 
-count=$(checkupdates | wc -l)
+count=$(cat <(checkupdates) <(pacaur -k) | wc -l)
+linux_needs_upgrade=$(checkupdates | grep '^linux ')
 
 COLOR="#7f9f7f"
 if [[ $count -gt 50 ]]
@@ -12,6 +13,16 @@ then
     COLOR="#c3bf9f"
 fi
 
-echo "$count pending"
+output=" <span color=\"$COLOR\">$count"
+
+if [[ -n "$linux_needs_upgrade" ]]
+then
+    output="$output "
+elif [[ "$count" -ne 0 ]]
+then
+    output="$output "
+fi
+
+echo "$output</span>"
 echo
-echo "$COLOR"
+echo

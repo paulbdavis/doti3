@@ -28,6 +28,7 @@ fi
 
 # kill all ssh sessions when locking, for extra security
 killall ssh || echo "no ssh sessions to kill"
+systemctl --user restart gpg-agent || echo "cannot restart gpg-agent systemd user unit"
 
 # clear GPG agent passwords
 pkill -SIGHUP gpg-agent

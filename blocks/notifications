@@ -1,0 +1,216 @@
+#!/bin/env bash
+#
+# i3blocks integration with dunst.
+# Author: Vivien Didelot <vivien.didelot@gmail.com>
+#
+# dunst caches a notification and signals i3blocks.
+# i3blocks catches the signal and prints the cached notification.
+#
+# Put this rule at the end of your ~/.config/dunst/dunstrc:
+#
+#     [i3blocks]
+#         summary = "*"
+#         script = FULL_PATH_OF_THIS_SCRIPT
+#
+# Add this block in your ~/.i3blocks.conf:
+#
+#     [dunst]
+#     command=THIS_SCRIPT
+#     signal=12
+
+cache_file=~/.cache/i3blocks/notification
+index_file=~/.cache/i3blocks/notification-index
+list_file=~/.cache/i3blocks/notification-list
+rofi_cmd=~/.config/i3/bin/make-menu
+
+color_appname="#a9a999"
+color_count="#6c6c6c"
+
+color_low="#83b3a3"
+symbol_low=""
+
+color_normal="#7f9f7f"
+symbol_normal=""
+
+color_critical="#dba3a3"
+symbol_critical=""
+
+# limit for total message length, based on screen size here
+disp_size="$(xrandr | grep ' connected \(primary \)\?[0-9]' | sed 's/.* \([0-9]\+x[0-9]\+\).*/\1/')"
+
+if [[ "$disp_size" = "2560x1080" ]]
+then
+    msg_limit=180
+else
+    msg_limit=85
+fi
+
+# limit for app name length, tries to truncate APPNAME first to get
+# unter msg_limit
+app_limit=16
+
+# Ensure the cache exists
+mkdir -p $(dirname "$cache_file")
+touch "$cache_file"
+touch "$index_file"
+
+index="$(cat $index_file)"
+if [[ -z "$index" ]]
+then
+    index=1 # actually a line number, don't yell at me
+    echo "$index" > "$index_file"
+fi
+
+function cleanstring {
+    sed -e "s/'/\"/g" \
+        -e ':a;N;$!ba;s/\n/ - /g' <<<"$1"
+}
+
+function showlist {
+    cp /dev/null "$list_file"
+    while read line
+    do
+        (eval "$line" && echo -e "$APPNAME - $SUMMARY - $BODY" >> "$list_file")
+    done <"$cache_file"
+    cat "$list_file" | $rofi_cmd -p 'type "clear" to clear all: '
+}
+
+function clearall {
+    cp /dev/null "$cache_file"
+}
+
+if env | grep -q BLOCK_
+then # called by i3blocks
+
+    # get total count, for possible clearing
+    total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
+    
+    # clear notification on click
+    [[ "$BLOCK_BUTTON" -eq 1 ]] && sed -i "${index}d" "$cache_file"
+    # clear all on right click
+    [[ "$BLOCK_BUTTON" -eq 3 ]] && clearall
+    # display all on middle click
+    if [[ "$BLOCK_BUTTON" -eq 2 ]]
+    then
+        response="$(showlist)"
+        if [[ "$response" = "clear" ]]
+        then
+            clearall
+        fi
+    fi
+
+    # get total count, reset index if necessary
+    total_notifications=$(wc -l "$cache_file" | awk '{print $1}')
+
+    if [[ "$index" -gt "$total_notifications" ]]
+    then
+        index="$total_notifications"
+        echo "$index" > "$index_file"
+    fi
+    
+
+    # change index on scroll
+    if [[ "$BLOCK_BUTTON" -eq 4 ]]
+    then
+        index=$[$index-1]
+    elif [[ "$BLOCK_BUTTON" -eq 5 ]]
+    then
+        index=$[$index+1]
+    fi
+
+    if [[ "$index" -gt "$total_notifications" ]]
+    then
+        index="$total_notifications"
+    elif [[ "$index" -lt 1 ]]
+    then
+        index=1
+    fi
+    echo "$index" > "$index_file"
+    
+
+    # source the notification
+    eval "$(sed -n ${index}p $cache_file)"
+
+    case "$URGENCY" in
+        LOW)
+            color="$color_low"
+            symbol="$symbol_low"
+            ;;
+        NORMAL)
+            color="$color_normal"
+            symbol="$symbol_normal"
+            ;;
+        CRITICAL)
+            color="$color_critical"
+            symbol="$symbol_critical"
+            ;;
+        *)
+            # unknown urgency, certainly empty notification
+            exit 0
+            ;;
+    esac
+
+    full_text="<span color='$color_appname'>$APPNAME</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+
+    app="$APPNAME"
+    applen="${#app}"
+    fullmsg="$app $SUMMARY $BODY"
+    msglen="${#fullmsg}"
+
+    # if message is too long, first just try truncating the app name to 20 characters
+    if [[ "$msglen" -gt "$msg_limit" ]] && [[ "$applen" -gt "$app_limit" ]]
+    then
+        app="${app:0:$app_limit}..."
+        fullmsg="$app $SUMMARY $BODY"
+        msglen="${#fullmsg}"
+    fi
+
+    if [[ "$msglen" -gt "$msg_limit" ]]
+    then
+        sumlen="${#SUMMARY}"
+        bodylen="${#BODY}"
+        if [[ "$sumlen" -gt "$msg_limit" ]]
+        then
+            short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>${SUMMARY:0:$msg_limit}...</b></span>"
+            leftover=0
+        else
+            short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>${SUMMARY}</b></span>"
+            leftover="$[$msg_limit-$sumlen]"
+        fi
+
+        if [[ "${leftover}" -gt 0 ]]
+        then
+            if [[ "$bodylen" -gt "$leftover" ]]
+            then
+                short_text="$short_text ${BODY:0:$leftover}..."
+            else
+                short_text="$short_text ${BODY}"
+            fi
+        fi
+    else
+        short_text="<span color='$color_appname'>$app</span> <span color='$color'><b>$SUMMARY</b></span> $BODY"
+    fi        
+    
+    if [[ $total_notifications -gt 1 ]]
+    then
+        full_text="<span color='$color_count'>($index/$total_notifications)</span> $full_text"
+        short_text="<span color='$color_count'>($index/$total_notifications)</span> $short_text"
+    fi
+
+    # Output the status block
+    echo "<span color='$color'>$symbol</span> $full_text"
+    echo "<span color='$color'>$symbol</span> $short_text"
+    echo ""
+    exit 0
+
+else # called by dunst
+
+    # store the notification
+    echo "APPNAME='$(cleanstring "$1")'; SUMMARY='$(cleanstring "$2")'; BODY='$(cleanstring "$3")'; ICON='$(cleanstring "$4")'; URGENCY='$(cleanstring "$5")'" >> "$cache_file"
+
+    # signal i3blocks that there is a new notification
+    pkill -RTMIN+13 i3blocks
+    exit
+
+fi
+

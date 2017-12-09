@@ -12,6 +12,8 @@
 set $mod Mod4
 set $confDir ~/.config/i3
 
+set $defaultBorderPx 4
+
 # zenburn colors
 set $bg_grey #333333
 set $md_grey #555555
@@ -24,6 +26,9 @@ set $green #7f9f7f
 set $orange #dfaf8f
 set $yellow #f0dfaf
 set $red #cc9393
+
+#rgba colors
+set $bg_grey_t #1c1c1ce6
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 set $pangoFont pango:Ubuntu 8
@@ -46,14 +51,17 @@ bindsym $mod+Shift+Ctrl+Return exec "emacs -q -l $HOME/.emacs.d/light.el"
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want?'"
-bindsym $mod+space exec "$confDir/bin/make-menu -s -p 'What the fuck do you want?'"
+bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want? '"
+bindsym $mod+space exec "$confDir/bin/make-menu -s -p 'What the fuck do you want? '"
 
-bindsym $mod+a exec "python3 $confDir/python/winmenu.py"
+bindsym $mod+a exec "$confDir/bin/make-menu -w -f 'Ubuntu Mono 18' -p 'What the fuck do you want? '"
 bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
 
 bindsym $mod+Shift+b border normal
-bindsym $mod+Shift+Ctrl+b border pixel 2
+bindsym $mod+Shift+Ctrl+b border pixel $defaultBorderPx
+
+# take screenshot of active window
+bindsym $mod+Shift+Ctrl+c exec "import -window $(xdotool getwindowfocus -f) $HOME/pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).jpg"
 
 bindsym $mod+Ctrl+L exec "$confDir/bin/lock $confdir/lib/lock.png"
 
@@ -63,6 +71,9 @@ bindsym $mod+Shift+quotedbl exec i3-input -f '$pangoMono' -F '[con_mark="%s"] fo
 
 # i3 prompt
 bindsym $mod+x exec i3-input -f '$pangoMono'
+
+# change wallpaper
+bindsym $mod+Shift+W exec systemctl --user start random-wallpaper
 
 # volume control
 bindsym $mod+equal exec "pulseaudio-ctl up", exec "pkill -RTMIN+12 i3blocks"
@@ -168,10 +179,12 @@ for_window [class="^VirtualBox"] floating enable
 for_window [class="^TeamViewer"] floating enable
 for_window [class="^Tresorit"] floating enable
 for_window [class="^telegram"] floating enable
+for_window [class="^Steam"] floating enable
+for_window [class="^Pinentry"] floating enable
 
-new_window pixel 2
-new_float pixel 2
-hide_edge_borders none
+new_window pixel $defaultBorderPx
+new_float pixel $defaultBorderPx
+smart_borders no_gaps
 
 # switch to workspace
 bindsym $mod+1 workspace number 1
@@ -197,8 +210,6 @@ bindsym $mod+Control+0 workspace number 20
 
 bindsym $mod+o exec "$confDir/bin/i3-next-output"
 bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
-bindsym $mod+period exec "$confDir/bin/i3-next-output"
-bindsym $mod+comma exec "$confDir/bin/i3-previous-output"
 bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
 bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
 
@@ -308,6 +319,49 @@ mode "tmux" {
 
 bindsym $mod+t mode "tmux"
 
+
+# gaps stuff
+
+gaps inner 20
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
 # keys for connecting and disconnecting screen
 bindsym $mod+z exec "$confDir/bin/connect-screen -w"
 bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
@@ -319,11 +373,11 @@ client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
 client.urgent           $red     $red     $fg      $dk_grey
 
 bar {
+    i3bar_command i3bar -t
     status_command i3blocks -c $confDir/blocks/bottom.conf
-    font pango:Ubuntu, FontAwesome 8
-    binding_mode_indicator no
+    font pango:Ubuntu, FontAwesome 12px
     colors {
-        background $bg_grey
+        background $bg_grey_t
         statusline $fg
 
         focused_workspace  $blue $lt_grey $dk_grey
@@ -334,13 +388,14 @@ bar {
 }
 
 bar {
+    i3bar_command i3bar -t
     status_command i3blocks -c $confDir/blocks/top.conf
-    font pango:Ubuntu, FontAwesome 8
+    font pango:Ubuntu, FontAwesome 12px
     position top
     workspace_buttons no
     tray_output none
     colors {
-        background $bg_grey
+        background $bg_grey_t
         statusline $fg
         urgent_workspace   $red $dk_grey $red
     }

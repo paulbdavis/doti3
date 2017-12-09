@@ -19,10 +19,9 @@ def get_workspace():
 def dmenu_prompt(num):
     script = expanduser('~/.config/i3/bin/make-menu')
     dmenu = subprocess.Popen([
-        script, '-m',
-        '-h', '50',
-        '-p', 'Type new workspace name: {0}: '.format(num), # prompt
-        '-f', 'Ubuntu 12'
+        script, '-P',
+        '-f', 'Ubuntu Mono 24',
+        '-p', 'Rename workspace {0}'.format(num), # prompt
         ],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE

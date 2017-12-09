@@ -9,8 +9,8 @@ then
     esac
 fi
 
-VOLUME="$(pulseaudio-ctl | grep "Volume level" | grep -o -E '[0-9]+ ' | tr -d ' ')"
-MUTED="$(pulseaudio-ctl | grep "Is sink muted" | grep -o -E '(yes|no)' | tr -d ' ')"
+VOLUME="$(pulseaudio-ctl fs | awk '{print $1}' | tr -d ' ')"
+MUTED="$(pulseaudio-ctl fs | awk '{print $2}' | grep -o -E '(yes|no)' | tr -d ' ')"
 
 if [[ $VOLUME -gt 49 ]]
 then

@@ -53,19 +53,20 @@ action="$(echo "solo left right above below" | tr ' ' '\n' | $menu_cmd -p "Actio
 
 if [[ "$action" == "solo" ]]
 then
-    xrandr --output "$display" --mode "$(get_resolution "$display")"
+    xrandr --output "$display" --mode "$(get_resolution "$display")" --primary
     for active in ${active_displays[@]}
     do
         xrandr --output "$active" --off
     done
-else if [[ "$action" == "left" ]] || [[ "$action" == "right" ]]
-     then
-         target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action of:")"
-         xrandr --output "$display" --mode "$(get_resolution "$display")" --${action}-of "$target"
-     else
-         target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action:")"
-         xrandr --output "$display" --mode "$(get_resolution "$display")" --${action} "$target"
-     fi
+else
+    if [[ "$action" == "left" ]] || [[ "$action" == "right" ]]
+    then
+        target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action of:")"
+        xrandr --output "$display" --mode "$(get_resolution "$display")" --${action}-of "$target"
+    else
+        target="$(echo ${active_displays[@]} | tr ' ' '\n' | $menu_cmd -p "Put $display $action:")"
+        xrandr --output "$display" --mode "$(get_resolution "$display")" --${action} "$target"
+    fi
 fi
 
 if [ $wallpaperFlag -eq 1 ]

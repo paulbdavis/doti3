@@ -10,7 +10,7 @@ aur_user=$(grep 1000 /etc/passwd | awk --field-separator=':' '{print $1}')
 
 
 pac_down="pacman -Syuw"
-pac_install="pacman -Su"
+pac_install="pacman --noconfirm -Su"
 
 snap_desc="pacman upgrade"
 
