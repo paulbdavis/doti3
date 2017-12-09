@@ -72,7 +72,7 @@ function showlist {
     do
         (eval "$line" && echo -e "$APPNAME - $SUMMARY - $BODY" >> "$list_file")
     done <"$cache_file"
-    cat "$list_file" | $rofi_cmd -p 'type "clear" to clear all: '
+    cat "$list_file" | $rofi_cmd -p 'type "clear" and C-Enter to clear all: '
 }
 
 function clearall {

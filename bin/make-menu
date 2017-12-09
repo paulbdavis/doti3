@@ -30,24 +30,24 @@ do
 done
 
 run_prompt() {
-    $DMENU -font "$FONT" "$@"
+    $DMENU -matching fuzzy -font "$FONT" "$@" 
 }
 
 if [[ "$mode" = "dmenu" ]]
 then
-    run_prompt -dmenu -p "$PROMPT"
+    run_prompt -dmenu -i -p "$PROMPT"
 elif [[ "$mode" = "prompt" ]]
 then
-    run_prompt -separator-style none -dmenu -mesg "$PROMPT" -p '> '
+    run_prompt -separator-style none -dmenu -i -mesg "$PROMPT" -p '> '
 elif [[ "$mode" = "run" ]]
 then
-    run_prompt -show "run" -fuzzy -display-run "$PROMPT"
+    run_prompt -show "run" -display-run "$PROMPT"
 elif [[ "$mode" = "spotlight" ]]
 then
-    run_prompt -modi drun -show drun -fuzzy -display-drun "$PROMPT"
+    run_prompt -modi drun -show drun -display-drun "$PROMPT"
 elif [[ "$mode" = "window" ]]
 then
-    run_prompt -modi window -show window -fuzzy -display-window "$PROMPT"
+    run_prompt -modi window -show window -display-window "$PROMPT"
 else
     run_prompt -e "$message" -separator-style none
 fi
