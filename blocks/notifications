@@ -62,9 +62,15 @@ then
 fi
 
 function cleanstring {
-    sed -e "s/'/\"/g" \
+    sed -e "s/'/'\"'\"'/g" \
         -e ':a;N;$!ba;s/\n/ - /g' <<<"$1"
 }
+
+# echo "newvar='$(cleanstring "$1")'"> /tmp/notify-test
+# cat /tmp/notify-test
+# source <(sed -n 1p /tmp/notify-test)
+# echo $newvar
+# exit
 
 function showlist {
     cp /dev/null "$list_file"
@@ -129,7 +135,7 @@ then # called by i3blocks
     
 
     # source the notification
-    eval "$(sed -n ${index}p $cache_file)"
+    source <(sed -n ${index}p $cache_file)
 
     case "$URGENCY" in
         LOW)
