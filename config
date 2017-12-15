@@ -184,7 +184,7 @@ for_window [class="^Pinentry"] floating enable
 
 new_window pixel $defaultBorderPx
 new_float pixel $defaultBorderPx
-smart_borders no_gaps
+hide_edge_borders smart
 
 # switch to workspace
 bindsym $mod+1 workspace number 1
@@ -322,7 +322,7 @@ bindsym $mod+t mode "tmux"
 
 # gaps stuff
 
-gaps inner 20
+# gaps inner 20
 
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)

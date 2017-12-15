@@ -63,6 +63,7 @@ fi
 
 function cleanstring {
     sed -e "s/'/'\"'\"'/g" \
+        -e 's/&/and/g' \
         -e ':a;N;$!ba;s/\n/ - /g' <<<"$1"
 }
 
