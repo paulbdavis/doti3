@@ -4,7 +4,7 @@ set -x
 
 DMENU="$(which rofi)"
 PROMPT="? "
-FONT="Input 18"
+FONT="Input Sans 18"
 
 mode="dmenu"
 
