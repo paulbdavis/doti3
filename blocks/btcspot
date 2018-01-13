@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-spot=$(curl https://api.coinbase.com/v2/prices/spot | jshon -e data -e amount -u 2>/dev/null)
+spot=$(curl https://api.coinbase.com/v2/prices/BTC-USD/sell | jshon -e data -e amount -u 2>/dev/null)
 last=$(cat /tmp/$USER-btcspot.txt)
 [[ -z "$last" ]] && last=0
 
