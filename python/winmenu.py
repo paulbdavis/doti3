@@ -101,7 +101,7 @@ def win_menu(clients, l=20):
     dmenu = subprocess.Popen([
         script,
         '-p', 'window: ', # prompt
-        '-f', 'Ubuntu Mono 12',
+        '-f', 'Input Mono 12',
         '-w', '1500',
         '-l', str(l)],
         stdin=subprocess.PIPE,

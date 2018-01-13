@@ -199,7 +199,7 @@ rofi.lines:                          100
 ! Number of columns
 rofi.columns:                        1
 ! Font to use
-rofi.font:                           Ubuntu 18
+rofi.font:                           Input 18
 ! Use extended color scheme
 rofi.color-enabled:                  true
 ! Color scheme for normal row        bg,fg,bg alt,hl bg,hl,fg

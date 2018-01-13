@@ -20,7 +20,7 @@ def dmenu_prompt(num):
     script = expanduser('~/.config/i3/bin/make-menu')
     dmenu = subprocess.Popen([
         script, '-P',
-        '-f', 'Ubuntu Mono 24',
+        '-f', 'Input Mono 24',
         '-p', 'Rename workspace {0}'.format(num), # prompt
         ],
         stdin=subprocess.PIPE,

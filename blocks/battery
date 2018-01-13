@@ -18,7 +18,7 @@ COLOR="#7f9f7f"
 CODE=0
 if [[ ${BATTERY%%%} -lt 5 ]]
 then
-    # i3-nagbar -m "Battery at ${BATTERY}" -f "pango:Ubuntu Mono 12" >/dev/null 2>&1 &
+    # i3-nagbar -m "Battery at ${BATTERY}" -f "pango:Input Mono 12" >/dev/null 2>&1 &
     COLOR="#dca3a3"
     CODE=33
 elif [[ ${BATTERY%%%} -lt 10 ]]
