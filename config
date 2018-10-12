@@ -31,8 +31,8 @@ set $red #cc9393
 set $bg_grey_t #1c1c1ce6
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
-set $pangoFont pango:Input Sans 8
-set $pangoMono pango:Input Mono 8
+set $pangoFont pango:Sans Serif 8
+set $pangoMono pango:Monospace 8
 
 # font for window titles. ISO 10646 = Unicode
 font $pangoFont
@@ -43,6 +43,7 @@ floating_modifier $mod
 workspace_auto_back_and_forth no
 # start a terminal
 bindsym $mod+Return exec "TERMINAL=termite i3-sensible-terminal"
+bindsym $mod+Ctrl+Return exec "emacsclient -c -n -e '(switch-to-buffer nil)'"
 # start an emacs client
 bindsym $mod+Shift+Return exec "$confDir/bin/dmenu-emacs-client"
 bindsym $mod+Shift+Ctrl+Return exec "emacs -q -l $HOME/.emacs.d/light.el"
@@ -64,7 +65,7 @@ bindsym $mod+Shift+Ctrl+b border pixel $defaultBorderPx
 bindsym $mod+Shift+Ctrl+c exec "import -window $(xdotool getwindowfocus -f) $HOME/pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).jpg"
 
 bindsym $mod+Ctrl+L exec "$confDir/bin/lock $confdir/lib/lock.png"
-
+ 
 # mark window
 bindsym $mod+apostrophe exec i3-input -f '$pangoMono' -F 'mark %s' -P 'mark: '
 bindsym $mod+Shift+quotedbl exec i3-input -f '$pangoMono' -F '[con_mark="%s"] focus' -P 'goto: '
@@ -76,14 +77,9 @@ bindsym $mod+x exec i3-input -f '$pangoMono'
 bindsym $mod+Shift+W exec systemctl --user start random-wallpaper
 
 # volume control
-bindsym $mod+equal exec "pulseaudio-ctl up", exec "pkill -RTMIN+12 i3blocks"
-bindsym $mod+minus exec "pulseaudio-ctl down", exec "pkill -RTMIN+12 i3blocks"
 bindsym XF86AudioRaiseVolume exec "pulseaudio-ctl up", exec "pkill -RTMIN+12 i3blocks"
 bindsym XF86AudioLowerVolume exec "pulseaudio-ctl down", exec "pkill -RTMIN+12 i3blocks"
 bindsym XF86AudioMute exec "pulseaudio-ctl mute", exec "pkill -RTMIN+12 i3blocks"
-bindsym XF86AudioPlay exec "cmus-play"
-bindsym XF86AudioNext exec "cmus-remote -n"
-bindsym XF86AudioPrev exec "cmus-remote -r"
 
 # change focus
 bindsym $mod+h focus left
@@ -97,6 +93,12 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# alternatively, you can use the keys from my let's split
+bindsym $mod+colon focus left
+bindsym $mod+minus focus down
+bindsym $mod+equal focus up
+bindsym $mod+bracketleft focus right
+
 # move focused window
 bindsym $mod+Shift+H move left
 bindsym $mod+Shift+J move down
@@ -108,6 +110,12 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# alternatively, you can use the keys from my let's split
+bindsym $mod+Mod1+colon move left
+bindsym $mod+Mod1+minus move down
+bindsym $mod+Mod1+equal move up
+bindsym $mod+Mod1+bracketleft move right
 
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
@@ -184,8 +192,8 @@ for_window [class="^Pinentry"] floating enable
 
 new_window pixel $defaultBorderPx
 new_float pixel $defaultBorderPx
-#hide_edge_borders smart_no_gaps
-hide_edge_borders smart
+hide_edge_borders smart_no_gaps
+#hide_edge_borders smart
 
 # switch to workspace
 bindsym $mod+1 workspace number 1
@@ -225,6 +233,16 @@ bindsym $mod+Shift+ampersand           move container to workspace number 7
 bindsym $mod+Shift+asterisk            move container to workspace number 8
 bindsym $mod+Shift+parenleft           move container to workspace number 9
 bindsym $mod+Shift+parenright          move container to workspace number 10
+bindsym $mod+Mod1+1                   move container to workspace number 1
+bindsym $mod+Mod1+2                   move container to workspace number 2
+bindsym $mod+Mod1+3                   move container to workspace number 3
+bindsym $mod+Mod1+4                   move container to workspace number 4
+bindsym $mod+Mod1+5                   move container to workspace number 5
+bindsym $mod+Mod1+6                   move container to workspace number 6
+bindsym $mod+Mod1+7                   move container to workspace number 7
+bindsym $mod+Mod1+8                   move container to workspace number 8
+bindsym $mod+Mod1+9                   move container to workspace number 9
+bindsym $mod+Mod1+0                   move container to workspace number 10
 bindsym $mod+Control+Shift+exclam      move container to workspace number 11
 bindsym $mod+Control+Shift+at          move container to workspace number 12
 bindsym $mod+Control+Shift+numbersign  move container to workspace number 13
@@ -241,8 +259,7 @@ bindsym $mod+Control+Shift+R reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+E exec i3-nagbar -m "Exit i3?" -t warning -b "exit" "i3-msg exit" -b "switch user" "/usr/bin/dm-tool switch-to-greeter" -f "$pangoFont"
-bindsym $mod+Control+Shift+E exec /usr/bin/dm-tool switch-to-greeter
+bindsym $mod+Shift+E exec i3-nagbar -m "Exit i3?" -t warning -b "exit" "i3-msg exit" -f "$pangoFont"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -369,7 +386,7 @@ bindsym $mod+Shift+Z exec "$confDir/bin/disconnect-screen -w"
 
 #colors                 border   bg       text     indicator
 client.focused          $blue    $blue    $dk_grey $orange
-client.focused_inactive $md_grey $md_grey $dk_grey $orange
+client.focused_inactive $orange  $orange  $dk_grey $blue
 client.unfocused        $bg_grey $bg_grey $fg      $bg_grey
 client.urgent           $red     $red     $fg      $dk_grey
 
