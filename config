@@ -309,44 +309,6 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+y mode "resize"
-
-mode "tmux" {
-
-     set $mod Mod4
-
-     bindsym --release $mod+1 exec xdotool key --clearmodifiers ctrl+a 1
-     bindsym --release $mod+2 exec xdotool key --clearmodifiers ctrl+a 2
-     bindsym --release $mod+3 exec xdotool key --clearmodifiers ctrl+a 3
-     bindsym --release $mod+4 exec xdotool key --clearmodifiers ctrl+a 4
-     bindsym --release $mod+5 exec xdotool key --clearmodifiers ctrl+a 5
-     bindsym --release $mod+6 exec xdotool key --clearmodifiers ctrl+a 6
-     bindsym --release $mod+7 exec xdotool key --clearmodifiers ctrl+a 7
-     bindsym --release $mod+8 exec xdotool key --clearmodifiers ctrl+a 8
-     bindsym --release $mod+9 exec xdotool key --clearmodifiers ctrl+a 9
-
-     bindsym --release $mod+v exec xdotool key --clearmodifiers ctrl+a quotedbl
-     bindsym --release $mod+b exec xdotool key --clearmodifiers ctrl+a percent
-     bindsym --release $mod+shift+q exec xdotool key --clearmodifiers ctrl+a x
-     bindsym --release $mod+n exec xdotool key --clearmodifiers ctrl+a c
-
-     bindsym --release $mod+f exec xdotool key --clearmodifiers ctrl+a z
-
-     bindsym --release $mod+Tab exec xdotool key --clearmodifiers ctrl+a ctrl+a
-
-     bindsym --release $mod+o exec xdotool key --clearmodifiers ctrl+a o
-     bindsym --release $mod+h exec xdotool key --clearmodifiers ctrl+a h
-     bindsym --release $mod+j exec xdotool key --clearmodifiers ctrl+a j
-     bindsym --release $mod+k exec xdotool key --clearmodifiers ctrl+a k
-     bindsym --release $mod+l exec xdotool key --clearmodifiers ctrl+a l
-
-
-    bindsym $mod+t mode "default"
-}
-
-
-bindsym $mod+t mode "tmux"
-
 bindsym $mod+Ctrl+s mode "resize"
 
 # gaps stuff
