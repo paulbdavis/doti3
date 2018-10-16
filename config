@@ -94,6 +94,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # alternatively, you can use the keys from my let's split
+bindsym $mod+y focus left
+bindsym $mod+n focus down
+bindsym $mod+e focus up
+bindsym $mod+o focus right
 bindsym $mod+colon focus left
 bindsym $mod+minus focus down
 bindsym $mod+equal focus up
@@ -112,6 +116,14 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # alternatively, you can use the keys from my let's split
+bindsym $mod+Ctrl+y move left
+bindsym $mod+Ctrl+n move down
+bindsym $mod+Ctrl+e move up
+bindsym $mod+Ctrl+o move right
+bindsym $mod+Shift+Y move left
+bindsym $mod+Shift+N move down
+bindsym $mod+Shift+E move up
+bindsym $mod+Shift+O move right
 bindsym $mod+Mod1+colon move left
 bindsym $mod+Mod1+minus move down
 bindsym $mod+Mod1+equal move up
@@ -125,8 +137,6 @@ bindsym $mod+Shift+M mark "scratchterm", move scratchpad
 bindsym $mod+m [con_mark="scratchterm"] scratchpad show
 bindsym $mod+Shift+C mark "scratchchat", move scratchpad
 bindsym $mod+c [con_mark="scratchchat"] scratchpad show
-bindsym $mod+Shift+N mark "scratchemacs", move scratchpad
-bindsym $mod+n [con_mark="scratchemacs"] scratchpad show
 bindsym $mod+Shift+F1 mark "scratch1", move scratchpad
 bindsym $mod+F1 [con_mark="scratch1"] scratchpad show
 bindsym $mod+Shift+F2 mark "scratch2", move scratchpad
@@ -164,7 +174,7 @@ bindsym $mod+f fullscreen
 # change container layout (stacked, tabbed, default)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout default
+bindsym $mod+d layout default
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -217,10 +227,10 @@ bindsym $mod+Control+8 workspace number 18
 bindsym $mod+Control+9 workspace number 19
 bindsym $mod+Control+0 workspace number 20
 
-bindsym $mod+o exec "$confDir/bin/i3-next-output"
-bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
-bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
-bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
+# bindsym $mod+o exec "$confDir/bin/i3-next-output"
+# bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
+# bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
+# bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam              move container to workspace number 1
@@ -259,7 +269,7 @@ bindsym $mod+Control+Shift+R reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+E exec i3-nagbar -m "Exit i3?" -t warning -b "exit" "i3-msg exit" -f "$pangoFont"
+bindsym $mod+Shift+Ctrl+E exec i3-nagbar -m "Exit i3?" -t warning -b "exit" "i3-msg exit" -f "$pangoFont"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -337,6 +347,7 @@ mode "tmux" {
 
 bindsym $mod+t mode "tmux"
 
+bindsym $mod+Ctrl+s mode "resize"
 
 # gaps stuff
 
