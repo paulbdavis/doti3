@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+resolution="$(xrandr | grep ' connected \(primary \)\?[0-9]' | sed 's/.* \([0-9]\+x[0-9]\+\).*/\1/')"
+
+crop=900
+top=30
+blur=1.1
+
+if [[ "$resolution" == "2560x1080" ]]
+then
+    crop=675
+    top=60
+    blur=2
+fi
+
+curl -s http://apcd.state.co.us/live_image/chpark.jpg \
+    | convert - \
+              -crop 1600x$crop+0+$top - \
+    | convert - \
+              -filter quadratic \
+              -define filter:blur=$blur \
+              -resize "$resolution" - 
