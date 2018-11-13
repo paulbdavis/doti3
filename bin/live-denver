@@ -1,22 +1,48 @@
 #!/usr/bin/env bash
 
 resolution="$(xrandr | grep ' connected \(primary \)\?[0-9]' | sed 's/.* \([0-9]\+x[0-9]\+\).*/\1/')"
+wide_res="2560x1080"
 
-crop=900
-top=30
-blur=1.1
+function img_1 () {
+    crop=900
+    top=30
+    blur=1.1
 
-if [[ "$resolution" == "2560x1080" ]]
-then
-    crop=675
-    top=60
-    blur=2
-fi
+    if [[ "$resolution" == "$wide_res" ]]
+    then
+        crop=675
+        top=60
+        blur=1.5
+    fi
 
-curl -s http://apcd.state.co.us/live_image/chpark.jpg \
-    | convert - \
-              -crop 1600x$crop+0+$top - \
-    | convert - \
-              -filter quadratic \
-              -define filter:blur=$blur \
-              -resize "$resolution" - 
+    curl -s http://apcd.state.co.us/live_image/chpark.jpg \
+        | convert - \
+                  -crop 1600x$crop+0+$top - \
+        | convert - \
+                  -filter quadratic \
+                  -define filter:blur=$blur \
+                  -resize "$resolution" - 
+}
+
+function img_2 () {
+    crop=1045
+    top=0
+    blur=1.1
+
+    if [[ "$resolution" == "$wide_res" ]]
+    then
+        crop=810
+        top=230
+        blur=1.5
+    fi
+
+    curl -s http://www.dmns.org/images/skyimage.jpg \
+        | convert - \
+                  -crop 1920x$crop+0+$top - \
+        | convert - \
+                  -filter quadratic \
+                  -define filter:blur=$blur \
+                  -resize "$resolution" - 
+}
+
+img_1
