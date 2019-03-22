@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+sun_url=https://www.timeanddate.com/sun/usa/denver
+
+# Called daily from /etc/cron.daily/sun-hours
+while true; do
+
+    ### "-q"= quiet, "-O-" pipe output
+    for search in "Sunrise Today" "Sunset Today"
+    do
+        echo $(date --date="$(curl -s "$sun_url" | grep -oE "$search.{35}" | awk -F\> '{print $3}' | tr --delete "<")" "+%s") > /tmp/$(echo "$search" | awk '{print $1}' | tr '[:upper:]' '[:lower:]')
+    done
+
+    ## If network is down files will have one byte size
+    size1=$(wc -c < /tmp/sunrise)
+    size2=$(wc -c < /tmp/sunset)
+
+    if [ $size1 -gt 1 ] && [ $size2 -gt 1 ] ; then
+        exit 0
+    else
+        logger "/etc/cron.daily/sun-hours: Network is down. Waiting 5 minutes to try again."
+        sleep 300
+    fi
+
+done

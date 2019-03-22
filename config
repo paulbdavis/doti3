@@ -74,8 +74,7 @@ bindsym $mod+Shift+quotedbl exec i3-input -f '$pangoMono' -F '[con_mark="%s"] fo
 bindsym $mod+x exec i3-input -f '$pangoMono'
 
 # change wallpaper
-bindsym $mod+Shift+W exec systemctl --user start random-wallpaper
-bindsym $mod+Ctrl+Shift+W exec systemctl --user start live-denver-wallpaper
+bindsym $mod+Shift+W exec systemctl --user start sun-wallpaper
 
 # volume control
 bindsym XF86AudioRaiseVolume exec "pulseaudio-ctl up", exec "pkill -RTMIN+12 i3blocks"

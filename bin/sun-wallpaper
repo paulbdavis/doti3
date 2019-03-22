@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+now="$(date "+%s")"
+display_size="$(xrandr | grep ' connected \(primary \)\?[0-9]' | sed 's/.* \([0-9]\+x[0-9]\+\).*/\1/')"
+sunrise="$(date --date "07:00" "+%s")"
+if [[ -f "/tmp/sunrise" ]]
+then
+    sunrise="$(cat /tmp/sunrise)"
+else
+    echo "using default value for sunrise" 1>&2
+fi
+
+sunset="$(date --date "18:00" "+%s")"
+if [[ -f "/tmp/sunset" ]]
+then
+    sunset="$(cat /tmp/sunset)"
+else
+    echo "using default value for sunset" 1>&2
+fi
+
+if [[ "$now" -gt "$sunrise" ]] && [[ "$now" -lt "$sunset" ]]
+then
+    # day
+    echo "setting daytime wallpaper"
+    "$HOME/.config/i3/bin/live-denver" > "/tmp/wallpaper.jpg"
+    "$HOME/.config/i3/bin/wallpaper" "/tmp/wallpaper.jpg"
+else
+    # night
+    echo "setting nighttime wallpaper"
+    find "$HOME/pictures/wallpaper/$display_size" \( -name "*jpg" -o -name "*png" \) -fprint "/tmp/$USER-wallpapers"
+    wallpaper="$(sed -n $(($RANDOM % $(wc -l "/tmp/$USER-wallpapers" | awk '{print $1}') + 1))p "/tmp/$USER-wallpapers")"
+    "$HOME/.config/i3/bin/wallpaper" "$wallpaper"
+fi
