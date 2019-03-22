@@ -27,7 +27,7 @@ fi
 
 export PATH=$HOME/.config/i3/bin:$PATH
 
-systemctl --user start live-denver-wallpaper
+systemctl --user start sun-wallpaper
 
 # disable caps lock
 setxkbmap -option ctrl:nocaps
