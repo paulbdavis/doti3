@@ -187,16 +187,10 @@ bindsym $mod+p focus parent
 #bindcode $mod+d focus child
 
 # for_window [class="^vivaldi-stable" instance="^crx.*"] border normal,floating enable
-for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
-for_window [class="^Google-chrome" instance="^crx.*"] border normal,floating enable
-for_window [class="^chromium" instance="^crx.*"] border normal,floating enable
-for_window [class="^Pwsafe"] border normal,floating enable
 for_window [class="^feh"] floating enable
-for_window [class="^Pidgin"] border normal
 for_window [class="^VirtualBox"] floating enable
 for_window [class="^TeamViewer"] floating enable
 for_window [class="^Tresorit"] floating enable
-for_window [class="^telegram"] floating enable
 for_window [class="^Steam"] floating enable
 for_window [class="^Pinentry"] floating enable
 
