@@ -223,8 +223,7 @@ bindsym $mod+Control+0 workspace number 20
 
 # bindsym $mod+o exec "$confDir/bin/i3-next-output"
 # bindsym $mod+Shift+o exec "$confDir/bin/i3-move-container-next-output"
-# bindsym $mod+Shift+greater exec "$confDir/bin/i3-move-workspace-next-output"
-# bindsym $mod+Shift+less exec "$confDir/bin/i3-move-workspace-previous-output"
+bindsym $mod+Shift+x move workspace to output right
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam              move container to workspace number 1
