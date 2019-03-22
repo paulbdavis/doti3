@@ -28,7 +28,7 @@ set $yellow #f0dfaf
 set $red #cc9393
 
 #rgba colors
-set $bg_grey_t #1c1c1ce6
+set $bg_grey_t #1c1c1ced
 
 set $font -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 set $pangoFont pango:Sans Serif 8
