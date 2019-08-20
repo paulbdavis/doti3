@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+declare -a vpns
+. "$HOME/.config/vpns"
+vpn_count=${#vpns[@]}
+
+vpn_name="$(systemctl list-units --plain --state=active | grep openvpn-client@ | awk '{print $1}' | sed -e 's/openvpn-client@//' -e 's/.service//')"
+
+index=0
+current_index=-1
+while [[ "${index}" -lt "${vpn_count}" ]]
+do
+    if [[ "${vpn_name}" == "${vpns[$index]}" ]]
+    then
+        current_index="${index}"
+    fi
+    ((index++))
+done
+
+new_index="${current_index}"
+if [[ -n "$BLOCK_BUTTON" ]]
+then
+    case $BLOCK_BUTTON in
+        1) ((new_index++));; 
+        # 4) ((new_index++));; 
+        # 5) ((new_index--));; 
+    esac
+fi
+
+if [[ "${new_index}" -ne "${current_index}" ]]
+then
+    if [[ "${new_index}" -lt 0 ]]
+    then
+        let "new_index = ${vpn_count} - 1"
+    elif [[ "${new_index}" -ge "${vpn_count}" ]]
+    then
+        new_index=0
+    fi
+
+    new_vpn="${vpns[$new_index]}"
+    
+    sudo systemctl stop "openvpn-client@${vpn_name}"
+    sudo systemctl start "openvpn-client@${new_vpn}"
+    
+    vpn_name="$(systemctl list-units --plain --state=active | grep openvpn-client@ | awk '{print $1}' | sed -e 's/openvpn-client@//' -e 's/.service//')"
+fi
+
+
+color="#dca3a3"
+lock=""
+
+if [[ -n "$vpn_name" ]]
+then
+    color="#7f9f7f"
+    lock=""
+fi
+
+
+echo $lock $vpn_name
+echo
+echo $color
