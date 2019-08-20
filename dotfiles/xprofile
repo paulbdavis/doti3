@@ -3,9 +3,10 @@ export GPG_TTY=$(tty)
 
 if which systemctl
 then
-    systemctl --user set-environment DISPLAY=$DISPLAY
-    systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK
-    systemctl --user set-environment GPG_TTY=$GPG_TTY
+    systemctl --user import-environment DISPLAY
+    systemctl --user import-environment PATH
+    systemctl --user import-environment SSH_AUTH_SOCK
+    systemctl --user import-environment GPG_TTY
 fi
 
 compton&
