@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 declare -a tzs
-tzs=( "GMT" "Asia/Hong_Kong" "US/Eastern" "Europe/Berlin" "Europe/Moscow")
+tzs=( "GMT" "Asia/Saigon" "US/Eastern" "Europe/Berlin" "Europe/Moscow")
 
 if [[ -n "$BLOCK_BUTTON" ]]
 then
@@ -23,7 +23,7 @@ fi
 echo -n '<span color="#a9a999">'
 echo -n $(TZ=${tzs[$current]} date "+%Y.%m.%d %H:%M")'</span> '
 echo -n '<span color="#dfaf8f">'
-echo -n $(echo ${tzs[$current]} | sed -r -e 's/([a-zA-Z]+)\/([a-zA-Z]+)/\1 - \2/' -e 's/_/ /')'</span> '
+echo -n $(echo ${tzs[$current]} | sed -r -e 's/_/ /')'</span> '
 echo -n '<span>'
 echo -n $(TZ=${tzs[$current]} date "+%z" | sed -r -e 's/([+-])([0-9][0-9]).*/\1\2h/' -e 's/([+-])0([0-9]h)/(\1\2)/' -e 's/\(.0h\)//')'</span> '
 
