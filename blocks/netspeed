@@ -7,7 +7,7 @@ FAIL() {
     exit 33
 }
 
-IF="$(ip addr | grep -o -E '(enp|wlp)[a-z0-9]+$')"
+IF="$(ip addr | grep -o -E '(enp|wlp|wlan)[a-z0-9]+$')"
 
 
 tmpfile=/tmp/$USER-netspeed-unit
