@@ -7,7 +7,7 @@ FAIL() {
     exit 33
 }
 
-IF="$(ip addr | grep -o -E '(enp|wlp|wlan)[a-z0-9]+$')"
+IF="$(ip addr | grep -o -E 'dynamic (enp|wlp|wlan)[a-z0-9]+$' | awk '{print $2}')"
 
 
 tmpfile=/tmp/$USER-netspeed-unit
