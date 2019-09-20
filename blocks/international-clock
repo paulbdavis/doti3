@@ -19,12 +19,14 @@ fi
 
 [[ "$current" -lt 0 ]] && current=$[${#tzs[@]} - 1]
 
-# echo '(<span color="#dcdccc">'$(TZ=${tzs[$current]} date "+%Y.%m.%d %l:%M %P")'</span>' '<span color="#a9a999">'${tzs[$current]}'</span>)'
-echo -n '<span color="#a9a999">'
-echo -n $(TZ=${tzs[$current]} date "+%Y.%m.%d %H:%M")'</span> '
-echo -n '<span color="#dfaf8f">'
-echo -n $(echo ${tzs[$current]} | sed -r -e 's/_/ /')'</span> '
-echo -n '<span>'
-echo -n $(TZ=${tzs[$current]} date "+%z" | sed -r -e 's/([+-])([0-9][0-9]).*/\1\2h/' -e 's/([+-])0([0-9]h)/(\1\2)/' -e 's/\(.0h\)//')'</span> '
-
 echo $current > /tmp/$USER-worldclock
+
+# echo '(<span color="#dcdccc">'$(TZ=${tzs[$current]} date "+%Y.%m.%d %l:%M %P")'</span>' '<span color="#a9a999">'${tzs[$current]}'</span>)'
+output='<span color="#a9a999">'
+output="$output"$(TZ=${tzs[$current]} date "+%Y.%m.%d %H:%M")'</span> '
+output="$output"'<span color="#dfaf8f">'
+output="$output"$(echo ${tzs[$current]} | sed -r -e 's/_/ /')'</span> '
+output="$output"'<span>'
+output="$output"$(TZ=${tzs[$current]} date "+%z" | sed -r -e 's/([+-])([0-9][0-9]).*/\1\2h/' -e 's/([+-])0([0-9]h)/(\1\2)/' -e 's/\(.0h\)//')'</span> '
+
+echo "$output"
