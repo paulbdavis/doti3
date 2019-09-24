@@ -1,8 +1,9 @@
 #!/bin/bash
 # Arch upgradeable packages
 
-count=$(cat <(checkupdates) <(pacaur -k) | wc -l)
-linux_needs_upgrade=$(checkupdates | grep '^linux ')
+updates="$(checkupdates)"
+count=$(echo -n "$updates" | wc -l)
+linux_needs_upgrade=$(echo "$updates" | grep '^linux ')
 
 COLOR="#7f9f7f"
 if [[ $count -gt 50 ]]
