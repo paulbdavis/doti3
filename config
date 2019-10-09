@@ -196,7 +196,7 @@ for_window [class="^Pinentry"] floating enable
 
 new_window pixel $defaultBorderPx
 new_float pixel $defaultBorderPx
-hide_edge_borders smart_no_gaps
+hide_edge_borders smart
 #hide_edge_borders smart
 
 # switch to workspace
