@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+pass_dir="$HOME/.password-store"
+# menu_cmd="$HOME/.config/i3/bin/make-menu"
+
+get_entries () {
+    for entry in $(find "$pass_dir" -name '*.gpg')
+    do
+        entry="${entry%.gpg}"
+        entry="${entry#$pass_dir/}"
+        echo "${entry}"
+    done    
+}
+
+entry="$(get_entries | make-menu)"
+
+pass -c "$entry" && notify-send -a "$entry" "Password copied" || notify-send -u critical -a "$entry" "Failed to copy"
+
+
+

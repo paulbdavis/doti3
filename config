@@ -54,6 +54,8 @@ bindsym $mod+Shift+Q kill
 # start dmenu (a program launcher)
 bindsym $mod+r exec "$confDir/bin/make-menu -r -p 'What the fuck do you want? '"
 bindsym $mod+space exec "$confDir/bin/make-menu -s -p 'What the fuck do you want? '"
+bindsym $mod+p exec "pass-copy"
+bindsym $mod+Ctrl+p exec "pass-otp"
 
 bindsym $mod+a exec "$confDir/bin/make-menu -w -f 'Input Mono 18' -p 'What the fuck do you want? '"
 bindsym $mod+Shift+semicolon exec "python3 $confDir/python/rename.py"
@@ -181,7 +183,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Control+space floating toggle
 
 # focus the parent container
-bindsym $mod+p focus parent
+# bindsym $mod+p focus parent
 
 # focus the child container
 #bindcode $mod+d focus child
