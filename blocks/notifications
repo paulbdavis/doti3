@@ -123,6 +123,8 @@ then # called by i3blocks
     elif [[ "$BLOCK_BUTTON" -eq 5 ]]
     then
         index=$[$index+1]
+    else
+        index="$total_notifications"
     fi
 
     if [[ "$index" -gt "$total_notifications" ]]
@@ -205,7 +207,7 @@ then # called by i3blocks
     fi
 
     # Output the status block
-    echo "<span color='$color'>$symbol</span> $full_text"
+    echo "<span color='$color'>$symbol</span> $short_text"
     echo "<span color='$color'>$symbol</span> $short_text"
     echo ""
     exit 0
@@ -213,7 +215,7 @@ then # called by i3blocks
 else # called by dunst
 
     # store the notification
-    echo "APPNAME='$(cleanstring "$1")'; SUMMARY='$(cleanstring "$2")'; BODY='$(cleanstring "$3")'; ICON='$(cleanstring "$4")'; URGENCY='$(cleanstring "$5")'" >> "$cache_file"
+    echo "TIMESTAMP='$(date "+%s")'; APPNAME='$(cleanstring "$1")'; SUMMARY='$(cleanstring "$2")'; BODY='$(cleanstring "$3")'; ICON='$(cleanstring "$4")'; URGENCY='$(cleanstring "$5")'" >> "$cache_file"
 
     # signal i3blocks that there is a new notification
     pkill -RTMIN+13 i3blocks
