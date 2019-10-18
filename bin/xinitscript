@@ -27,7 +27,23 @@ fi
 
 export PATH=$HOME/.config/i3/bin:$PATH
 
-systemctl --user start sun-wallpaper
+systemctl --user start random-wallpaper
+
+if which systemctl
+then
+    systemctl --user import-environment DISPLAY
+    systemctl --user import-environment PATH
+    systemctl --user import-environment SSH_AUTH_SOCK
+    systemctl --user import-environment GPG_TTY
+    systemctl --user import-environment GOPATH
+    systemctl --user import-environment GOBIN
+    systemctl --user import-environment GOPRIVATE
+    systemctl --user import-environment GO111MODULE
+    systemctl --user import-environment GOARCH
+    systemctl --user import-environment GOOS
+    systemctl --user import-environment GOPROXY
+    systemctl --user restart emacsd
+fi
 
 # disable caps lock
 setxkbmap -option ctrl:nocaps
