@@ -12,9 +12,14 @@ get_entries () {
     done    
 }
 
-entry="$(get_entries | make-menu)"
+entry="$(get_entries | make-menu | tr -d '\n')"
 
-pass -c "$entry" && notify-send -a "$entry" "Password copied" || notify-send -u critical -a "$entry" "Failed to copy"
+if [[ "${#entry}" -gt 0 ]]
+then
+    pass -c "$entry" \
+        && notify-send -a "$entry" "Password copied" \
+            || notify-send -u critical -a "$entry" "Failed to copy"
+fi
 
 
 

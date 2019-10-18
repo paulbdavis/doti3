@@ -14,5 +14,9 @@ get_entries () {
 
 entry="$(get_entries | make-menu)"
 
-pass otp -c "$entry" && notify-send -a "$entry" "OTP copied" || notify-send -u critical -a "$entry" "Failed to copy OTP"
-
+if [[ "${#entry}" -gt 0 ]]
+then
+    pass otp -c "$entry" \
+        && notify-send -a "$entry" "OTP copied" \
+            || notify-send -u critical -a "$entry" "Failed to copy OTP"
+fi
