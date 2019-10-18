@@ -117,10 +117,10 @@ then # called by i3blocks
     
 
     # change index on scroll
-    if [[ "$BLOCK_BUTTON" -eq 4 ]]
+    if [[ "$BLOCK_BUTTON" -eq 5 ]]
     then
         index=$[$index-1]
-    elif [[ "$BLOCK_BUTTON" -eq 5 ]]
+    elif [[ "$BLOCK_BUTTON" -eq 4 ]]
     then
         index=$[$index+1]
     else
